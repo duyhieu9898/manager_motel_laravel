@@ -1,0 +1,55 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateRoomsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        //
+        Schema::create('rooms', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('title');
+            $table->text('description');
+            $table->bigInteger('category_id')->unsigned();
+            $table->text('police_and_terms');
+            $table->bigInteger('room_area')->unsigned();
+            $table->bigInteger('price')->unsigned();
+            $table->integer('maximum_peoples_number')->unsigned()->nullable();
+            $table->bigInteger('status_id')->unsigned();
+            $table->timestamps();
+            //relationship
+            $table->foreign('status_id')->references('id')->on('status_booking_room')->onDelete('cascade')->onUpdate('cascade'); //1-n
+            $table->foreign('category_id')->references('id')->on('category')->onDelete('cascade')->onUpdate('cascade'); //1-n
+        });
+
+        Schema::create('images', function (Blueprint $table) {
+            $table->bigIncrements('id')->increment();
+            $table->string('original_name');
+            $table->string('file_name');
+            $table->string('slug');
+            $table->unsignedBigInteger('room_id');
+            //relationship
+            $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade')->onUpdate('cascade'); //n-1
+
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('images');
+        Schema::dropIfExists('rooms');
+    }
+}

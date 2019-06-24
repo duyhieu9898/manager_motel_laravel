@@ -1,0 +1,45 @@
+/* footer{
+  background: #80b435;
+  padding: 10px 0px;
+} */
+
+.top-footer {
+  background-color: #222;
+  border-color: #101010;
+  color: #ffffff;
+  padding-top: 30px;
+  padding-bottom: 10px;
+}
+
+.top-footer h4 {
+  margin-bottom: 20px;
+}
+
+.top-footer ul {
+  padding-left: 0px;
+}
+
+.top-footer ul li {
+  list-style: none;
+  line-height: 1.8em;
+  margin-bottom: 10px;
+}
+
+.copy-right {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+/*sticky footer*/
+html, body,#app {
+  height: 100%;
+}
+.main-content{
+  padding-bottom: 395px;
+}
+main {
+  min-height: 100%;
+
+  /* Equal to height of footer */
+  /* But also accounting for potential margin-bottom of last child */
+  margin-bottom: -325px;
+}

@@ -1,0 +1,35 @@
+.title-detail{
+  color: #1e1e1e;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 1.4;
+}
+.content-detail {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #000;
+}
+.widget-img{
+  padding-top: 5px;
+  padding-bottom: 20px;
+  text-align: center;
+}
+/* .widget-img img{
+
+} */
+.widget-img span.decription-img{
+  margin-top: 10px;
+  display: block;
+}
+
+.comment{
+  margin-top: 15px;
+}
+.w3-display-bottommiddle{
+  font-size:24px;
+}
+.container h1{
+  display: inline-block;
+  margin-left: 100px;
+}
