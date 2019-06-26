@@ -1,8 +1,17 @@
 .image-room {
     border-radius: 5px;
     overflow: hidden;
+    height: 242px;
+    position: relative;
+    border: 2px solid #c7b78c;
 }
 
 .image-room img {
     max-width: 100%;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }

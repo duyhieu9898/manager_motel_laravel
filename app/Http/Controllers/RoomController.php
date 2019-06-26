@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Mail;
+use Illuminate\Http\Request;
 use App\Repositories\Room\RoomRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Convenient;
@@ -13,7 +14,6 @@ class RoomController extends Controller
 
     private $roomRepository;
     private $categoryRepository;
-    private $statusBookingRoomRepository;
     public function __construct(RoomRepositoryInterface $roomRepository, CategoryRepositoryInterface $categoryRepository)
     {
         $this->roomRepository = $roomRepository;
@@ -69,10 +69,15 @@ class RoomController extends Controller
         $convenients = Convenient::get();
         $statusRoom = StatusBookingRoom::get();
         $room = $this->roomRepository->findById($id);
-        $arrAllConvenientsId = $convenients->map(function ($item) {
+        $AllConvenientsId = $convenients->map(function ($item) {
             return $item['id'];
         });
+        $arrListConvenientsId = $AllConvenientsId->all();
 
+
+
+        $ok = arrayHas($arrListConvenientsId, $convenients[11]['id']);
+        dd($ok);
         return view(
             'admin.edit-room-detail',
             compact(
@@ -80,7 +85,7 @@ class RoomController extends Controller
                 'categories',
                 'statusRoom',
                 'convenients',
-                'arrAllConvenientsId'
+                'arrListConvenientsId'
             )
         );
     }

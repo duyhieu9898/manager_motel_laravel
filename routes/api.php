@@ -16,9 +16,3 @@ use Illuminate\Support\Facades\Auth;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-//restful api
-Route::resource('users', 'UserController');
-Route::get('/getCurrentUser', function () {
-    dd(Auth);
-    return Auth::user()->get();
-});

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <!-- BEGIN HEAD -->
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,8 +18,6 @@
     <!--bootstrap -->
     <link href="{{ asset('admin_rooms/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin_rooms/plugins/summernote/summernote.css" rel="stylesheet')}}">
-    <!-- morris chart -->
-    {{-- <link href="{{ asset('admin_rooms/plugins/morris/morris.css" rel="stylesheet')}}" type="text/css" /> --}}
     <!-- Material Design Lite CSS -->
     <link rel="stylesheet" href="{{ asset('admin_rooms/plugins/material/material.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin_rooms/css/material_style.css')}}">
@@ -34,10 +31,10 @@
     <!-- favicon -->
     <link rel="shortcut icon" href="{{ asset('admin_rooms/img/favicon.ico') }}">
     {{-- option --}}
-    @yield('css');
+    @yield('css')
 </head>
 
-<body id='app' class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark">
+<body class='page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark'>
     <div class="page-wrapper">
         <!-- start header -->
         <div class="page-header navbar navbar-fixed-top">
@@ -46,7 +43,8 @@
                 <div class="page-logo">
                     <a href="index.html">
                         <img alt="" src="{{ asset('admin_rooms/img/logo.png') }}">
-                        <span class="logo-default">Spice</span> </a>
+                        <span class="logo-default">Spice</span>
+                    </a>
                 </div>
                 <!-- logo end -->
                 <ul class="nav navbar-nav navbar-left in">
@@ -1331,8 +1329,9 @@
     <script src="{{ asset('admin_rooms/plugins/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
     <!-- bootstrap -->
     <script src="{{ asset('admin_rooms/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('admin_rooms/plugins/sparkline/jquery.sparkline.min.js') }}"></script>
-    <script src="{{ asset('admin_rooms/js/pages/sparkline/sparkline-data.js') }}"></script>
+    <!-- excel -->
+    {{-- <script src="{{ asset('admin_rooms/plugins/sparkline/jquery.sparkline.min.js') }}"></script>
+    <script src="{{ asset('admin_rooms/js/pages/sparkline/sparkline-data.js') }}"></script> --}}
     <!-- Common js-->
     <script src="{{ asset('admin_rooms/js/app.js') }}"></script>
     <script src="{{ asset('admin_rooms/js/layout.js') }}"></script>

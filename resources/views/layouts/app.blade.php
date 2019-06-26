@@ -93,9 +93,7 @@
             <div class="copy-right text-center">Copyright @2018 - All rights reserved</div>
         </footer>
     </div>
-
-</body>
-<!-- Scripts -->
+    <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
@@ -103,4 +101,5 @@
     <script src="{{ asset('js/myJs.js') }}" type="text/javascript" charset="utf-8"></script>
 
     @yield('option-js')
+</body>
 </html>

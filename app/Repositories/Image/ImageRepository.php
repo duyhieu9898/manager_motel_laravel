@@ -1,7 +1,6 @@
 <?php
 namespace App\Repositories\Image;
 
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
@@ -25,24 +24,13 @@ class ImageRepository extends BaseRepository implements ImageRepositoryInterface
         parent::__construct($model);
     }
 
-    public function upload($form_data, $roomId = 1)
+    public function upload($photo, $roomId)
     {
-        // $validator = Validator::make($form_data, Image::$rules, Image::$messages);
-        // if ($validator->fails()) {
-
-        //     return response()->json([
-        //         'error' => true,
-        //         'message' => $validator->messages()->first(),
-        //         'code' => 400
-        //     ], 400);
-        // }
         $path = 'uploads/images/' . date('Y') . "/" . date('m') . "/";
 
         if (!file_exists($path) && !is_dir($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
         }
-
-        $photo = $form_data['file'];
         $originalName = $photo->getClientOriginalName();
         $originalNameWithoutExt = substr($originalName, 0, strlen($originalName) - 4);
         $filename = $this->sanitize($originalNameWithoutExt);
@@ -60,9 +48,8 @@ class ImageRepository extends BaseRepository implements ImageRepositoryInterface
 
         $sessionImage = new Image;
         $sessionImage->original_name = $originalName;
-        $sessionImage->name          = $allowed_filename;
-        $sessionImage->slug          = $path . Config::get('images.icon_size') . '-' . $filenameExt;
-        $sessionImage->link          = $path . Config::get('images.full_size') . '-' . $filenameExt;
+        $sessionImage->slug          = $path . Config::get('images.icon_size') . $filenameExt;
+        $sessionImage->file_name          = $path . Config::get('images.full_size') . $filenameExt;
         $sessionImage->room_id       = $roomId;
 
         $sessionImage->save();
@@ -73,39 +60,23 @@ class ImageRepository extends BaseRepository implements ImageRepositoryInterface
         ], 200);
     }
 
-    public function delete($originalFilename)
+    public function deleteById($imageId)
     {
-        $image = Image::where('original_name', 'like', $originalFilename)->first();
-        if (empty($sessionImage)) {
-            return response()->json([
-                'error' => true,
-                'code'  => 400
-            ], 400);
-        }
-        if (empty($image)) {
-            return response()->json([
-                'error' => true,
-                'code'  => 400
-            ], 400);
-        }
-
-        $full_path = $image->original_name;
+        $image = $this->model::find($imageId);
+        $full_path = $image->file_name;
 
         if (File::exists($full_path)) {
             File::delete($full_path);
         }
-
-        $image->delete();
-
-        return response()->json([
-            'error' => false,
-            'code'  => 200
-        ], 200);
+        if ($image->delete()) {
+            return true;
+        }
+        return false;
     }
 
     public function createUniqueFilename($filename, $path)
     {
-        $full_image_path =  $path . Config::get('images.full_size') . '-' . $filename . '.jpg';
+        $full_image_path =  $path . Config::get('images.full_size') . $filename . '.jpg';
 
         if (File::exists($full_image_path)) {
             // Generate token for image
@@ -121,7 +92,7 @@ class ImageRepository extends BaseRepository implements ImageRepositoryInterface
     public function original($photo, $filename, $path)
     {
         $manager = new ImageManager();
-        $image = $manager->make($photo)->encode('jpg')->save($path . Config::get('images.full_size') . '-' . $filename);
+        $image = $manager->make($photo)->encode('jpg')->save($path . Config::get('images.full_size') . $filename);
         return $image;
     }
 
@@ -138,5 +109,9 @@ class ImageRepository extends BaseRepository implements ImageRepositoryInterface
 
         return ($force_lowercase) ? (function_exists('mb_strtolower')) ?
             mb_strtolower($clean, 'UTF-8') : strtolower($clean) : $clean;
+    }
+    public function getListImagesByRoom($roomId)
+    {
+        return $this->model::where('Room_id', $roomId)->get();
     }
 }

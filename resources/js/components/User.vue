@@ -109,7 +109,7 @@ export default {
   methods: {
     getCurrentUser() {
       axios
-        .get("/api/getCurrentUser")
+        .get("/getCurrentUser")
         .then(response => {
           this.currentUser = response.data;
         })
@@ -119,7 +119,7 @@ export default {
     },
     getListUsers() {
       axios
-        .get("/api/users")
+        .get("/users/")
         .then(response => {
           this.list_users = response.data;
           this.list_users.forEach(user => {
@@ -132,7 +132,7 @@ export default {
     },
     createUser() {
       axios
-        .post("/api/users", {
+        .post("/users/", {
           user: this.userCreate
         })
         .then(response => {
@@ -153,7 +153,7 @@ export default {
     },
     updateUser(user) {
       axios
-        .put("/api/users/" + user.id, {
+        .put("/users/" + user.id, {
           userData: user
         })
         .then(response => {
@@ -168,7 +168,7 @@ export default {
     },
     deleteUser(user, index) {
       axios
-        .delete("/api/users/" + user.id)
+        .delete("/users" + user.id)
         .then(response => {
           console.log(response.data.result);
           this.list_users.splice(index, 1);
