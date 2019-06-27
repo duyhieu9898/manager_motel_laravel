@@ -30,9 +30,9 @@ Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => '/admin'], function () {
-        Route::get('/rooms', 'RoomController@create');
-        Route::get('/rooms/all', 'RoomController@getAll')->name('all-rooms');
-        Route::get('/rooms/{id}/edit', 'RoomController@edit')->name('edit-room');
+        Route::get('/rooms', 'RoomController@create')->name('all-rooms');
+        Route::get('/rooms/all', 'RoomController@getAll');
+        Route::get('/rooms/{id}/edit', 'RoomController@edit')->name('room-edit');
         Route::put('/rooms/{id}', 'RoomController@update')->name('room-update');
 
 

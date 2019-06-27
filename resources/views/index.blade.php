@@ -81,15 +81,8 @@
                         <div class="new-post__info col-xs-12">
                             <p class="info__address width-ellipsis">
                                 <i class="fa fa-map-marker"></i>:
-                                @foreach($room->address as $address)
-                                {{
-                                $address['apartment_number']." ".
-                                $address['street']." ".
-                                $address['ward']." ".
-                                $address['district']." ".
-                                $address['provincial']
-                                }}
-                                @endforeach
+                                {{ formatAddressToString($room->address) }}
+
                             </p>
                             <p class="info__people">
                                 People number: {{$room['maximum_peoples_number']}}

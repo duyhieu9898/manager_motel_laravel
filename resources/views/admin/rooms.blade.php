@@ -68,22 +68,23 @@
                                         <th class="center"> Area </th>
                                         <th class="center"> People </th>
                                         <th class="center"> Rent </th>
-                                        <th class="center"> Status </th>
+                                        <th class="center"> Province </th>
                                         <th class="center"> Action </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 	@foreach ($rooms as $room)
 										<tr class="odd gradeX">
-	                                        <td class="center">{{ $room['id'] }}</td>
-	                                        <td class="center">{{ $room['category']['name'] }}</td>
-	                                        <td class="center">{{$room['title'] }}</td>
-	                                        <td class="center">{{$room['room_area'] }}m</td>
-	                                        <td class="center">{{$room['maximum_peoples_number'] }}</td>
-	                                        <td class="center">{{$room['price'] }} vnd</td>
-	                                        <td class="center">{{ $room['active'] }}</td>
+	                                        <td class="center">{{ $room->id }}</td>
+	                                        <td class="center">{{ $room->category->name }}</td>
+	                                        <td class="center">{{$room->title }}</td>
+                                            <td class="center">{{ $room->address->city }}</td>
+	                                        <td class="center">{{$room->room_area }}m</td>
+	                                        <td class="center">{{$room->maximum_peoples_number }}</td>
+	                                        <td class="center">{{$room->price }} vnd</td>
+
 	                                        <td class="center">
-	                                            <a href="{{ $room['id'] }}/edit" class="btn btn-tbl-edit btn-xs">
+	                                            <a href="{{ route('room-edit',$room->id) }}" class="btn btn-tbl-edit btn-xs">
 	                                                <i class="fa fa-pencil"></i>
 	                                            </a>
 	                                            <a class="btn btn-tbl-delete btn-xs">

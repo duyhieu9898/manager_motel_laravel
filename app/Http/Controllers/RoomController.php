@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\Room\RoomRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Convenient;
-use App\StatusBookingRoom;
+use App\StatusBooking;
 
 class RoomController extends Controller
 {
@@ -21,7 +21,8 @@ class RoomController extends Controller
     }
     public function create()
     {
-        return view("admin.admin-rooms");
+        $rooms = $this->roomRepository->getAll();
+        return view('admin.rooms', compact('rooms'));
     }
     public function latest()
     {
@@ -40,8 +41,10 @@ class RoomController extends Controller
         //         },
         //     ]
         // )->get();
+
         $categoryList = $this->categoryRepository->getAll();
         $newRoomsOfCategory = $this->categoryRepository->getNewRoomsOfCategory($categoryList);
+        // dd($newRoomsOfCategory);
         return view('index', compact(['categoryList', 'newRoomsOfCategory']));
     }
     public function sendEmail()
@@ -59,31 +62,22 @@ class RoomController extends Controller
         return view('detail-room', compact('room'));
     }
     public function getAll()
-    {
-        $rooms = $this->roomRepository->getAll();
-        return view('admin.all-rooms', compact('rooms'));
-    }
+    { }
     public function edit($id)
     {
         $categories = $this->categoryRepository->getAll();
         $convenients = Convenient::get();
-        $statusRoom = StatusBookingRoom::get();
         $room = $this->roomRepository->findById($id);
         $AllConvenientsId = $convenients->map(function ($item) {
             return $item['id'];
         });
         $arrListConvenientsId = $AllConvenientsId->all();
 
-
-
-        $ok = arrayHas($arrListConvenientsId, $convenients[11]['id']);
-        dd($ok);
         return view(
-            'admin.edit-room-detail',
+            'admin.room-detail-edit',
             compact(
                 'room',
                 'categories',
-                'statusRoom',
                 'convenients',
                 'arrListConvenientsId'
             )

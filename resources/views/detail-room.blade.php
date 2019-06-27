@@ -29,12 +29,7 @@
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <p>
-                                    <strong>Address:</strong> {{
-                                    $room['address'][0]['apartment_number'].' '.
-                                    $room['address'][0]['street'].' '.
-                                    $room['address'][0]['ward'].' '.
-                                    $room['address'][0]['district'].' '.
-                                    $room['address'][0]['provincial']}}
+                                    <strong>Address:</strong> {{ formatAddressToString($room->address) }}
                                 </p>
                                 <p><strong>Room area: </strong>{{ $room['room_area'] }}m</p>
                                 <p><strong>Price: </strong>{{ $room['price'] }} vnd/month</p>

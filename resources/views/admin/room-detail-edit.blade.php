@@ -84,7 +84,12 @@
                                             </div>
                                             <div class="col-lg-6 p-t-20">
                                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height txt-full-width is-dirty is-upgraded" data-upgraded=",MaterialTextfield" style="width: 124px;">
-                                                    <select name="room_status_id" id="room-status" class="mdl-textfield__input">
+                                                       <p class="info__address width-ellipsis mdl-textfield__input">
+                                                            <i class="fa fa-map-marker"></i>
+                                                            {{formatAddressToString($room->address) }}
+                                                        </p>
+                                                        <label class="mdl-textfield__label">Address</label>
+                                                    {{-- <select name="room_status_id" id="room-status" class="mdl-textfield__input">
                                                         @foreach ($statusRoom as $status)
                                                         @if ($status['name']==$room['statusRoom']['name'])
                                                         <option selected>{{ $status['name'] }}</option>
@@ -96,7 +101,7 @@
                                                     <label for="room-status" class="pull-right margin-0">
                                                         <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
                                                     </label>
-                                                    <label for="room-status" class="mdl-textfield__label">Status Booking</label>
+                                                    <label for="room-status" class="mdl-textfield__label">Status Booking</label> --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -126,7 +131,7 @@
                                         <div class="row">
                                             @foreach ($convenients as $convenient)
 
-                                            @if (array_has($arrListConvenientsId,$convenient['id']))
+                                            @if (in_array($convenient['id'],$arrListConvenientsId))
                                             <div style="margin-top:6px;margin-left:0px" class="col-md-4 col-sm-4 col-xs-6">
                                                 <input id="convenient_id_{{ $convenient['id'] }}" type="checkbox" name="convenient_id_{{ $convenient['id'] }}" checked>
                                                 <label for="convenient_id_{{ $convenient['id'] }}" class="text-left go-text-right size14">{{$convenient['name'] }}</label>

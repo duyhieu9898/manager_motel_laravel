@@ -383,11 +383,6 @@
                                             <span class="selected"></span>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="edit_room.html" class="nav-link ">
-                                            <span class="title">Edit Room Details</span>
-                                        </a>
-                                    </li>
                                 </ul>
                             </li>
                             <li class="nav-item">
