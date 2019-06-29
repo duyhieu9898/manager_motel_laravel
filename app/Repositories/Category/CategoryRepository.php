@@ -27,13 +27,14 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
     {
         foreach($categories as $category)
         {
-
             $rooms[] = Category::ofName( $category['name'])->first()->load(
                 [
                     'rooms' => function ($query) {
                         $query->limit(3);
                     },
-                    'rooms.address',
+                    'rooms.address.ward',
+                    'rooms.address.district',
+                    'rooms.address.province',
                     'rooms.images',
                 ]
             );

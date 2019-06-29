@@ -1,6 +1,6 @@
 @extends('../layouts.admin')
 @section('content-page')
-<div class="page-content-wrapper">
+<div id="app" class="page-content-wrapper">
     <div class="page-content" style="min-height:1639px">
         <div class="page-bar">
             <div class="page-title-breadcrumb">
@@ -83,26 +83,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 p-t-20">
-                                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height txt-full-width is-dirty is-upgraded" data-upgraded=",MaterialTextfield" style="width: 124px;">
-                                                       <p class="info__address width-ellipsis mdl-textfield__input">
-                                                            <i class="fa fa-map-marker"></i>
-                                                            {{formatAddressToString($room->address) }}
-                                                        </p>
-                                                        <label class="mdl-textfield__label">Address</label>
-                                                    {{-- <select name="room_status_id" id="room-status" class="mdl-textfield__input">
-                                                        @foreach ($statusRoom as $status)
-                                                        @if ($status['name']==$room['statusRoom']['name'])
-                                                        <option selected>{{ $status['name'] }}</option>
-                                                        @else
-                                                        <option>{{ $status['name'] }}</option>
-                                                        @endif
-                                                        @endforeach
-                                                    </select>
-                                                    <label for="room-status" class="pull-right margin-0">
-                                                        <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
-                                                    </label>
-                                                    <label for="room-status" class="mdl-textfield__label">Status Booking</label> --}}
-                                                </div>
+                                                <address-form-component></address-form-component>
                                             </div>
                                         </div>
                                     </div>
@@ -130,7 +111,6 @@
                                     <div class="card-body">
                                         <div class="row">
                                             @foreach ($convenients as $convenient)
-
                                             @if (in_array($convenient['id'],$arrListConvenientsId))
                                             <div style="margin-top:6px;margin-left:0px" class="col-md-4 col-sm-4 col-xs-6">
                                                 <input id="convenient_id_{{ $convenient['id'] }}" type="checkbox" name="convenient_id_{{ $convenient['id'] }}" checked>
@@ -147,7 +127,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="app" class="col-lg-12 p-t-20">
+                            <div class="col-lg-12 p-t-20">
                                 <room-photo-component></room-photo-component>
                             </div>
                             <div class="col-lg-12 p-t-20 text-center">
@@ -167,7 +147,6 @@
 <input id="js_url_path_delete" type="hidden" value="{{ route('delete-image')}}">
 @endsection
 @section('css')
-
 <!-- my style -->
 <link href="{!! asset('css/admin-rooms.css') !!}" rel="stylesheet" media="screen">
 <!-- dropzone -->
@@ -175,7 +154,7 @@
 @endsection
 @section('script')
 <!-- app -->
- <script src="{!! asset('/js/app.js') !!}"></script>
+<script src="{!! asset('/js/app.js') !!}"></script>
 <!-- dropzone -->
 <script src="{!! asset('admin_rooms/plugins/dropzone/dropzone.js') !!}"></script>
 <script src="{!! asset('admin_rooms/plugins/dropzone/dropzone-option.js') !!}"></script>
@@ -183,9 +162,24 @@
 <script src="{!! asset('/ckeditor/ckeditor.js') !!}"></script>
 <script type="text/javascript">
 $(function() {
-    CKEDITOR.instances.description.setData('{{ $room['description'] }}');
-    CKEDITOR.instances.police_and_terms.setData('{{ $room['police_and_terms'] }}');
+    CKEDITOR.instances.description.setData('{{ $room['
+        description '] }}');
+    CKEDITOR.instances.police_and_terms.setData('{{ $room['
+        police_and_terms '] }}');
 });
 
 </script>
 @endsection
+{{-- <select name="room_status_id" id="room-status" class="mdl-textfield__input">
+                                                        @foreach ($statusRoom as $status)
+                                                        @if ($status['name']==$room['statusRoom']['name'])
+                                                        <option selected>{{ $status['name'] }}</option>
+                                                        @else
+                                                        <option>{{ $status['name'] }}</option>
+                                                        @endif
+                                                        @endforeach
+                                                    </select>
+                                                    <label for="room-status" class="pull-right margin-0">
+                                                        <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+                                                    </label>
+                                                    <label for="room-status" class="mdl-textfield__label">Status Booking</label> --}}

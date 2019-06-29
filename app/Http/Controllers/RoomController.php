@@ -21,7 +21,7 @@ class RoomController extends Controller
     }
     public function create()
     {
-        $rooms = $this->roomRepository->getAll();
+        $rooms = $this->roomRepository->getAll()->load('category','address.province');
         return view('admin.rooms', compact('rooms'));
     }
     public function latest()
@@ -58,21 +58,18 @@ class RoomController extends Controller
     }
     public function show($id)
     {
-        $room = $this->roomRepository->findById($id);
+        $room = $this->roomRepository->findById($id)->load('images', 'convenients');
         return view('detail-room', compact('room'));
     }
-    public function getAll()
-    { }
     public function edit($id)
     {
         $categories = $this->categoryRepository->getAll();
         $convenients = Convenient::get();
-        $room = $this->roomRepository->findById($id);
+        $room = $this->roomRepository->findById($id)->load('convenients');
         $AllConvenientsId = $convenients->map(function ($item) {
             return $item['id'];
         });
         $arrListConvenientsId = $AllConvenientsId->all();
-
         return view(
             'admin.room-detail-edit',
             compact(
@@ -86,5 +83,9 @@ class RoomController extends Controller
     public function update(Request $request)
     {
         dd($request);
+    }
+    public function FunctionName(Type $var = null)
+    {
+        # code...
     }
 }

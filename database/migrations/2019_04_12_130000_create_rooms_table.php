@@ -27,7 +27,7 @@ class CreateRoomsTable extends Migration {
 			//relationship
 			$table->foreign('status_booking_id')->references('id')->on('status_bookings')->onDelete('cascade')->onUpdate('cascade'); //1-n
 			$table->foreign('category_id')->references('id')->on('category')->onDelete('cascade')->onUpdate('cascade'); //n-1
-			$table->foreign('address_id')->references('id')->on('address')->onDelete('cascade')->onUpdate('cascade'); //n-1
+			$table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade')->onUpdate('cascade'); //n-1
 		});
 
 		Schema::create('images', function (Blueprint $table) {

@@ -81,8 +81,10 @@
                         <div class="new-post__info col-xs-12">
                             <p class="info__address width-ellipsis">
                                 <i class="fa fa-map-marker"></i>:
-                                {{ formatAddressToString($room->address) }}
-
+                                {{ $room->address->street }}
+                                {{ $room->address->ward->name }}
+                                {{ $room->address->district->name }}
+                                {{ $room->address->province->name }}
                             </p>
                             <p class="info__people">
                                 People number: {{$room['maximum_peoples_number']}}

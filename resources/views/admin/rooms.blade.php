@@ -77,11 +77,11 @@
 										<tr class="odd gradeX">
 	                                        <td class="center">{{ $room->id }}</td>
 	                                        <td class="center">{{ $room->category->name }}</td>
-	                                        <td class="center">{{$room->title }}</td>
-                                            <td class="center">{{ $room->address->city }}</td>
-	                                        <td class="center">{{$room->room_area }}m</td>
-	                                        <td class="center">{{$room->maximum_peoples_number }}</td>
-	                                        <td class="center">{{$room->price }} vnd</td>
+	                                        <td class="center">{{ $room->title }}</td>
+                                            <td class="center">{{ $room->address->province->name }}</td>
+	                                        <td class="center">{{ $room->room_area }}m</td>
+	                                        <td class="center">{{ $room->maximum_peoples_number }}</td>
+	                                        <td class="center">{{ $room->price }} vnd</td>
 
 	                                        <td class="center">
 	                                            <a href="{{ route('room-edit',$room->id) }}" class="btn btn-tbl-edit btn-xs">

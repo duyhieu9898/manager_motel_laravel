@@ -52,3 +52,8 @@ Route::get('/getCurrentUser', function () {
 Route::get('/getListImages/{room_id}', 'ImageController@getListImagesByRoom');
 Route::post('/upload-image/{room_id}', 'ImageController@store')->name('upload-image');
 Route::delete('/delete-image/{image_id?}', 'ImageController@destroy')->name('delete-image');
+Route::get('api/wards/{idDistrict}', 'AddressController@getWardsByDistrict');
+Route::get('api/districts/{idProvince}', 'AddressController@getDistrictsByProvince');
+Route::get('api/provinces', 'AddressController@getProvinces');
+Route::get('api/address/{id}','AddressController@getAddressByRoom');
+Route::put('api/address/{id}','AddressController@updateAddressByRoom');
