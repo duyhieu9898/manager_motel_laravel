@@ -1816,6 +1816,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1830,7 +1842,15 @@ __webpack_require__.r(__webpack_exports__);
       list_provinces: [],
       list_districts: [],
       list_wards: [],
-      hostName: null
+      hostName: null,
+      errors: {
+        address: {
+          street: null,
+          ward: null,
+          district: null,
+          province: null
+        }
+      }
     };
   },
   created: function created() {
@@ -1839,6 +1859,7 @@ __webpack_require__.r(__webpack_exports__);
     this.getListProvinces();
     this.getAddressByRoom();
   },
+  mounted: function mounted() {},
   methods: {
     getAddressByRoom: function getAddressByRoom() {
       var _this = this;
@@ -1850,7 +1871,7 @@ __webpack_require__.r(__webpack_exports__);
         console.error(err);
       });
     },
-    updateAddressByRoom: function updateAddressByRoom() {
+    updateAddressThisRoom: function updateAddressThisRoom() {
       var _this2 = this;
 
       axios.put(this.hostName + '/api/address/' + this.room_id, {
@@ -1892,6 +1913,41 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         console.error(err);
       });
+    },
+    checkAddress: function checkAddress() {
+      //reset error
+      this.errors.address.street = null;
+      this.errors.address.ward = null;
+      this.errors.address.district = null;
+      this.errors.address.province = null;
+
+      if (this.address.street === '') {
+        this.errors.address.street = "Please enter Street.";
+      }
+
+      if (this.address.ward === 'Chose Ward') {
+        this.errors.address.ward = "Please choose Ward";
+      }
+
+      if (this.address.district === 'Chose District') {
+        this.errors.address.district = "Please choose District.";
+      }
+
+      if (this.address.province === 'Chose Province') {
+        this.errors.address.province = "Please choose Province.";
+      }
+
+      if (this.errors.address.street === null && this.errors.address.province === null && this.errors.address.district === null && this.errors.address.ward === null) {
+        return true;
+      }
+
+      return false;
+    },
+    middewareAddress: function middewareAddress() {
+      if (this.checkAddress()) {
+        this.updateAddressThisRoom();
+        $('#adddress--model__edit').modal('hide');
+      }
     }
   },
   computed: {
@@ -1900,18 +1956,40 @@ __webpack_require__.r(__webpack_exports__);
     },
     getDistrict: function getDistrict() {
       return this.address.district;
+    },
+    getWard: function getWard() {
+      return this.address.ward;
+    },
+    getStreet: function getStreet() {
+      return this.address.street;
     }
   },
   watch: {
     getProvince: function getProvince() {
-      this.getListDistrictsByProvince(this.address.province.id); //reset value select default
+      if (this.address.province !== "Chose Province") {
+        this.errors.address.province = null;
+        this.getListDistrictsByProvince(this.address.province.id); //reset value select default
 
-      this.address.district = 'Chose District';
+        this.address.district = 'Chose District';
+      }
     },
     getDistrict: function getDistrict() {
-      this.getListWardsByDistrict(this.address.district.id); //reset value select default
+      if (this.address.district !== "Chose Province") {
+        this.errors.address.district = null;
+        this.getListWardsByDistrict(this.address.district.id); //reset value select default
 
-      this.address.ward = 'Chose Ward';
+        this.address.ward = 'Chose Ward';
+      }
+    },
+    getWard: function getWard() {
+      if (this.address.ward !== "Chose Ward") {
+        this.errors.address.ward = null;
+      }
+    },
+    getStreet: function getStreet() {
+      if (this.address.street !== "Chose Province") {
+        this.errors.address.street = null;
+      }
     }
   }
 });
@@ -2317,6 +2395,25 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 // module
 exports.push([module.i, ".errors-create-user > p[data-v-d884f594] {\n  color: red;\n}\n.user-management[data-v-d884f594] {\n  margin-top: 100px;\n  margin-bottom: 200px;\n}", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AddressForm.vue?vue&type=style&index=0&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AddressForm.vue?vue&type=style&index=0&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.errors>p{\n    margin:0 !important;\n    color:#DC3545;\n    font-size:14px\n}\n", ""]);
 
 // exports
 
@@ -19976,6 +20073,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AddressForm.vue?vue&type=style&index=0&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AddressForm.vue?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./AddressForm.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AddressForm.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/lib/addStyles.js":
 /*!****************************************************!*\
   !*** ./node_modules/style-loader/lib/addStyles.js ***!
@@ -20597,7 +20724,7 @@ var render = function() {
         attrs: {
           readonly: "",
           "data-toggle": "modal",
-          "data-target": "#dddress--model__edit"
+          "data-target": "#adddress--model__edit"
         },
         domProps: { value: _vm.current_address },
         on: {
@@ -20615,7 +20742,7 @@ var render = function() {
         {
           staticClass: "modal fade",
           attrs: {
-            id: "dddress--model__edit",
+            id: "adddress--model__edit",
             tabindex: "-1",
             role: "dialog",
             "aria-labelledby": "modalLongTitle",
@@ -20656,7 +20783,13 @@ var render = function() {
                             _vm.$set(_vm.address, "street", $event.target.value)
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.address.street != null
+                        ? _c("div", { staticClass: "errors" }, [
+                            _c("p", [_vm._v(_vm._s(_vm.errors.address.street))])
+                          ])
+                        : _vm._e()
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-8 form-group" }, [
@@ -20709,7 +20842,15 @@ var render = function() {
                           })
                         ],
                         2
-                      )
+                      ),
+                      _vm._v(" "),
+                      _vm.errors.address.province != null
+                        ? _c("div", { staticClass: "errors" }, [
+                            _c("p", [
+                              _vm._v(_vm._s(_vm.errors.address.province))
+                            ])
+                          ])
+                        : _vm._e()
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-8 form-group" }, [
@@ -20762,7 +20903,15 @@ var render = function() {
                           })
                         ],
                         2
-                      )
+                      ),
+                      _vm._v(" "),
+                      _vm.errors.address.district != null
+                        ? _c("div", { staticClass: "errors" }, [
+                            _c("p", [
+                              _vm._v(_vm._s(_vm.errors.address.district))
+                            ])
+                          ])
+                        : _vm._e()
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-8 form-group" }, [
@@ -20815,7 +20964,13 @@ var render = function() {
                           })
                         ],
                         2
-                      )
+                      ),
+                      _vm._v(" "),
+                      _vm.errors.address.ward != null
+                        ? _c("div", { staticClass: "errors" }, [
+                            _c("p", [_vm._v(_vm._s(_vm.errors.address.ward))])
+                          ])
+                        : _vm._e()
                     ])
                   ]),
                   _vm._v(" "),
@@ -20834,10 +20989,10 @@ var render = function() {
                         "button",
                         {
                           staticClass: "btn  btn-primary",
-                          attrs: { type: "button", "data-dismiss": "modal" },
+                          attrs: { type: "button" },
                           on: {
                             click: function($event) {
-                              return _vm.updateAddressByRoom()
+                              return _vm.middewareAddress()
                             }
                           }
                         },
@@ -33742,7 +33897,9 @@ if (token) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AddressForm_vue_vue_type_template_id_00905c86___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AddressForm.vue?vue&type=template&id=00905c86& */ "./resources/js/components/AddressForm.vue?vue&type=template&id=00905c86&");
 /* harmony import */ var _AddressForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddressForm.vue?vue&type=script&lang=js& */ "./resources/js/components/AddressForm.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _AddressForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AddressForm.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/AddressForm.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -33750,7 +33907,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _AddressForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _AddressForm_vue_vue_type_template_id_00905c86___WEBPACK_IMPORTED_MODULE_0__["render"],
   _AddressForm_vue_vue_type_template_id_00905c86___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -33779,6 +33936,22 @@ component.options.__file = "resources/js/components/AddressForm.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddressForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./AddressForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AddressForm.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddressForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/AddressForm.vue?vue&type=style&index=0&lang=css&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/AddressForm.vue?vue&type=style&index=0&lang=css& ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AddressForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--5-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--5-2!../../../node_modules/vue-loader/lib??vue-loader-options!./AddressForm.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AddressForm.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AddressForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AddressForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AddressForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AddressForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AddressForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
