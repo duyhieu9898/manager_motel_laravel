@@ -66,7 +66,6 @@ class AddressController extends Controller
             return response()->json($stdAddress, 200);
         }
         return response(400);
-
     }
     /**
      * Update address of the room by room id

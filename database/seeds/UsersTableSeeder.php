@@ -4,13 +4,15 @@ use App\Role;
 use App\User;
 use Illuminate\Database\Seeder;
 
-class UsersTableSeeder extends Seeder {
+class UsersTableSeeder extends Seeder
+{
     /**
      * Run the database seeds.
      *
      * @return void
      */
-    public function run() {
+    public function run()
+    {
         //
         $role_customer = Role::where('name', 'customer')->first();
         $role_owner = Role::where('name', 'owner')->first();
