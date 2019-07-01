@@ -12,6 +12,6 @@ class Province extends Model
 
     public function addresses()
     {
-        return $this->hasMany(Ward::class,'id','province_id');
+        return $this->hasMany(Ward::class, 'id', 'province_id');
     }
 }

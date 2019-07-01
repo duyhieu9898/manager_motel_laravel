@@ -13,6 +13,6 @@ class Ward extends Model
 
     public function addresses()
     {
-        return $this->hasMany(Ward::class,'id','ward_id');
+        return $this->hasMany(Ward::class, 'id', 'ward_id');
     }
 }

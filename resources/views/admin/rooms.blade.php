@@ -84,7 +84,7 @@
 	                                        <td class="center">{{ $room->price }} vnd</td>
 
 	                                        <td class="center">
-	                                            <a href="{{ route('room-edit',$room->id) }}" class="btn btn-tbl-edit btn-xs">
+	                                            <a href="{{ route('room_edit',$room->id) }}" class="btn btn-tbl-edit btn-xs">
 	                                                <i class="fa fa-pencil"></i>
 	                                            </a>
 	                                            <a class="btn btn-tbl-delete btn-xs">

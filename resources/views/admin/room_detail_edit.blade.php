@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="card-body ">
-                        <form class='row' method='POST' action="{{ route('room-update',$room['id'] )}}">
+                        <form class='row' method='POST' action="{{ route('room_update',$room['id'] )}}">
                             @csrf @method('PUT')
                             <div class="col-lg-12 p-t-20">
                                 <div class="card-box">
@@ -143,8 +143,8 @@
 </div>
 <!--passing data-->
 <input id="js_room_id" type="hidden" value="{{ $room['id'] }}">
-<input id="js_url_path_upload" type="hidden" value="{{ route('upload-image', $room['id'])}}">
-<input id="js_url_path_delete" type="hidden" value="{{ route('delete-image')}}">
+<input id="js_url_path_upload" type="hidden" value="{{ route('upload_image', $room['id'])}}">
+<input id="js_url_path_delete" type="hidden" value="{{ route('delete_image')}}">
 @endsection
 @section('css')
 <!-- my style -->
@@ -155,17 +155,15 @@
 @section('script')
 <!-- app -->
 <script src="{!! asset('/js/app.js') !!}"></script>
-<!-- dropzone -->
+{{-- {{-- <!-- dropzone -->
 <script src="{!! asset('admin_rooms/plugins/dropzone/dropzone.js') !!}"></script>
-<script src="{!! asset('admin_rooms/plugins/dropzone/dropzone-option.js') !!}"></script>
-<!-- ckeditor -->
+<script src="{!! asset('admin_rooms/plugins/dropzone/dropzone-option.js') !!}"></script> --}}
+<!-- ckeditor --> --}}
 <script src="{!! asset('/ckeditor/ckeditor.js') !!}"></script>
 <script type="text/javascript">
 $(function() {
-    CKEDITOR.instances.description.setData('{{ $room['
-        description '] }}');
-    CKEDITOR.instances.police_and_terms.setData('{{ $room['
-        police_and_terms '] }}');
+    CKEDITOR.instances.description.setData('{{ $room['description'] }}');
+    CKEDITOR.instances.police_and_terms.setData('{{ $room['police_and_terms'] }}');
 });
 
 </script>

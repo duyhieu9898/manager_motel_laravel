@@ -105,10 +105,12 @@ class UserController extends Controller
 
         $this->userRepository->updateById($id, $dataUser['name'], $dataUser['email'], $dataUser['role']);
 
-        return response([
-            'result' => 'success',
-            'role_id' => $dataUser['roles'],
-        ], 200);
+        return response(
+            [
+                'result' => 'success',
+                'role_id' => $dataUser['roles'],
+            ], 200
+        );
     }
 
     /**
@@ -120,8 +122,10 @@ class UserController extends Controller
     public function destroy($id)
     {
         $this->userRepository->deleteById($id);
-        return response([
+        return response(
+            [
             'result' => 'success',
-        ], 200);
+            ], 200
+        );
     }
 }

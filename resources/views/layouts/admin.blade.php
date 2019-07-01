@@ -364,21 +364,21 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item active">
+                            <li class="nav-item">
                                 <a href="#" class="nav-link nav-toggle">
                                     <i class="material-icons">vpn_key</i>
                                     <span class="title">Rooms</span>
                                     <span class="selected"></span>
-                                    <span class="arrow open"></span>
+                                    <span class="arrow"></span>
                                 </a>
-                                <ul class="sub-menu">
+                                <ul class="sub-menu" style="display: none;">
                                     <li class="nav-item">
                                         <a href="add_room.html" class="nav-link ">
                                             <span class="title">Add Room Details</span>
                                         </a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a href="{{ route('all-rooms') }}" class="nav-link ">
+                                        <a href="http://localhost:8080/admin/rooms" class="nav-link ">
                                             <span class="title">View All Rooms</span>
                                             <span class="selected"></span>
                                         </a>

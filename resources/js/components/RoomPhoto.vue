@@ -88,7 +88,7 @@ export default {
   methods: {
     getListImages() {
       axios
-        .get("/getListImages/" + this.roomId)
+        .get("/api/list-images/" + this.roomId)
         .then(response => {
           this.listImages = response.data;
         })
@@ -98,7 +98,7 @@ export default {
     },
     deleteImage(imageId, index) {
       axios
-        .delete(this.hostName + "/delete-image/" + imageId)
+        .delete(this.hostName + "/api/delete-image/" + imageId)
         .then(res => {
           this.listImages.splice(index, 1);
           console.log(res);
@@ -113,3 +113,11 @@ export default {
   }
 };
 </script>
+<style>
+    .image--remove{
+        color: #337ab7 !important;
+    }
+    .image--remove:hover{
+        text-decoration:underline !important;
+    }
+</style>

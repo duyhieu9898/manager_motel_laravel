@@ -5,7 +5,6 @@ namespace App\Repositories\Category;
 use App\Category;
 use App\Repositories\BaseRepository;
 
-
 class CategoryRepository extends BaseRepository implements CategoryRepositoryInterface
 {
     /**
@@ -25,9 +24,8 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
 
     public function getNewRoomsOfCategory($categories)
     {
-        foreach($categories as $category)
-        {
-            $rooms[] = Category::ofName( $category['name'])->first()->load(
+        foreach ($categories as $category) {
+            $rooms[] = Category::ofName($category['name'])->first()->load(
                 [
                     'rooms' => function ($query) {
                         $query->limit(3);

@@ -23,6 +23,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('user-component', require('./components/User.vue').default);
 Vue.component('room-photo-component', require('./components/RoomPhoto.vue').default);
 Vue.component('address-form-component', require('./components/AddressForm.vue').default);
+Vue.component('admin-page-component', require('./components/AdminPage.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
