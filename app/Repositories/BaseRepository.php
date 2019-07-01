@@ -39,4 +39,3 @@ class BaseRepository implements RepositoryInterface
         return $this->model::findOrFail($id);
     }
 }
-

@@ -3,13 +3,15 @@
 use App\Category;
 use Illuminate\Database\Seeder;
 
-class CategoryTableSeeder extends Seeder {
+class CategoryTableSeeder extends Seeder
+{
     /**
      * Run the database seeds.
      *
      * @return void
      */
-    public function run() {
+    public function run()
+    {
         //
         $motel = new Category();
         $motel->id = 1;

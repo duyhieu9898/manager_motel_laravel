@@ -35,7 +35,6 @@ class LoginController extends Controller
                 'name' => 'Tên',
                 'password' => 'Mật khẩu',
             ]
-
         );
         if ($validate->fails()) {
             return redirect()->back()

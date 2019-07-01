@@ -4,13 +4,15 @@ use App\Room;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class RoomsTableSeeder extends Seeder {
+class RoomsTableSeeder extends Seeder
+{
     /**
      * Run the database seeds.
      *
      * @return void
      */
-    public function run() {
+    public function run()
+    {
         //
         $listIdConvenient = DB::table('convenients')->pluck('id');
         $room = new Room();
