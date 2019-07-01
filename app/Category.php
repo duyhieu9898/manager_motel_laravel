@@ -22,6 +22,7 @@ class Category extends Model
  * @param string $name
  *  return instance query builder
  */
+
     public function scopeOfName($query, $name)
     {
         return $query->where('name', $name);
