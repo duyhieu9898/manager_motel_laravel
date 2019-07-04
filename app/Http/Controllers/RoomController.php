@@ -22,7 +22,7 @@ class RoomController extends Controller
     public function create()
     {
         $rooms = $this->roomRepository->getAll()->load('category', 'address.province');
-        return view('admin.rooms', compact('rooms'));
+        return response()->json($rooms);
     }
     public function latest()
     {
@@ -70,15 +70,13 @@ class RoomController extends Controller
             return $item['id'];
         });
         $arrListConvenientsId = $AllConvenientsId->all();
-        return view(
-            'admin.room_detail_edit',
-            compact(
-                'room',
-                'categories',
-                'convenients',
-                'arrListConvenientsId'
-            )
-        );
+        $arrData=[
+            'room' => $room,
+            'categories' => $categories,
+            'convenients' => $convenients,
+            'arrListConvenientsId' => $arrListConvenientsId,
+        ];
+        return response()->json($arrData);
     }
     public function update(Request $request)
     {

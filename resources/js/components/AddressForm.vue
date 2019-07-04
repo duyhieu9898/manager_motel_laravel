@@ -11,7 +11,6 @@
                         </button>
                     </div>
                     <div class="modal-body">
-
                         <div class="row justify-content-center">
                              <div class="col-8 form-group">
                                  <input class="form-control" type="text" v-model="address.street" placeholder="enter Street">
@@ -46,7 +45,6 @@
                                      <p>{{ errors.address.ward }}</p>
                                  </div>
                             </div>
-
                         </div>
                         <div class="modal-footer">
                             <div>
@@ -65,9 +63,13 @@
 
 <script>
     export default {
+        props: {
+            room_id: {
+                type: Number
+            }
+        },
         data() {
             return {
-                room_id:'',
                 address: {
                     street:'',
                     ward: 'Chose Ward',
@@ -78,7 +80,7 @@
                 list_provinces: [],
                 list_districts: [],
                 list_wards: [],
-                hostName: null,
+                host_name: null,
                 errors:{
                     address: {
                         street:null,
@@ -90,18 +92,14 @@
             };
         },
         created() {
-            this.hostName = window.location.origin;
-            this.room_id=document.getElementById('js_room_id').value;
+            this.host_name = window.location.origin;
             this.getListProvinces();
             this.getAddressByRoom();
-        },
-        mounted(){
-            
         },
         methods: {
             getAddressByRoom(){
                 axios
-                    .get(this.hostName + '/api/address/' + this.room_id)
+                    .get(this.host_name + '/api/address/' + this.room_id)
                     .then(res => {
                         this.current_address = res.data;
                         this.$forceUpdate;
@@ -112,7 +110,7 @@
             },
             updateAddressThisRoom(){
                 axios
-                    .put(this.hostName + '/api/address/' + this.room_id,{address:this.address})
+                    .put(this.host_name + '/api/address/' + this.room_id,{address:this.address})
                     .then(res => {
                         this.getAddressByRoom();
                         console.log(res);
@@ -123,7 +121,7 @@
             },
             getListWardsByDistrict(disttictId) {
                 axios
-                    .get(this.hostName + '/api/wards/' + disttictId)
+                    .get(this.host_name + '/api/wards/' + disttictId)
                     .then(res => {
                         this.list_wards = res.data;
                         this.$forceUpdate;
@@ -135,7 +133,7 @@
             },
             getListDistrictsByProvince(provinceId) {
                 axios
-                    .get(this.hostName + '/api/districts/' + provinceId)
+                    .get(this.host_name + '/api/districts/' + provinceId)
                     .then(res => {
                         this.list_districts = res.data;
                         this.$forceUpdate();
@@ -146,7 +144,7 @@
             },
             getListProvinces() {
                 axios
-                    .get(this.hostName + '/api/provinces')
+                    .get(this.host_name + '/api/provinces')
                     .then(res => {
                         this.list_provinces = res.data;
                     })
@@ -187,7 +185,7 @@
         },
         computed: {
             getProvince() {
-                return this.address.province; 
+                return this.address.province;
             },
             getDistrict() {
                 return this.address.district;
@@ -207,7 +205,7 @@
                     //reset value select default
                     this.address.district= 'Chose District';
                 }
-                
+
             },
             getDistrict() {
                 if(this.address.district!=="Chose Province"){

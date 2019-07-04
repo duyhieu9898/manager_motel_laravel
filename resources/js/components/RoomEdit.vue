@@ -1,6 +1,6 @@
-@extends('../layouts.admin')
-@section('content-page')
-<div class="page-bar">
+<template>
+<div class="page-content">
+    <div class="page-bar">
         <div class="page-title-breadcrumb">
             <div class=" pull-left">
                 <div class="page-title">Edit Room Details</div>
@@ -18,7 +18,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-head">
-                    <header>Room No {{ $room['id'] }}</header>
+                    <header>Room No {{ data.room.id }}</header>
                     <div class="mdl-menu__container is-upgraded">
                         <div class="mdl-menu__outline mdl-menu--bottom-right"></div>
                         <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events" data-mdl-for="panel-button" data-upgraded=",MaterialMenu,MaterialRipple">
@@ -32,8 +32,6 @@
                     </div>
                 </div>
                 <div class="card-body ">
-                    <form class='row' method='POST' action="{{ route('room_update',$room['id'] )}}">
-                        @csrf @method('PUT')
                         <div class="col-lg-12 p-t-20">
                             <div class="card-box">
                                 <div class="card-header">Room Infomation</div>
@@ -41,14 +39,10 @@
                                     <div class="row">
                                         <div class="col-lg-6 p-t-20">
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height txt-full-width is-dirty is-upgraded" data-upgraded=",MaterialTextfield" style="width: 124px;">
-                                                <select name="category_id" id="category-room" class="mdl-textfield__input">
-                                                    @foreach ($categories as $category)
-                                                    @if ($category['name']==$room['category']['name'])
-                                                    <option selected>{{ $category['name'] }}</option>
-                                                    @else
-                                                    <option>{{ $category['name'] }}</option>
-                                                    @endif
-                                                    @endforeach
+                                                <select   name="category_id" id="category-room" class="mdl-textfield__input">
+                                                    <!-- v-if="" -->
+                                                    <option  v-model="dataRoomEdit.category" v-for="category in data.categories" v-if="category.id==data.room.category_id" :key="category.id" checked>{{ category.name }}</option>
+                                                    <option v-model="dataRoomEdit.category" v-for="category in data.categories" v-if="category.id!=data.room.category_id" :key="category.id">{{ category.name }}</option>
                                                 </select>
                                                 <label for="category-room" class="pull-right margin-0">
                                                     <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
@@ -58,30 +52,30 @@
                                         </div>
                                         <div class="col-lg-6 p-t-20">
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width is-dirty is-upgraded" data-upgraded=",MaterialTextfield">
-                                                <input name="room_title" class="mdl-textfield__input" type="text" value="{{ $room['title'] }}">
+                                                <input name="room_title" class="mdl-textfield__input" type="text" v-model="dataRoomEdit.title">
                                                 <label class="mdl-textfield__label">Room Title</label>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 p-t-20">
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width is-dirty is-upgraded" data-upgraded=",MaterialTextfield">
-                                                <input name="room_area" class="mdl-textfield__input" type="text" value="{{ $room['room_area'] }}">
+                                                <input name="room_area" class="mdl-textfield__input" type="text" v-model="dataRoomEdit.area">
                                                 <label class="mdl-textfield__label">Room Area</label>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 p-t-20">
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width is-dirty is-upgraded" data-upgraded=",MaterialTextfield">
-                                                <input name="maximum_peoples_number" class="mdl-textfield__input" type="text" value="{{ $room['maximum_peoples_number'] }}">
+                                                <input name="maximum_peoples_number" class="mdl-textfield__input" type="text" v-model="dataRoomEdit.peoples">
                                                 <label class="mdl-textfield__label">Room People</label>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 p-t-20">
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width is-dirty is-upgraded" data-upgraded=",MaterialTextfield">
-                                                <input name="room_price" class="mdl-textfield__input" type="text" value="{{ $room['price'] }}">
-                                                <label class="mdl-textfield__label">Room Rent</label>
+                                                <input name="room_price" class="mdl-textfield__input" type="text" v-model="dataRoomEdit.price">
+                                                <label class="mdl-textfield__label">Room Price</label>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 p-t-20">
-                                            <address-form-component></address-form-component>
+                                            <address-form-component :room_id="data.room.id"></address-form-component>
                                         </div>
                                     </div>
                                 </div>
@@ -91,7 +85,7 @@
                             <div class="card-box">
                                 <div class="card-header">Room Description</div>
                                 <div class="">
-                                    <textarea name="description" class="ckeditor mdl-textfield__input" id="description" cols="30" rows="4"></textarea>
+                                    <ckeditor :editor="editor" v-model="dataRoomEdit.description" :config="editorConfig"></ckeditor>
                                 </div>
                             </div>
                         </div>
@@ -99,7 +93,7 @@
                             <div class="card-box">
                                 <div class="card-header">Room Police And Term</div>
                                 <div class="">
-                                    <textarea name="police_and_terms" class="ckeditor" id="police_and_terms"></textarea>
+                                    <ckeditor :editor="editor" v-model="dataRoomEdit.policeAndTerms" :config="editorConfig" ></ckeditor>
                                 </div>
                             </div>
                         </div>
@@ -108,51 +102,104 @@
                                 <div class="card-header">Room Convenients</div>
                                 <div class="card-body">
                                     <div class="row">
-                                        @foreach ($convenients as $convenient)
-                                        @if (in_array($convenient['id'],$arrListConvenientsId))
-                                        <div style="margin-top:6px;margin-left:0px" class="col-md-4 col-sm-4 col-xs-6">
-                                            <input id="convenient_id_{{ $convenient['id'] }}" type="checkbox" name="convenient_id_{{ $convenient['id'] }}" checked>
-                                            <label for="convenient_id_{{ $convenient['id'] }}" class="text-left go-text-right size14">{{$convenient['name'] }}</label>
-                                        </div>
-                                        @else
-                                        <div style="margin-top:6px;margin-left:0px" class="col-md-4 col-sm-4 col-xs-6">
-                                            <input id="convenient_id_{{ $convenient['id'] }}" type="checkbox" name="convenient_id_{{ $convenient['id'] }}">
-                                            <label for="convenient_id_{{ $convenient['id'] }}" class="text-left go-text-right size14">{{$convenient['name'] }}</label>
-                                        </div>
-                                        @endif
-                                        @endforeach
+                                        <convenients-form-component
+                                            :convenients="data.convenients"
+                                            :convenients_room="data.arrListConvenientsId"
+                                            @convenients_edit="convenients_edit"
+                                            ></convenients-form-component>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-12 p-t-20">
-                            <room-photo-component></room-photo-component>
+                            <room-photo-component :room_id="data.room.id"></room-photo-component>
                         </div>
                         <div class="col-lg-12 p-t-20 text-center">
                             <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink" data-upgraded=",MaterialButton,MaterialRipple">Submit<span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></button>
                             <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-default" data-upgraded=",MaterialButton,MaterialRipple">Cancel<span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></button>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
-<!--passing data-->
-<input id="js_room_id" type="hidden" value="{{ $room['id'] }}">
-<input id="js_url_path_upload" type="hidden" value="{{ route('upload_image', $room['id'])}}">
-<input id="js_url_path_delete" type="hidden" value="{{ route('delete_image')}}">
-@endsection
+</div>
 
-{{-- <select name="room_status_id" id="room-status" class="mdl-textfield__input">
-                                                        @foreach ($statusRoom as $status)
-                                                        @if ($status['name']==$room['statusRoom']['name'])
-                                                        <option selected>{{ $status['name'] }}</option>
-                                                        @else
-                                                        <option>{{ $status['name'] }}</option>
-                                                        @endif
-                                                        @endforeach
-                                                    </select>
-                                                    <label for="room-status" class="pull-right margin-0">
-                                                        <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
-                                                    </label>
-                                                    <label for="room-status" class="mdl-textfield__label">Status Booking</label> --}}
+</template>
+
+
+<script>
+var Dropzone = require("dropzone");
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+export default {
+    data() {
+        return {
+            editor: ClassicEditor,
+            editorConfig: {},
+            data:{},
+            dataRoomEdit:{
+                category:{
+                    id:0
+                },
+                title:'',
+                area:0,
+                peoples:0,
+                price:0,
+                description:'',
+                policeAndTerms:'',
+                list_convenients_id:[],
+            },
+            hostName: '',
+        }
+    },
+    created(){
+        this.hostName = window.location.origin;
+        this.roomId = this.$route.params.id;
+        this.getRoom(this.roomId);
+    },
+    methods: {
+        getRoom(roomId) {
+        axios
+            .get(this.hostName + `/api/rooms/${roomId}/edit`)
+            .then(response => {
+                this.data = response.data;
+                this.dataRoomEdit.category.id = this.data.room.category_id;
+                this.dataRoomEdit.title = this.data.room.title;
+                this.dataRoomEdit.area = this.data.room.room_area;
+                this.dataRoomEdit.peoples = this.data.room.maximum_peoples_number;
+                this.dataRoomEdit.price = this.data.room.price;
+                this.dataRoomEdit.description=this.data.room.description;
+                this.dataRoomEdit.policeAndTerms=this.data.room.police_and_terms;
+                this.dataRoomEdit.description=this.data.room.description;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        },
+        convenients_edit(arrConvenients){
+            this.dataRoomEdit.list_convenients_id=arrConvenients;
+        }
+    },
+}
+
+</script>
+<style>
+@import '../../../public/admin_rooms/plugins/dropzone/dropzone.css';
+.image-room {
+    border-radius: 5px;
+    overflow: hidden;
+    height: 242px;
+    position: relative;
+    border: 2px solid #c7b78c;
+}
+
+.image-room img {
+    max-width: 100%;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+</style>

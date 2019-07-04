@@ -33,7 +33,7 @@
                     <div class="dz-message">
                       <div class="dropIcon">
                         <i class="material-icons">cloud_upload</i>
-                        <input type="file" multiple>
+                        <input type="file" multiple style="display:none">
                       </div>
                       <h3>Drop files here or click to upload.</h3>
                     </div>
@@ -57,7 +57,7 @@
       <div class="row">
         <div
           class="col-sm-4 text-sm-center"
-          v-for="(image, index) in listImages"
+          v-for="(image, index) in list_images"
           v-bind:key="image.id"
         >
           <div class="image-room">
@@ -71,46 +71,93 @@
 </template>
 
 <script>
+
 export default {
-  data() {
-    return {
-      listImages: [],
-      roomId: null,
-      hostName: null
-    };
-  },
-  created() {
-    this.roomId = document.getElementById("js_room_id").value;
-    this.getListImages();
-    this.hostName = window.location.origin;
-    console.log(this.hostname);
-  },
-  methods: {
-    getListImages() {
-      axios
-        .get("/api/list-images/" + this.roomId)
-        .then(response => {
-          this.listImages = response.data;
-        })
-        .catch(error => {
-          console.error(error);
+    props: {
+            room_id: {
+                type: Number
+            }
+        },
+    data() {
+        return {
+        list_images: [],
+        host_name: null
+        };
+    },
+    created() {
+        this.host_name = window.location.origin;
+        this.getListImages();
+
+    },
+    mounted(){
+        const URL_PATH_UPLOAD = "/api/upload-image/"+this.room_id;
+        var photo_counter = 0;
+
+        var myDropzone = new Dropzone("#id_dropzone", {
+            url: URL_PATH_UPLOAD,
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name = "csrf-token"]').attr("content")
+            },
+            parallelUploads: 100,
+            maxFiles: 1,
+            maxFilesize: 5,
+            acceptedFiles: ".jpeg,.jpg,.png,.gif",
+            dictRemoveFile: "Remove",
+            dictFileTooBig: "Image is bigger than 5MB",
+            paramName: "file",
+            // The setting up of the dropzone
+
+            init: function() {},
+            error: function(file, response) {
+                if ($.type(response) === "string") var message = response;
+                //dropzone sends it's own error messages in string
+                else var message = response.message;
+
+                file.previewElement.classList.add("dz-error");
+                _ref = file.previewElement.querySelectorAll(
+                    "[data-dz-errormessage]"
+                );
+                _results = [];
+                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                    node = _ref[_i];
+                    _results.push((node.textContent = message));
+                }
+                console.log(_results);
+                return _results;
+            },
+            success: function(file, res) {
+                console.log(res);
+                $("#debug").html(res);
+                photo_counter++;
+                $("#photoCounter").text("(" + photo_counter + ")");
+            }
         });
     },
-    deleteImage(imageId, index) {
-      axios
-        .delete(this.hostName + "/api/delete-image/" + imageId)
-        .then(res => {
-          this.listImages.splice(index, 1);
-          console.log(res);
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    },
-    asset(fileName) {
-      return this.hostName + "/" + fileName;
+    methods: {
+        getListImages() {
+        axios
+            .get(this.host_name +"/api/list-images/" + this.room_id)
+            .then(response => {
+            this.list_images = response.data;
+            })
+            .catch(error => {
+            console.error(error);
+            });
+        },
+        deleteImage(imageId, index) {
+        axios
+            .delete(this.host_name + "/api/delete-image/" + imageId)
+            .then(res => {
+                this.list_images.splice(index, 1);;
+            })
+            .catch(err => {
+            console.error(err);
+            });
+        },
+        asset(fileName) {
+        return this.host_name + "/" + fileName;
+        }
     }
-  }
 };
 </script>
 <style>
