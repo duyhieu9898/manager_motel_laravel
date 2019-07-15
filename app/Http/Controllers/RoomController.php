@@ -99,7 +99,13 @@ class RoomController extends Controller
             return response('success', 204);
         }
     }
+    public function category(int $id)
+    {
+        $category=$this->categoryRepository->getRoomByCategoryId($id);
+        $listRooms=$category->rooms;
+        return view('category_rooms', compact('listRooms'));
 
+    }
     public function sendEmail()
     {
         Mail::send('home', ['user' => "hieu"], function ($m) {

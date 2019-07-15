@@ -49,8 +49,8 @@ class ImageRepository extends BaseRepository implements ImageRepositoryInterface
 
         $sessionImage = new Image;
         $sessionImage->original_name = $originalName;
-        $sessionImage->slug          = $path . Config::get('images.icon_size') . $filenameExt;
-        $sessionImage->file_name     = $path . Config::get('images.full_size') . $filenameExt;
+        $sessionImage->slug          = '/'.$path . Config::get('images.icon_size') . $filenameExt;
+        $sessionImage->file_name     = '/'.$path . Config::get('images.full_size') . $filenameExt;
         if ($roomId) {
             $sessionImage->room_id = $roomId;
         }
@@ -62,7 +62,7 @@ class ImageRepository extends BaseRepository implements ImageRepositoryInterface
         ], 200);
     }
 
-    public function deleteById($imageId)
+    public function deleteById(int $imageId)
     {
         $image = $this->model::find($imageId);
         $full_path = $image->file_name;
@@ -112,8 +112,16 @@ class ImageRepository extends BaseRepository implements ImageRepositoryInterface
         return ($force_lowercase) ? (function_exists('mb_strtolower')) ?
             mb_strtolower($clean, 'UTF-8') : strtolower($clean) : $clean;
     }
-    public function getListImagesByRoom($roomId)
+    public function getListImagesByRoom(int $roomId)
     {
         return $this->model::where('Room_id', $roomId)->get();
+    }
+    public function setImagesToRoom(array $arrImagesId, int $roomId)
+    {
+        foreach ($arrImagesId as $imageId) {
+            $image = $this->model::findOrFail($imageId);
+            $image->room_id=$roomId;
+            $image->save();
+        }
     }
 }

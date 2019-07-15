@@ -67,31 +67,31 @@
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 block-footer">
                             <h4>Trụ sở chính:</h4>
                             <ul>
-                                <li><i class="fa fa-map-marker"></i> 34 Âu Cơ, Hòa Khánh Bắc,Liên Chiểu, TP Đà Nẵng,Hòa Khánh Bắc,Liên Chiểu, TP Đà Nẵng</li>
-                                <li><i class="fa fa-phone"></i> Điện thoại: 0999 999 999</li>
-                                <li><i class="fa fa-envelope-o"></i> Gmail: nguyenvana@gmail.com</li>
+                                <li><i class="fa fa-map-marker"></i> 169 Đường 32,Liên Mạc, Bắc Từ Liêm, TP Hà Nội</li>
+                                <li><i class="fa fa-phone"></i> Điện thoại: 0366 025 756</li>
+                                <li><i class="fa fa-envelope-o"></i> Gmail: duyhieu9898@gmail.com</li>
                             </ul>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 block-footer">
-                            <h4>Chi nhánh Đà Nẵng</h4>
+                            <h4>Chi nhánh Hà Nội</h4>
                             <ul>
-                                <li><i class="fa fa-map-marker"></i> 34 Âu Cơ, Hòa Khánh Bắc,Liên Chiểu, TP Đà Nẵng,Hòa Khánh Bắc,Liên Chiểu, TP Đà Nẵng</li>
-                                <li><i class="fa fa-phone"></i> Điện thoại: 099 999 999</li>
-                                <li><i class="fa fa-envelope-o"></i> Gmail: nguyenvana@gmail.com</li>
+                                <li><i class="fa fa-map-marker"></i> 169 Đường 32,Liên Mạc, Bắc Từ Liêm, TP Hà Nội</li>
+                                <li><i class="fa fa-phone"></i> Điện thoại: 0366 025 756</li>
+                                <li><i class="fa fa-envelope-o"></i> Gmail: duyhieu9898@gmail.com</li>
                             </ul>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 block-footer">
                             <h4>Fanpages của chúng tôi</h4>
                             <div class="fb-page" data-href="https://www.facebook.com/thuephongtro.vn//" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
-                                <blockquote cite="https://www.facebook.com/Ducpho1998/" class="fb-xfbml-parse-ignore">
-                                    <a href="https://www.facebook.com/Ducpho1998/">Thuê Phòng Trọ</a>
+                                <blockquote cite="https://www.facebook.com/duyhieu9889/" class="fb-xfbml-parse-ignore">
+                                    <a href="https://www.facebook.com/duyhieu9889/">Thuê Phòng Trọ</a>
                                 </blockquote>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="copy-right text-center">Copyright @2018 - All rights reserved</div>
+            <div class="copy-right text-center">Copyright @2019 - All rights reserved</div>
         </footer>
     </div>
     <!-- Scripts -->

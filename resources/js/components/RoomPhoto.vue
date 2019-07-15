@@ -29,7 +29,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal" @click="getListImages()">BACK</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" >BACK</button>
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,6 @@ export default {
     created() {
         this.host_name = window.location.origin;
         this.getListImages();
-
     },
     mounted() {
         if(this.room_id){
@@ -74,8 +73,6 @@ export default {
             var URL_PATH_UPLOAD = "/api/store-image/";
         }
         var vm=this;
-        console.log(URL_PATH_UPLOAD);
-        var photo_counter = 0;
         // default method post
         var myDropzone = new Dropzone("#id_dropzone", {
             url: URL_PATH_UPLOAD,
@@ -90,8 +87,6 @@ export default {
             dictFileTooBig: "Image is bigger than 5MB",
             paramName: "file",
             // The setting up of the dropzone
-
-            init: function() {},
             error: function(file, response) {
                 if ($.type(response) === "string") {
                     //dropzone sends it's own error messages in string
@@ -113,30 +108,50 @@ export default {
                 return _results;
             },
             success: function(file, response) {
-                console.log(file);
-                var image = new Image();
-                image.src = file.dataURL;
-                $('.photo-view>.row').append(image);
+                var html =  `<div class="col-sm-4 text-sm-center " id="js-section-${response.image_id}">
+                                <div class="image-room">
+                                    <img src="${file.dataURL}" alt="delete-booking.png">
+                                </div>
+                                <a class="js-remove-image image--remove" data-image-id="${response.image_id}">Remove</a>
+                            </div>`;
+                $('.photo-view > .row').append(html);
 
+                $('.js-remove-image').click(function (e) {
+                    e.preventDefault();
+                    var imageId=e.target.dataset.imageId;
+                    $.ajax({
+                        type: "delete",
+                        url: "/api/delete-image/"+imageId,
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name = "csrf-token"]').attr("content")
+                        },
+                        success: function (response) {
+                            $('#js-section-'+imageId).remove();
+                        },
+                        error: function (res) {
+                            console.log(res.data)
+                        }
+                    });
+                });
 
-                console.log(response.image_id);
                 vm.list_images_id.push(response.image_id);
                 vm.$emit('arr-images-id',vm.list_images_id);
+
             }
         });
-        console.log(myDropzone);
-
     },
     methods: {
         getListImages() {
-            axios
-                .get(this.host_name + "/api/list-images/" + this.room_id)
-                .then(response => {
-                    this.list_images = response.data;
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+            if (this.room_id) {
+                axios
+                    .get(this.host_name + "/api/list-images/" + this.room_id)
+                    .then(response => {
+                        this.list_images = response.data;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
         },
         deleteImage(imageId, index) {
             axios
@@ -165,8 +180,11 @@ export default {
 
 .card__header--photo .car-body {
     min-height: 150px;
-}
+}undefined
 .photo-room .card-body{
     min-height:150px
+}
+.photo-view{
+    min-height: 150px;
 }
 </style>

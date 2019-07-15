@@ -3484,9 +3484,7 @@ __webpack_require__.r(__webpack_exports__);
       var URL_PATH_UPLOAD = "/api/store-image/";
     }
 
-    var vm = this;
-    console.log(URL_PATH_UPLOAD);
-    var photo_counter = 0; // default method post
+    var vm = this; // default method post
 
     var myDropzone = new Dropzone("#id_dropzone", {
       url: URL_PATH_UPLOAD,
@@ -3501,7 +3499,6 @@ __webpack_require__.r(__webpack_exports__);
       dictFileTooBig: "Image is bigger than 5MB",
       paramName: "file",
       // The setting up of the dropzone
-      init: function init() {},
       error: function error(file, response) {
         if ($.type(response) === "string") {
           //dropzone sends it's own error messages in string
@@ -3526,26 +3523,41 @@ __webpack_require__.r(__webpack_exports__);
         return _results;
       },
       success: function success(file, response) {
-        console.log(file);
-        var image = new Image();
-        image.src = file.dataURL;
-        $('.photo-view>.row').append(image);
-        console.log(response.image_id);
+        var html = "<div class=\"col-sm-4 text-sm-center \" id=\"js-section-".concat(response.image_id, "\">\n                                <div class=\"image-room\">\n                                    <img src=\"").concat(file.dataURL, "\" alt=\"delete-booking.png\">\n                                </div>\n                                <a class=\"js-remove-image image--remove\" data-image-id=\"").concat(response.image_id, "\">Remove</a>\n                            </div>");
+        $('.photo-view > .row').append(html);
+        $('.js-remove-image').click(function (e) {
+          e.preventDefault();
+          var imageId = e.target.dataset.imageId;
+          $.ajax({
+            type: "delete",
+            url: "/api/delete-image/" + imageId,
+            headers: {
+              "X-CSRF-TOKEN": $('meta[name = "csrf-token"]').attr("content")
+            },
+            success: function success(response) {
+              $('#js-section-' + imageId).remove();
+            },
+            error: function error(res) {
+              console.log(res.data);
+            }
+          });
+        });
         vm.list_images_id.push(response.image_id);
         vm.$emit('arr-images-id', vm.list_images_id);
       }
     });
-    console.log(myDropzone);
   },
   methods: {
     getListImages: function getListImages() {
       var _this = this;
 
-      axios.get(this.host_name + "/api/list-images/" + this.room_id).then(function (response) {
-        _this.list_images = response.data;
-      })["catch"](function (error) {
-        console.error(error);
-      });
+      if (this.room_id) {
+        axios.get(this.host_name + "/api/list-images/" + this.room_id).then(function (response) {
+          _this.list_images = response.data;
+        })["catch"](function (error) {
+          console.error(error);
+        });
+      }
     },
     deleteImage: function deleteImage(imageId, index) {
       var _this2 = this;
@@ -3974,6 +3986,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           price: this.room.price
         }).then(function (res) {
           console.log(res);
+          history.back();
         })["catch"](function (err) {
           console.log(err.response.data);
           _this2.errors = err.response.data.errors;
@@ -23957,7 +23970,7 @@ var VBTooltip = {
 /*!*************************************************!*\
   !*** ./node_modules/bootstrap-vue/esm/index.js ***!
   \*************************************************/
-/*! exports provided: BVConfigPlugin, BVConfig, BootstrapVue, install, setConfig, default, componentsPlugin, BVModalPlugin, BVToastPlugin, AlertPlugin, BAlert, BadgePlugin, BBadge, BreadcrumbPlugin, BBreadcrumb, BBreadcrumbItem, ButtonPlugin, BButton, BButtonClose, ButtonGroupPlugin, BButtonGroup, ButtonToolbarPlugin, BButtonToolbar, CardPlugin, BCard, BCardBody, BCardFooter, BCardGroup, BCardHeader, BCardImg, BCardImgLazy, BCardSubTitle, BCardText, BCardTitle, CarouselPlugin, BCarousel, BCarouselSlide, CollapsePlugin, BCollapse, DropdownPlugin, BDropdown, BDropdownItem, BDropdownItemButton, BDropdownDivider, BDropdownForm, BDropdownGroup, BDropdownHeader, BDropdownText, EmbedPlugin, BEmbed, FormPlugin, BForm, BFormDatalist, BFormText, BFormInvalidFeedback, BFormValidFeedback, FormCheckboxPlugin, BFormCheckbox, BFormCheckboxGroup, FormFilePlugin, BFormFile, FormGroupPlugin, BFormGroup, FormInputPlugin, BFormInput, FormRadioPlugin, BFormRadio, BFormRadioGroup, FormSelectPlugin, BFormSelect, FormTextareaPlugin, BFormTextarea, ImagePlugin, BImg, BImgLazy, InputGroupPlugin, BInputGroup, BInputGroupAddon, BInputGroupAppend, BInputGroupPrepend, BInputGroupText, JumbotronPlugin, BJumbotron, LayoutPlugin, BContainer, BRow, BCol, BFormRow, LinkPlugin, BLink, ListGroupPlugin, BListGroup, BListGroupItem, MediaPlugin, BMedia, BMediaAside, BMediaBody, ModalPlugin, BModal, NavPlugin, BNav, BNavForm, BNavItem, BNavItemDropdown, BNavText, NavbarPlugin, BNavbar, BNavbarBrand, BNavbarNav, BNavbarToggle, PaginationPlugin, BPagination, PaginationNavPlugin, BPaginationNav, PopoverPlugin, BPopover, ProgressPlugin, BProgress, BProgressBar, SpinnerPlugin, BSpinner, TablePlugin, BTable, BTableLite, TabsPlugin, BTabs, BTab, ToastPlugin, BToast, BToaster, TooltipPlugin, BTooltip, directivesPlugin, VBModalPlugin, VBModal, VBPopoverPlugin, VBPopover, VBScrollspyPlugin, VBScrollspy, VBTogglePlugin, VBToggle, VBTooltipPlugin, VBTooltip */
+/*! exports provided: componentsPlugin, BVModalPlugin, BVToastPlugin, AlertPlugin, BAlert, BadgePlugin, BBadge, BreadcrumbPlugin, BBreadcrumb, BBreadcrumbItem, ButtonPlugin, BButton, BButtonClose, ButtonGroupPlugin, BButtonGroup, ButtonToolbarPlugin, BButtonToolbar, CardPlugin, BCard, BCardBody, BCardFooter, BCardGroup, BCardHeader, BCardImg, BCardImgLazy, BCardSubTitle, BCardText, BCardTitle, CarouselPlugin, BCarousel, BCarouselSlide, CollapsePlugin, BCollapse, DropdownPlugin, BDropdown, BDropdownItem, BDropdownItemButton, BDropdownDivider, BDropdownForm, BDropdownGroup, BDropdownHeader, BDropdownText, EmbedPlugin, BEmbed, FormPlugin, BForm, BFormDatalist, BFormText, BFormInvalidFeedback, BFormValidFeedback, FormCheckboxPlugin, BFormCheckbox, BFormCheckboxGroup, FormFilePlugin, BFormFile, FormGroupPlugin, BFormGroup, FormInputPlugin, BFormInput, FormRadioPlugin, BFormRadio, BFormRadioGroup, FormSelectPlugin, BFormSelect, FormTextareaPlugin, BFormTextarea, ImagePlugin, BImg, BImgLazy, InputGroupPlugin, BInputGroup, BInputGroupAddon, BInputGroupAppend, BInputGroupPrepend, BInputGroupText, JumbotronPlugin, BJumbotron, LayoutPlugin, BContainer, BRow, BCol, BFormRow, LinkPlugin, BLink, ListGroupPlugin, BListGroup, BListGroupItem, MediaPlugin, BMedia, BMediaAside, BMediaBody, ModalPlugin, BModal, NavPlugin, BNav, BNavForm, BNavItem, BNavItemDropdown, BNavText, NavbarPlugin, BNavbar, BNavbarBrand, BNavbarNav, BNavbarToggle, PaginationPlugin, BPagination, PaginationNavPlugin, BPaginationNav, PopoverPlugin, BPopover, ProgressPlugin, BProgress, BProgressBar, SpinnerPlugin, BSpinner, TablePlugin, BTable, BTableLite, TabsPlugin, BTabs, BTab, ToastPlugin, BToast, BToaster, TooltipPlugin, BTooltip, directivesPlugin, VBModalPlugin, VBModal, VBPopoverPlugin, VBPopover, VBScrollspyPlugin, VBScrollspy, VBTogglePlugin, VBToggle, VBTooltipPlugin, VBTooltip, BVConfigPlugin, BVConfig, BootstrapVue, install, setConfig, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -32801,7 +32814,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.image--remove {\n    color: #337ab7 !important;\n}\n.image--remove:hover {\n    text-decoration: underline !important;\n}\n.card__header--photo .car-body {\n    min-height: 150px;\n}\n.photo-room .card-body{\n    min-height:150px\n}\n", ""]);
+exports.push([module.i, "\n.image--remove {\n    color: #337ab7 !important;\n}\n.image--remove:hover {\n    text-decoration: underline !important;\n}\n.card__header--photo .car-body {\n    min-height: 150px;\n}undefined\n.photo-room .card-body{\n    min-height:150px\n}\n.photo-view{\n    min-height: 150px;\n}\n", ""]);
 
 // exports
 
@@ -58181,72 +58194,7 @@ var render = function() {
     "div",
     { staticClass: "card-box photo-room txt-full-width is-dirty is-upgraded" },
     [
-      _c("div", { staticClass: "card-header d-flex justify-content-between" }, [
-        _c("div", { staticClass: "card__header--photo" }, [
-          _vm._v("Room Photos")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "image__add" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary",
-              attrs: {
-                type: "button",
-                "data-toggle": "modal",
-                "data-target": "#image--model__add"
-              }
-            },
-            [_vm._v("Add Images")]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "modal fade",
-              attrs: {
-                id: "image--model__add",
-                tabindex: "-1",
-                role: "dialog",
-                "aria-labelledby": "modalLongTitle",
-                "aria-hidden": "true"
-              }
-            },
-            [
-              _c(
-                "div",
-                {
-                  staticClass: "modal-dialog modal-xl",
-                  attrs: { role: "document" }
-                },
-                [
-                  _c("div", { staticClass: "modal-content" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "modal-footer" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary",
-                          attrs: { type: "button", "data-dismiss": "modal" },
-                          on: {
-                            click: function($event) {
-                              return _vm.getListImages()
-                            }
-                          }
-                        },
-                        [_vm._v("BACK")]
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ]
-          )
-        ])
-      ]),
+      _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "card-body photo-view" }, [
         _c(
@@ -58292,56 +58240,126 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c("h5", { staticClass: "modal-title", attrs: { id: "modalTitle" } }, [
-        _vm._v("Upload Room Photos")
-      ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-body" }, [
-      _c("div", { staticClass: "col-lg-12 p-t-20" }, [
-        _c(
-          "div",
-          {
-            staticClass: "d-flex justify-content-center dz-clickable",
-            attrs: { id: "id_dropzone" }
-          },
-          [
-            _c("div", { staticClass: "dz-message" }, [
-              _c("div", { staticClass: "dropIcon" }, [
-                _c("i", { staticClass: "material-icons" }, [
-                  _vm._v("cloud_upload")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  staticStyle: { display: "none" },
-                  attrs: { type: "file", multiple: "" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("h3", [_vm._v("Drop files here or click to upload.")])
-            ])
-          ]
-        )
-      ])
-    ])
+    return _c(
+      "div",
+      { staticClass: "card-header d-flex justify-content-between" },
+      [
+        _c("div", { staticClass: "card__header--photo" }, [
+          _vm._v("Room Photos")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "image__add" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              attrs: {
+                type: "button",
+                "data-toggle": "modal",
+                "data-target": "#image--model__add"
+              }
+            },
+            [_vm._v("Add Images")]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "modal fade",
+              attrs: {
+                id: "image--model__add",
+                tabindex: "-1",
+                role: "dialog",
+                "aria-labelledby": "modalLongTitle",
+                "aria-hidden": "true"
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-dialog modal-xl",
+                  attrs: { role: "document" }
+                },
+                [
+                  _c("div", { staticClass: "modal-content" }, [
+                    _c("div", { staticClass: "modal-header" }, [
+                      _c(
+                        "h5",
+                        {
+                          staticClass: "modal-title",
+                          attrs: { id: "modalTitle" }
+                        },
+                        [_vm._v("Upload Room Photos")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close"
+                          }
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×")
+                          ])
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-body" }, [
+                      _c("div", { staticClass: "col-lg-12 p-t-20" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "d-flex justify-content-center dz-clickable",
+                            attrs: { id: "id_dropzone" }
+                          },
+                          [
+                            _c("div", { staticClass: "dz-message" }, [
+                              _c("div", { staticClass: "dropIcon" }, [
+                                _c("i", { staticClass: "material-icons" }, [
+                                  _vm._v("cloud_upload")
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  staticStyle: { display: "none" },
+                                  attrs: { type: "file", multiple: "" }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("h3", [
+                                _vm._v("Drop files here or click to upload.")
+                              ])
+                            ])
+                          ]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-footer" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "button", "data-dismiss": "modal" }
+                        },
+                        [_vm._v("BACK")]
+                      )
+                    ])
+                  ])
+                ]
+              )
+            ]
+          )
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true

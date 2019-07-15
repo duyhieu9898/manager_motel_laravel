@@ -265,6 +265,7 @@ export default {
                     )
                     .then(res => {
                         console.log(res);
+                        history.back();
                     })
                     .catch(err => {
                         console.log(err.response.data);

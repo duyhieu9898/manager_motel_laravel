@@ -66,7 +66,7 @@
     <div class=" row wiget-category " id=" cho-thue-phong-tro">
         <div class="col-sm-12 category">
             <div class="row category--name text-capitalize">
-                <a href="./category.php" class="text-success">{{$category['name']}}</a>
+                <a href="{{ route('category_rooms',$category['id']) }}" class="text-success">{{$category['name']}}</a>
             </div>
         </div>
         @foreach($category['rooms'] as $room)

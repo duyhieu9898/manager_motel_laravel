@@ -1,7 +1,11 @@
-body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+@font-face {
+    font-family: Roboto;
+    src: url(../fonts/Roboto-Regular.ttf);
+}
+
+@font-face {
+    font-family: PlayfairDisplay;
+    src: url(../fonts/PlayfairDisplay-Bold.ttf);
 }
 
 #header {

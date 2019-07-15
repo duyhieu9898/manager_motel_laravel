@@ -39,4 +39,20 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
         }
         return $rooms;
     }
+
+    public function getRoomByCategoryId(int $id)
+    {
+        $listRooms=$this->model->findOrFail($id)->load(
+            [
+            'rooms',
+            'rooms.address.district',
+            'rooms.address.province',
+            'rooms.images',
+            ]
+        );
+        if ($listRooms) {
+            return $listRooms;
+        }
+        return false;
+    }
 }

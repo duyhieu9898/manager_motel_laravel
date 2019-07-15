@@ -24,7 +24,7 @@ Route::get('/profile', function () {
 })->middleware('verified');
 
 Route::get('/', 'RoomController@latest')->name('index');
-Route::view('/category-room/', 'category_rooms');
+Route::get('/category-room/{id}', 'RoomController@category')->name('category_rooms');
 Route::get('/detail-room/{id}', 'RoomController@show');
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 //*===============ROUTE CONTROLL ADMIN==================*//
