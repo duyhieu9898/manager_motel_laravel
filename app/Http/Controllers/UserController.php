@@ -109,7 +109,8 @@ class UserController extends Controller
             [
                 'result' => 'success',
                 'role_id' => $dataUser['roles'],
-            ], 200
+            ],
+            200
         );
     }
 

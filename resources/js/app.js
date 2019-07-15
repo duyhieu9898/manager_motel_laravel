@@ -21,6 +21,10 @@ window.Vue = require('vue');
 import VueRouter from 'vue-router';
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import BootstrapVue from 'bootstrap-vue'
+import money from 'v-money'
+
+// register directive v-money and component <money>
+Vue.use(money, { precision: 3 })
 
 Vue.use(BootstrapVue)
 Vue.use(CKEditor);
@@ -28,28 +32,34 @@ Vue.use(VueRouter);
 
 Vue.component('user-component', require('./components/User.vue').default);
 Vue.component('room-photo-component', require('./components/RoomPhoto.vue').default);
-Vue.component('address-form-component', require('./components/AddressForm.vue').default);
-Vue.component('admin-app-component', require('./components/AdminApp.vue').default);
-Vue.component('convenients-form-component', require('./components/ConvenientsForm.vue').default);
+Vue.component('room-address-component', require('./components/RoomAddress.vue').default);
+Vue.component('app-admin-component', require('./components/AppAdmin.vue').default);
+Vue.component('room-convenients-component', require('./components/RoomConvenients.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-import ListRooms from './components/ListRooms.vue';
-import RoomEdit from './components/RoomEdit.vue';
+import TheListRooms from './components/TheListRooms.vue';
+import TheRoomEdit from './components/TheRoomEdit.vue';
+import TheRoomCreate from './components/TheRoomCreate.vue';
 
 const router = new VueRouter({
     mode: 'history',
     routes: [{
             path: '/app',
             name: 'all-room',
-            component: ListRooms
+            component: TheListRooms
         },
         {
             path: '/app/admin/rooms/:id/edit',
-            name: 'room',
-            component: RoomEdit
+            name: 'room-edit',
+            component: TheRoomEdit
+        },
+        {
+            path: '/app/admin/rooms/create',
+            name: 'room-create',
+            component: TheRoomCreate
         }
     ],
 });

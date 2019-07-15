@@ -292,14 +292,15 @@
                                     <span class="arrow"></span>
                                 </a>
                                 <ul class="sub-menu" style="display: none;">
-                                    <li class="nav-item">
-                                        <router-link :to="{ name: 'address' }" class="nav-link">
+
+                                    <li class="nav-item js-route-link">
+                                        <router-link :to="{ name: 'room-create' }" >
                                             <span class="title">Add Room Details</span>
                                             <span class="selected"></span>
                                         </router-link>
                                     </li>
-                                    <li class="nav-item active">
-                                        <router-link :to="{ name: 'all-room'}">
+                                    <li class="nav-item js-route-link">
+                                        <router-link :to="{ name: 'all-room'}" >
                                             <span class="title">View All Rooms</span>
                                             <span class="selected"></span>
                                         </router-link>
@@ -1253,10 +1254,23 @@ export default {
     created(){
         this.host_name = window.location.origin;
     },
+    mounted() {
+        $('.js-route-link').click(function (e) {
+            $('.js-route-link').removeClass("active");
+            e.currentTarget.classList.add("active");
+        });
+    },
     methods: {
         asset(fileName) {
         return this.host_name + "/" + fileName;
-        }
+        },
     },
 }
 </script>
+<style lang="css">
+    .errors>p{
+        margin:0 !important;
+        color:#DC3545;
+        font-size:14px
+    }
+</style>

@@ -16,15 +16,15 @@ class CreateRoomsTable extends Migration
         //
         Schema::create('rooms', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('category_id')->unsigned();
+            $table->bigInteger('address_id')->unsigned();
+            $table->bigInteger('status_booking_id')->unsigned()->default(1);
             $table->string('title');
             $table->text('description');
-            $table->bigInteger('category_id')->unsigned();
-            $table->text('police_and_terms');
             $table->bigInteger('room_area')->unsigned();
+            $table->integer('maximum_peoples_number')->unsigned()->default(1);
+            $table->text('police_and_terms');
             $table->bigInteger('price')->unsigned();
-            $table->integer('maximum_peoples_number')->unsigned()->nullable();
-            $table->bigInteger('status_booking_id')->unsigned()->default(1);
-            $table->bigInteger('address_id')->unsigned();
             $table->timestamps();
             //relationship
             $table->foreign('status_booking_id')->references('id')->on('status_bookings')->onDelete('cascade')->onUpdate('cascade'); //1-n
@@ -37,7 +37,7 @@ class CreateRoomsTable extends Migration
             $table->string('original_name');
             $table->string('file_name');
             $table->string('slug');
-            $table->unsignedBigInteger('room_id');
+            $table->unsignedBigInteger('room_id')->nullable();
             //relationship
             $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade')->onUpdate('cascade'); //n-1
         });

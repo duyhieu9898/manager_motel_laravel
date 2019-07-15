@@ -1,6 +1,6 @@
 <template>
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height txt-full-width is-dirty is-upgraded" data-upgraded=",MaterialTextfield" style="width: 124px;">
-        <input class="info__address width-ellipsis mdl-textfield__input" v-model="current_address" readonly data-toggle="modal" data-target="#adddress--model__edit" />
+        <input class="info__address width-ellipsis mdl-textfield__input" v-model="current_address" placeholder="Enter address of the room" readonly data-toggle="modal" data-target="#adddress--model__edit" />
         <div class="modal fade" id="adddress--model__edit" tabindex="-1" role="dialog" aria-labelledby="modalLongTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -49,7 +49,7 @@
                         <div class="modal-footer">
                             <div>
                                 <button type="button" class="btn  btn-secondary" data-dismiss="modal" >CLOSE</button>
-                                <button type="button" class="btn  btn-primary" @click="middewareAddress()" >SAVE</button>
+                                <button type="button" class="btn  btn-primary" @click="saveAddress()" >SAVE</button>
                             </div>
                         </div>
                     </div>
@@ -93,39 +93,67 @@
         },
         created() {
             this.host_name = window.location.origin;
+            if(this.room_id){
+                //if isset prop room id bind address input
+                this.getAddressOfRoom();
+            }
             this.getListProvinces();
-            this.getAddressByRoom();
+
         },
         methods: {
-            getAddressByRoom(){
+            getAddressOfRoom() {
                 axios
                     .get(this.host_name + '/api/address/' + this.room_id)
                     .then(res => {
                         this.current_address = res.data;
-                        this.$forceUpdate;
                     })
                     .catch(err => {
                         console.error(err);
                     });
+
             },
-            updateAddressThisRoom(){
-                axios
-                    .put(this.host_name + '/api/address/' + this.room_id,{address:this.address})
-                    .then(res => {
-                        this.getAddressByRoom();
-                        console.log(res);
-                    })
-                    .catch(err => {
-                        console.error(err);
-                    });
+            saveAddress(){
+                if (this.room_id) {
+                    this.updateAddress();
+                }
+                else {
+                    this.createAddress();
+                }
+
+            },
+            createAddress(){
+                if(this.checkAddress()){
+                    axios
+                        .post(this.host_name + '/api/addresses/create', {address:this.address})
+                        .then(res => {
+                            //return id address
+                            this.$emit("address-id", res.data.address_id);
+                            $('#adddress--model__edit').modal('hide');
+                        })
+                        .catch(err => {
+                            console.error(err.response.data.message);
+                        });
+                }
+            },
+            updateAddress() {
+                if(this.checkAddress()){
+                    axios
+                        .put(this.host_name + '/api/address/' + this.room_id, {address:this.address})
+                        .then(res => {
+                            this.getAddressOfRoom();
+                            getAddressOfRoom();
+                            $('#adddress--model__edit').modal('hide');
+                        })
+                        .catch(err => {
+                            console.error(err);
+                        });
+                }
             },
             getListWardsByDistrict(disttictId) {
                 axios
                     .get(this.host_name + '/api/wards/' + disttictId)
                     .then(res => {
                         this.list_wards = res.data;
-                        this.$forceUpdate;
-
                     })
                     .catch(err => {
                         console.error(err);
@@ -136,7 +164,6 @@
                     .get(this.host_name + '/api/districts/' + provinceId)
                     .then(res => {
                         this.list_districts = res.data;
-                        this.$forceUpdate();
                     })
                     .catch(err => {
                         console.error(err);
@@ -154,10 +181,10 @@
             },
             checkAddress(){
                 //reset error
-                this.errors.address.street=null;
-                this.errors.address.ward=null;
-                this.errors.address.district=null;
-                this.errors.address.province=null;
+                this.errors.address.street = null;
+                this.errors.address.ward = null;
+                this.errors.address.district = null;
+                this.errors.address.province = null;
                 if (this.address.street === '') {
                     this.errors.address.street = "Please enter Street.";
                 }
@@ -170,18 +197,16 @@
                 if (this.address.province === 'Chose Province') {
                     this.errors.address.province = "Please choose Province.";
                 }
-                if(this.errors.address.street===null && this.errors.address.province===null && this.errors.address.district===null && this.errors.address.ward===null){
+                if(
+                    this.errors.address.street === null
+                    && this.errors.address.province === null
+                    && this.errors.address.district === null
+                    && this.errors.address.ward === null
+                ){
                     return true;
                 }
                 return false;
-            },
-            middewareAddress(){
-                if(this.checkAddress()){
-                    this.updateAddressThisRoom();
-                    $('#adddress--model__edit').modal('hide');
-                }
             }
-
         },
         computed: {
             getProvince() {
@@ -190,48 +215,43 @@
             getDistrict() {
                 return this.address.district;
             },
-            getWard(){
+            getWard() {
                 return this.address.ward;
             },
-            getStreet(){
+            getStreet() {
                 return this.address.street;
             }
         },
         watch: {
             getProvince() {
-                if(this.address.province!=="Chose Province"){
+                if (this.address.province !== "Chose Province") {
                     this.errors.address.province=null;
                     this.getListDistrictsByProvince(this.address.province.id);
                     //reset value select default
-                    this.address.district= 'Chose District';
+                    this.address.district = 'Chose District';
                 }
-
             },
             getDistrict() {
-                if(this.address.district!=="Chose Province"){
-                    this.errors.address.district=null;
+                if (this.address.district !== "Chose Province") {
+                    this.errors.address.district = null;
                     this.getListWardsByDistrict(this.address.district.id);
                     //reset value select default
-                    this.address.ward= 'Chose Ward';
+                    this.address.ward = 'Chose Ward';
                 }
             },
             getWard() {
-                if(this.address.ward!=="Chose Ward"){
-                    this.errors.address.ward=null;
+                if (this.address.ward !== "Chose Ward") {
+                    this.errors.address.ward = null;
                 }
             },
             getStreet() {
-                if(this.address.street!=="Chose Province"){
-                    this.errors.address.street=null;
+                if (this.address.street!== "Chose Province") {
+                    this.errors.address.street = null;
                 }
             }
         },
     };
 </script>
 <style>
-    .errors>p{
-        margin:0 !important;
-        color:#DC3545;
-        font-size:14px
-    }
+
 </style>

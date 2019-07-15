@@ -7,6 +7,7 @@ use App\Category;
 use App\Convenient;
 use App\Image;
 use App\StatusBooking;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model
@@ -14,7 +15,7 @@ class Room extends Model
     //
     protected $table = 'rooms';
     public $timestamps = true;
-    protected $fillable = ['title', 'description', 'police_and_terms', 'price', 'room_area', 'status_booking', 'address_id'];
+    protected $guarded = [];//all attributes mass assignable
 
     //relationship
     public function category()
@@ -36,5 +37,18 @@ class Room extends Model
     public function statusBooking()
     {
         return $this->belongsTo(statusBooking::class);
+    }
+    /**
+     * function help detach, attack
+     *
+     * @return eloquent_model
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Convenient::class, 'room_convenient');
+    }
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->withPivot('check_in', 'check_out')->withTimestamps();
     }
 }

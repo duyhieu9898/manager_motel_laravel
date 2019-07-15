@@ -62,7 +62,7 @@ class AddressController extends Controller
                 ->where('rooms.id', $roomId)
                 ->first();
         if ($address) {
-            $stdAddress="$address->street $address->ward $address->district $address->province";
+            $stdAddress="$address->street - $address->ward - $address->district - $address->province";
             return response()->json($stdAddress, 200);
         }
         return response(400);
@@ -95,11 +95,34 @@ class AddressController extends Controller
                     ]
                 );
             if ($address) {
-                Log::debug($address);
                 return response("success", 200);
             }
         }
-            Log::debug('updateAddressByRoom' . $request);
-            return response(400);
+        return response(400);
+    }
+    public function create(Request $request)
+    {
+        if ($request->has(['address.street', 'address.province.id', 'address.district.id', 'address.ward.id' ])) {
+            $street=$request->address['street'];
+            $wardId=$request->address['ward']['id'];
+            $districtId=$request->address['district']['id'];
+            $provinceId=$request->address['province']['id'];
+
+            $addressId=DB::table('addresses')
+                ->insertGetId(
+                    [
+                    'street' => $street,
+                    'ward_id' => $wardId,
+                    'district_id' => $districtId,
+                    'province_id' => $provinceId,
+                    ]
+                );
+            if ($addressId) {
+                return response()->json([
+                    "address_id" => $addressId
+                ], 200);
+            }
+        }
+        return response(400);
     }
 }

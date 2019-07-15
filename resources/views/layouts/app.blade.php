@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css')}}">
     <link rel="stylesheet" href="{{ asset('css/jquery-ui.css')}}">
     <link rel="stylesheet" href="{{ asset('css/animate.css')}}">
+    @yield('head')
 </head>
 
 <body>

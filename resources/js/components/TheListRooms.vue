@@ -3,14 +3,18 @@
         <div class="page-bar">
             <div class="page-title-breadcrumb">
                 <div class=" pull-left">
-                    <div class="page-title">All Bookings</div>
+                    <div class="page-title">All Rooms</div>
                 </div>
                 <ol class="breadcrumb page-breadcrumb pull-right">
-                    <li><i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="index.html">Home</a>&nbsp;<i class="fa fa-angle-right"></i>
+                    <li>
+                        <i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="index.html">Home</a>&nbsp;<i class="fa fa-angle-right"></i>
                     </li>
-                    <li><a class="parent-item" href="">Booking</a>&nbsp;<i class="fa fa-angle-right"></i>
+                    <li>
+                        <router-link :to="{ name: 'all-room'}" class="title">
+                            Room&nbsp;<i class="fa fa-angle-right"></i>
+                        </router-link>
                     </li>
-                    <li class="active">All Bookings</li>
+                    <li class="active">All Rooms</li>
                 </ol>
             </div>
         </div>
@@ -29,9 +33,9 @@
                         <div class="row p-b-20">
                             <div class="col-md-6 col-sm-6 col-6">
                                 <div class="btn-group">
-                                    <a href="add_room.html" id="addRow" class="btn btn-info">
-                                        Add New <i class="fa fa-plus"></i>
-                                    </a>
+                                    <router-link :to="{ name: 'room-create' }"  id="addRow" class="btn btn-info">
+                                            Add New <i class="fa fa-plus"></i>
+                                    </router-link>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6 col-6">
@@ -71,7 +75,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="odd gradeX" v-for="(room,index) in listRooms" :key="room.id"  >
+                                    <tr class="odd gradeX" v-for="(room,index) in list_rooms" :key="room.id"  >
                                         <td class="center">{{ index+1 }}</td>
                                         <td class="center">{{ room.name }}</td>
                                         <td class="center">{{ room.category.name }}</td>
@@ -82,11 +86,11 @@
                                         <td class="center">{{ room.price }} vnd</td>
 
                                         <td class="center">
-                                            <router-link :to="{ name: 'room',params: { id: room.id }}" class='btn btn-tbl-edit btn-xs' >
+                                            <router-link :to="{ name: 'room-edit',params: { id: room.id }}" class='btn btn-tbl-edit btn-xs' >
                                                 <i class="fa fa-pencil"></i>
 
                                             </router-link>
-                                            <a href="http://" target="_blank" class='btn btn-tbl-delete btn-xs'>
+                                            <a href="#" target="_blank" class='btn btn-tbl-delete btn-xs'>
                                                 <i class="fa fa-trash-o "></i>
                                             </a>
                                         </td>
@@ -102,24 +106,23 @@
 </template>
 <script>
 export default {
-    props: ['text'],
     data() {
         return {
             room: {},
-            listRooms:[],
-            hostName: '',
+            list_rooms:[],
+            host_name: '',
     }
     },
     created(){
-        this.hostName = window.location.origin;
-        this.getListRooms();
+        this.host_name = window.location.origin;
+        this.getlist_rooms();
     },
     methods: {
-        getListRooms() {
+        getlist_rooms() {
         axios
-            .get(this.hostName + "/api/rooms/all")
+            .get(this.host_name + "/api/rooms")
             .then(response => {
-                this.listRooms = response.data;
+                this.list_rooms = response.data;
             })
             .catch(error => {
                 console.error(error);

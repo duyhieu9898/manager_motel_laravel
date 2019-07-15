@@ -16,7 +16,7 @@ class CreateAddressesTable extends Migration
         //
         Schema::create('addresses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('street')->nullable();
+            $table->string('street');
             $table->string('ward_id');
             $table->string('district_id');
             $table->string('province_id');
@@ -35,6 +35,6 @@ class CreateAddressesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('address');
+        Schema::dropIfExists('addresses');
     }
 }

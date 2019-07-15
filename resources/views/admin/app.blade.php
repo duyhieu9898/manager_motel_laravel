@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('admin-app')
-    <admin-app-component></admin-app-component>
+    <app-admin-component></app-admin-component>
 @endsection
 @section('script')
 

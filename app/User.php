@@ -8,6 +8,7 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Room;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -72,5 +73,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function address()
     {
         return $this->belongsTo(Address::class);
+    }
+    public function rooms()
+    {
+        return $this->belongsToMany(Room::class)->withPivot('check_in', 'check_out')->withTimestamps();
     }
 }

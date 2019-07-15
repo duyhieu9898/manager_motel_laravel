@@ -23,14 +23,17 @@ class ImageRepository extends BaseRepository implements ImageRepositoryInterface
     {
         parent::__construct($model);
     }
-
-    public function upload($photo, $roomId)
+    public function firstOrCreateFolderStore()
     {
         $path = 'uploads/images/' . date('Y') . "/" . date('m') . "/";
-
         if (!file_exists($path) && !is_dir($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
         }
+        return $path;
+    }
+    public function storeByRoomId($photo, $roomId)
+    {
+        $path = $this->firstOrCreateFolderStore();
         $originalName = $photo->getClientOriginalName();
         $originalNameWithoutExt = substr($originalName, 0, strlen($originalName) - 4);
         $filename = $this->sanitize($originalNameWithoutExt);
@@ -40,23 +43,22 @@ class ImageRepository extends BaseRepository implements ImageRepositoryInterface
 
         if (!$uploadSuccess1) {
             return response()->json([
-                'error' => true,
-                'message' => 'Server error while uploading',
-                'code' => 500
+                'message' => 'Server error while uploading'
             ], 500);
         }
 
         $sessionImage = new Image;
         $sessionImage->original_name = $originalName;
         $sessionImage->slug          = $path . Config::get('images.icon_size') . $filenameExt;
-        $sessionImage->file_name          = $path . Config::get('images.full_size') . $filenameExt;
-        $sessionImage->room_id       = $roomId;
-
+        $sessionImage->file_name     = $path . Config::get('images.full_size') . $filenameExt;
+        if ($roomId) {
+            $sessionImage->room_id = $roomId;
+        }
         $sessionImage->save();
-
+        // Response::json(array('success' => true, 'last_insert_id' => $data->id), 200);
+        // return response()->json([$sessionImage' => $sessionImage->id], 200);
         return response()->json([
-            'error' => false,
-            'code'  => 200
+            'image_id' => $sessionImage->id
         ], 200);
     }
 

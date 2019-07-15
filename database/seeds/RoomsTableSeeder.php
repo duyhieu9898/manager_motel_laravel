@@ -27,7 +27,7 @@ class RoomsTableSeeder extends Seeder
         $room->status_booking_id = 1;
         $room->address_id = 1;
         $room->save();
-        $room->convenients()->attach($listIdConvenient);
+        //$room->convenients()->attach($listIdConvenient);
 
         $room = new Room();
         $room->id = 2;
@@ -41,7 +41,7 @@ class RoomsTableSeeder extends Seeder
         $room->status_booking_id = 1;
         $room->address_id = 2;
         $room->save();
-        $room->convenients()->attach($listIdConvenient);
+        //$room->convenients()->attach($listIdConvenient);
 
         $room = new Room();
         $room->id = 3;
@@ -55,7 +55,7 @@ class RoomsTableSeeder extends Seeder
         $room->status_booking_id = 1;
         $room->address_id = 3;
         $room->save();
-        $room->convenients()->attach($listIdConvenient);
+        //$room->convenients()->attach($listIdConvenient);
 
         $room = new Room();
         $room->id = 4;
@@ -69,7 +69,7 @@ class RoomsTableSeeder extends Seeder
         $room->status_booking_id = 1;
         $room->address_id = 4;
         $room->save();
-        $room->convenients()->attach($listIdConvenient);
+        //$room->convenients()->attach($listIdConvenient);
 
         $room = new Room();
         $room->id = 5;
@@ -83,7 +83,7 @@ class RoomsTableSeeder extends Seeder
         $room->status_booking_id = 1;
         $room->address_id = 5;
         $room->save();
-        $room->convenients()->attach($listIdConvenient);
+        //$room->convenients()->attach($listIdConvenient);
 
         $room = new Room();
         $room->id = 6;
@@ -97,7 +97,7 @@ class RoomsTableSeeder extends Seeder
         $room->status_booking_id = 1;
         $room->address_id = 6;
         $room->save();
-        $room->convenients()->attach($listIdConvenient);
+        //$room->convenients()->attach($listIdConvenient);
 
         $room = new Room();
         $room->id = 7;
@@ -111,7 +111,7 @@ class RoomsTableSeeder extends Seeder
         $room->status_booking_id = 1;
         $room->address_id = 7;
         $room->save();
-        $room->convenients()->attach($listIdConvenient);
+        //$room->convenients()->attach($listIdConvenient);
 
         $room = new Room();
         $room->id = 8;
@@ -125,7 +125,7 @@ class RoomsTableSeeder extends Seeder
         $room->status_booking_id = 1;
         $room->address_id = 8;
         $room->save();
-        $room->convenients()->attach($listIdConvenient);
+        //$room->convenients()->attach($listIdConvenient);
 
         $room = new Room();
         $room->id = 9;
@@ -139,7 +139,7 @@ class RoomsTableSeeder extends Seeder
         $room->status_booking_id = 1;
         $room->address_id = 9;
         $room->save();
-        $room->convenients()->attach($listIdConvenient);
+        //$room->convenients()->attach($listIdConvenient);
 
         $room = new Room();
         $room->id = 10;
@@ -153,6 +153,6 @@ class RoomsTableSeeder extends Seeder
         $room->status_booking_id = 1;
         $room->address_id = 10;
         $room->save();
-        $room->convenients()->attach($listIdConvenient);
+        //$room->convenients()->attach($listIdConvenient);
     }
 }

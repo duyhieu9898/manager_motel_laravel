@@ -24,13 +24,14 @@ Route::get('/profile', function () {
 })->middleware('verified');
 
 Route::get('/', 'RoomController@latest')->name('index');
+Route::view('/category-room/', 'category_rooms');
 Route::get('/detail-room/{id}', 'RoomController@show');
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 //*===============ROUTE CONTROLL ADMIN==================*//
 
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => '/admin'], function () {
-        Route::put('/rooms/{id}', 'RoomController@update')->name('room_update');
+
 
         Route::group(['prefix' => '/users'], function () {
             /*-------------------API VUEJS CURD USER-----------------*/
@@ -44,24 +45,35 @@ Route::get('/getCurrentUser', function () {
     return Auth::user()->load('roles');
 });
 Route::group(['middleware' => ['admin']], function () {
+    //image
+    Route::post('/api/store-image', 'ImageController@store');
     Route::get('/api/list-images/{room_id}', 'ImageController@getListImagesByRoom');
-    Route::post('/api/upload-image/{room_id}', 'ImageController@store')->name('upload_image');
+    Route::post('/api/upload-image/{room_id}', 'ImageController@storeByRoomId')->name('upload_image');
     Route::delete('/api/delete-image/{image_id?}', 'ImageController@destroy')->name('delete_image');
-    Route::get('api/wards/{idDistrict}', 'AddressController@getWardsByDistrict');
-    Route::get('api/districts/{idProvince}', 'AddressController@getDistrictsByProvince');
-    Route::get('api/provinces', 'AddressController@getProvinces');
-    Route::get('api/address/{id}', 'AddressController@getAddressByRoom');
-    Route::put('api/address/{id}', 'AddressController@updateAddressByRoom');
-    Route::get('api/rooms/all', 'RoomController@create');
-    Route::get('api/rooms/{id}/edit', 'RoomController@edit')->name('room_edit');
+    //address
+    Route::get('/api/wards/{idDistrict}', 'AddressController@getWardsByDistrict');
+    Route::get('/api/districts/{idProvince}', 'AddressController@getDistrictsByProvince');
+    Route::get('/api/provinces', 'AddressController@getProvinces');
+
+    Route::get('/api/address/{id}', 'AddressController@getAddressByRoom');
+    Route::put('/api/address/{id}', 'AddressController@updateAddressByRoom');
+    Route::post('/api/addresses/create', 'AddressController@create');
+    //room
+    Route::get('/api/rooms', 'RoomController@index');
+    Route::get('/api/rooms/{id}/edit', 'RoomController@edit')->name('room_edit');
+    Route::get('/api/rooms/create', 'RoomController@create');
+    Route::post('/api/rooms', 'RoomController@store');
 });
 
+Route::put('api/rooms/{id}', 'RoomController@update')->name('room_update');
 //*===============ROUTE FOR SPA-ADMIN==================*//
-Route::get('/app', function () {
-    return view('admin.app');
-});
-Route::group(['prefix' => '/app'], function () {
-    Route::any('/{any}', function () {
+Route::group(['middleware' => ['admin']], function () {
+    Route::get('/app', function () {
         return view('admin.app');
-    })->where('any', '.*');
+    });
+    Route::group(['prefix' => '/app'], function () {
+        Route::any('/{any}', function () {
+            return view('admin.app');
+        })->where('any', '.*');
+    });
 });

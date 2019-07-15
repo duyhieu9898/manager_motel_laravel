@@ -51,7 +51,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading go-text-right">Description</div>
                         <div class="panel-body">
-                            <p>{{ $room['description'] }}</p>
+                            <p>{!! $room['description'] !!}</p>
                         </div>
                     </div>
                     <div class="row  mb-10 slide-img">
@@ -62,7 +62,7 @@
                     <div class="panel-heading go-text-right">Police and terms</div>
                     <div class="panel-body">
                         <span class="RTL">
-                            <p>{{ $room['police_and_terms'] }}</p>
+                            <p>{!! $room['police_and_terms'] !!}</p>
                         </span>
                     </div>
                 </div>

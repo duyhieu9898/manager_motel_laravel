@@ -12,7 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.styles([
-    'resources/css/category.css',
+    // 'resources/css/category-rooms.css',
     'resources/css/detail-posts.css',
     'resources/css/footer.css',
     'resources/css/header.css',
