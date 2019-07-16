@@ -27,8 +27,8 @@ class RoomCreateRequest extends FormRequest
             'category_id' => 'required|numeric',
             'address_id' => 'required|numeric',
 
-            'title' => 'required|string|min:10|max:99',
-            'room_area' => 'required|numeric|min:1|max:99',
+            'title' => 'required|string|min:10|max:999',
+            'room_area' => 'required|numeric|min:1|max:999',
             'maximum_peoples_number' => 'required|numeric|min:1|max:999',
             'price' => 'required|numeric|min:1|max:99999999',
             'description' => 'required|string|between:10,999',

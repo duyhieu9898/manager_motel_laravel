@@ -125,11 +125,12 @@ export default {
                         headers: {
                             "X-CSRF-TOKEN": $('meta[name = "csrf-token"]').attr("content")
                         },
-                        success: function (response) {
+                        success: function (res) {
                             $('#js-section-'+imageId).remove();
+                            //console.log(res.message)
                         },
-                        error: function (res) {
-                            console.log(res.data)
+                        error: function (res, ) {
+                            //console.log(res.responseJSON);
                         }
                     });
                 });
@@ -148,8 +149,8 @@ export default {
                     .then(response => {
                         this.list_images = response.data;
                     })
-                    .catch(error => {
-                        console.error(error);
+                    .catch(err=> {
+                        console.error(err.response.data);
                     });
             }
         },
@@ -160,7 +161,7 @@ export default {
                     this.list_images.splice(index, 1);;
                 })
                 .catch(err => {
-                    console.error(err);
+                    console.log(err.response.data);
                 });
         },
         asset(fileName) {

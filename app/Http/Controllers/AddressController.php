@@ -20,7 +20,9 @@ class AddressController extends Controller
         if ($listWards) {
             return response()->json($listWards, 200);
         }
-        return response('cannot get list wads', 400);
+        return response()->json([
+            'message'=> 'Server error while get  list Ward ', 500
+        ]);
     }
     /**
      * Get list districts of the province by province id
@@ -34,7 +36,9 @@ class AddressController extends Controller
         if ($listDistricts) {
             return response()->json($listDistricts, 200);
         }
-        return response('cannot get list districts', 400);
+        return response()->json([
+            'message'=> 'Server error while get list Districts ', 500
+        ]);
     }
     /**
      * Get list Provinces
@@ -62,10 +66,12 @@ class AddressController extends Controller
                 ->where('rooms.id', $roomId)
                 ->first();
         if ($address) {
-            $stdAddress="$address->street - $address->ward - $address->district - $address->province";
+            $stdAddress ="$address->street - $address->ward, $address->district, $address->province";
             return response()->json($stdAddress, 200);
         }
-        return response(400);
+        return response()->json([
+            'message'=> 'Server error while get address ', 500
+            ]);
     }
     /**
      * Update address of the room by room id
@@ -77,52 +83,49 @@ class AddressController extends Controller
      */
     public function updateAddressByRoom(Request $request, int $roomId)
     {
-        if ($request->has(['address.street', 'address.province.id', 'address.district.id', 'address.ward.id' ])) {
-            $street=$request->address['street'];
-            $wardId=$request->address['ward']['id'];
-            $districtId=$request->address['district']['id'];
-            $provinceId=$request->address['province']['id'];
-
+        if ($request->has(['street', 'province', 'district', 'ward' ])) {
             $address=DB::table('rooms')
                 ->join('addresses', 'address_id', 'addresses.id')
                 ->where('rooms.id', $roomId)
                 ->update(
                     [
-                    'addresses.street' => $street,
-                    'addresses.ward_id' => $wardId,
-                    'addresses.district_id' => $districtId,
-                    'addresses.province_id' => $provinceId,
+                    'addresses.street' => $request->street,
+                    'addresses.ward_id' => $request->ward,
+                    'addresses.district_id' => $request->district,
+                    'addresses.province_id' => $request->province,
                     ]
                 );
             if ($address) {
-                return response("success", 200);
+                return response()->json([
+                    'message'=> 'update address success', 200
+                    ]);
             }
         }
-        return response(400);
+        return response()->json([
+            'message' => 'Server error while updating address',
+        ], 500);
     }
     public function create(Request $request)
     {
-        if ($request->has(['address.street', 'address.province.id', 'address.district.id', 'address.ward.id' ])) {
-            $street=$request->address['street'];
-            $wardId=$request->address['ward']['id'];
-            $districtId=$request->address['district']['id'];
-            $provinceId=$request->address['province']['id'];
-
+        if ($request->has(['street', 'province', 'district', 'ward' ])) {
             $addressId=DB::table('addresses')
                 ->insertGetId(
                     [
-                    'street' => $street,
-                    'ward_id' => $wardId,
-                    'district_id' => $districtId,
-                    'province_id' => $provinceId,
+                    'street' => $request->street,
+                    'ward_id' => $request->ward,
+                    'district_id' => $request->district,
+                    'province_id' => $request->province,
                     ]
                 );
             if ($addressId) {
                 return response()->json([
+                    'message' => 'create address success',
                     "address_id" => $addressId
                 ], 200);
             }
         }
-        return response(400);
+        return response()->json([
+            'message'=> 'Server error while creating address ', 500
+            ]);
     }
 }

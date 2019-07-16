@@ -21,7 +21,7 @@
                             <div class="col-8 form-group">
                                 <select class="form-control" v-model="address.province" >
                                     <option hidden>Chose Province</option>
-                                    <option v-bind:value="{ id: province.id }" v-for="province in list_provinces" :key="province.id">{{ province.name }}</option>
+                                    <option v-bind:value="{ id: province.id, name: province.name }" v-for="province in list_provinces" :key="province.id">{{ province.name }}</option>
                                 </select>
                                 <div class="errors" v-if="errors.address.province != null">
                                      <p>{{ errors.address.province }}</p>
@@ -30,7 +30,7 @@
                             <div class="col-8 form-group" >
                                 <select class="form-control" v-model="address.district" >
                                     <option hidden>Chose District</option>
-                                    <option v-bind:value="{ id: district.id }" v-for="district in list_districts" :key="district.id">{{ district.name }}</option>
+                                    <option v-bind:value="{ id: district.id, name: district.name }" v-for="district in list_districts" :key="district.id">{{ district.name }}</option>
                                 </select>
                                 <div class="errors" v-if="errors.address.district != null">
                                      <p>{{ errors.address.district }}</p>
@@ -39,7 +39,7 @@
                             <div class="col-8 form-group">
                                 <select class="form-control" v-model="address.ward" >
                                     <option hidden>Chose Ward</option>
-                                    <option v-bind:value="{ id: ward.id }" v-for="ward in list_wards" :key="ward.id">{{ ward.name }}</option>
+                                    <option v-bind:value="{ id: ward.id, name: ward.name}" v-for="ward in list_wards" :key="ward.id">{{ ward.name }}</option>
                                 </select>
                                 <div class="errors" v-if="errors.address.ward != null">
                                      <p>{{ errors.address.ward }}</p>
@@ -113,41 +113,49 @@
 
             },
             saveAddress(){
-                if (this.room_id) {
-                    this.updateAddress();
+                if(this.checkAddress()){
+                    if (this.room_id) {
+                        this.updateAddress();
+                    }
+                    else {
+                        this.createAddress();
+                    }
+                    var current_address= `${this.address.street} - ${this.address.ward.name}, ${this.address.district.name}, ${this.address.province.name}`;
+                    this.current_address=current_address;
+                    $('#adddress--model__edit').modal('hide');
                 }
-                else {
-                    this.createAddress();
-                }
-
             },
             createAddress(){
-                if(this.checkAddress()){
-                    axios
-                        .post(this.host_name + '/api/addresses/create', {address:this.address})
-                        .then(res => {
-                            //return id address
-                            this.$emit("address-id", res.data.address_id);
-                            $('#adddress--model__edit').modal('hide');
-                        })
-                        .catch(err => {
-                            console.error(err.response.data.message);
-                        });
-                }
+                axios
+                    .post(this.host_name + '/api/addresses/create', {
+                        street:this.address.street,
+                        ward:this.address.ward.id,
+                        district:this.address.district.id,
+                        province:this.address.province.id
+                     })
+                    .then(res => {
+                        //return id address
+                        console.log(res.data.message);
+                        this.$emit("address-id", res.data.address_id);
+                    })
+                    .catch(err => {
+                        console.error(err.response.data.message);
+                    });
             },
             updateAddress() {
-                if(this.checkAddress()){
-                    axios
-                        .put(this.host_name + '/api/address/' + this.room_id, {address:this.address})
-                        .then(res => {
-                            this.getAddressOfRoom();
-                            getAddressOfRoom();
-                            $('#adddress--model__edit').modal('hide');
-                        })
-                        .catch(err => {
-                            console.error(err);
-                        });
-                }
+                axios
+                    .put(this.host_name + '/api/address/' + this.room_id, {
+                        street:this.address.street,
+                        ward:this.address.ward.id,
+                        district:this.address.district.id,
+                        province:this.address.province.id
+                     })
+                    .then(res => {
+                        console.log(res.data.message);
+                    })
+                    .catch(err => {
+                        console.error(err.response.data.message);
+                    });
             },
             getListWardsByDistrict(disttictId) {
                 axios

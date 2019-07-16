@@ -73,7 +73,7 @@
                                         </div>
                                         <div class="col-lg-6 p-t-20">
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width is-dirty is-upgraded" data-upgraded=",MaterialTextfield">
-                                                <input type="tel" name="maximum_peoples_number" class="mdl-textfield__input"  v-model.number="room.maximum_peoples_number" maxlength="2">
+                                                <money v-model="room.maximum_peoples_numbe" v-bind="people" class="mdl-textfield__input" maxlength='15'></money>
                                                 <label class="mdl-textfield__label">Room People</label>
                                                 <div class="errors" v-if="errors.maximum_peoples_number!=null">
                                                     <p>{{ errors.maximum_peoples_number[0] }}</p>
@@ -195,6 +195,13 @@ export default {
                 thousands: ',',
                 precision: 0,
                 suffix: ' M',
+                masked: false
+            },
+            people: {
+                decimal: ',',
+                thousands: ',',
+                precision: 0,
+                suffix: ' Pleople/Room',
                 masked: false
             }
         }

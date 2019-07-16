@@ -47,8 +47,8 @@ Route::get('/getCurrentUser', function () {
 Route::group(['middleware' => ['admin']], function () {
     //image
     Route::post('/api/store-image', 'ImageController@store');
-    Route::get('/api/list-images/{room_id}', 'ImageController@getListImagesByRoom');
-    Route::post('/api/upload-image/{room_id}', 'ImageController@storeByRoomId')->name('upload_image');
+    Route::get('/api/list-images/{room_id}', 'ImageController@getListImagesByRoomId');
+    Route::post('/api/upload-image/{room_id}', 'ImageController@saveImage')->name('upload_image');
     Route::delete('/api/delete-image/{image_id?}', 'ImageController@destroy')->name('delete_image');
     //address
     Route::get('/api/wards/{idDistrict}', 'AddressController@getWardsByDistrict');

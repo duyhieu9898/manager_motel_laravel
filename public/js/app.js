@@ -3187,67 +3187,70 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     saveAddress: function saveAddress() {
-      if (this.room_id) {
-        this.updateAddress();
-      } else {
-        this.createAddress();
+      if (this.checkAddress()) {
+        if (this.room_id) {
+          this.updateAddress();
+        } else {
+          this.createAddress();
+        }
+
+        var current_address = "".concat(this.address.street, " - ").concat(this.address.ward.name, ", ").concat(this.address.district.name, ", ").concat(this.address.province.name);
+        this.current_address = current_address;
+        $('#adddress--model__edit').modal('hide');
       }
     },
     createAddress: function createAddress() {
       var _this2 = this;
 
-      if (this.checkAddress()) {
-        axios.post(this.host_name + '/api/addresses/create', {
-          address: this.address
-        }).then(function (res) {
-          //return id address
-          _this2.$emit("address-id", res.data.address_id);
+      axios.post(this.host_name + '/api/addresses/create', {
+        street: this.address.street,
+        ward: this.address.ward.id,
+        district: this.address.district.id,
+        province: this.address.province.id
+      }).then(function (res) {
+        //return id address
+        console.log(res.data.message);
 
-          $('#adddress--model__edit').modal('hide');
-        })["catch"](function (err) {
-          console.error(err.response.data.message);
-        });
-      }
+        _this2.$emit("address-id", res.data.address_id);
+      })["catch"](function (err) {
+        console.error(err.response.data.message);
+      });
     },
     updateAddress: function updateAddress() {
-      var _this3 = this;
-
-      if (this.checkAddress()) {
-        axios.put(this.host_name + '/api/address/' + this.room_id, {
-          address: this.address
-        }).then(function (res) {
-          _this3.getAddressOfRoom();
-
-          getAddressOfRoom();
-          $('#adddress--model__edit').modal('hide');
-        })["catch"](function (err) {
-          console.error(err);
-        });
-      }
+      axios.put(this.host_name + '/api/address/' + this.room_id, {
+        street: this.address.street,
+        ward: this.address.ward.id,
+        district: this.address.district.id,
+        province: this.address.province.id
+      }).then(function (res) {
+        console.log(res.data.message);
+      })["catch"](function (err) {
+        console.error(err.response.data.message);
+      });
     },
     getListWardsByDistrict: function getListWardsByDistrict(disttictId) {
-      var _this4 = this;
+      var _this3 = this;
 
       axios.get(this.host_name + '/api/wards/' + disttictId).then(function (res) {
-        _this4.list_wards = res.data;
+        _this3.list_wards = res.data;
       })["catch"](function (err) {
         console.error(err);
       });
     },
     getListDistrictsByProvince: function getListDistrictsByProvince(provinceId) {
-      var _this5 = this;
+      var _this4 = this;
 
       axios.get(this.host_name + '/api/districts/' + provinceId).then(function (res) {
-        _this5.list_districts = res.data;
+        _this4.list_districts = res.data;
       })["catch"](function (err) {
         console.error(err);
       });
     },
     getListProvinces: function getListProvinces() {
-      var _this6 = this;
+      var _this5 = this;
 
       axios.get(this.host_name + '/api/provinces').then(function (res) {
-        _this6.list_provinces = res.data;
+        _this5.list_provinces = res.data;
       })["catch"](function (err) {
         console.error(err);
       });
@@ -3534,11 +3537,10 @@ __webpack_require__.r(__webpack_exports__);
             headers: {
               "X-CSRF-TOKEN": $('meta[name = "csrf-token"]').attr("content")
             },
-            success: function success(response) {
-              $('#js-section-' + imageId).remove();
+            success: function success(res) {
+              $('#js-section-' + imageId).remove(); //console.log(res.message)
             },
-            error: function error(res) {
-              console.log(res.data);
+            error: function error(res) {//console.log(res.responseJSON);
             }
           });
         });
@@ -3554,8 +3556,8 @@ __webpack_require__.r(__webpack_exports__);
       if (this.room_id) {
         axios.get(this.host_name + "/api/list-images/" + this.room_id).then(function (response) {
           _this.list_images = response.data;
-        })["catch"](function (error) {
-          console.error(error);
+        })["catch"](function (err) {
+          console.error(err.response.data);
         });
       }
     },
@@ -3567,7 +3569,7 @@ __webpack_require__.r(__webpack_exports__);
 
         ;
       })["catch"](function (err) {
-        console.error(err);
+        console.log(err.response.data);
       });
     },
     asset: function asset(fileName) {
@@ -3587,8 +3589,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -3906,16 +3906,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       list_convenients: [],
       placeholder: {
         title: "Enter title of the room",
-        address: "Enter address of the room",
-        maximum_peoples_number: "Enter maximum number of people in the room"
+        address: "Enter address of the room"
       },
       room: (_room = {
-        id: null,
         category_id: 'Chose type of the room',
         address_id: null,
         title: null,
         room_area: 0,
-        maximum_peoples_number: null,
+        maximum_peoples_number: 1,
         price: 0,
         description: null,
         police_and_terms: null
@@ -3928,7 +3926,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         room_area: null,
         maximum_peoples_number: null,
         price: null
-      }, _defineProperty(_errors, "room_area", null), _defineProperty(_errors, "description", null), _defineProperty(_errors, "police_and_terms", null), _defineProperty(_errors, "list_images_id", null), _defineProperty(_errors, "check", true), _errors),
+      }, _defineProperty(_errors, "room_area", null), _defineProperty(_errors, "description", null), _defineProperty(_errors, "police_and_terms", null), _defineProperty(_errors, "list_images_id", null), _defineProperty(_errors, "check", true), _defineProperty(_errors, "on", false), _errors),
       money: {
         decimal: ',',
         thousands: ',',
@@ -3941,6 +3939,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         thousands: ',',
         precision: 0,
         suffix: ' M',
+        masked: false
+      },
+      people: {
+        decimal: ',',
+        thousands: ',',
+        precision: 0,
+        suffix: ' Pleople/Room',
         masked: false
       }
     };
@@ -3990,6 +3995,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         })["catch"](function (err) {
           console.log(err.response.data);
           _this2.errors = err.response.data.errors;
+          _this2.errors.on = true;
         });
       }
     }
@@ -3997,50 +4003,112 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   watch: {
     room: {
       handler: function handler() {
-        this.errors = {
-          address_id: null,
-          category_id: null,
-          title: null,
-          room_area: null,
-          maximum_peoples_number: null,
-          price: null,
-          description: null,
-          police_and_terms: null,
-          list_images_id: null,
-          check: true
-        };
+        if (!this.errors.on) {
+          console.log('on off');
+          this.errors = {
+            address_id: null,
+            category_id: null,
+            title: null,
+            room_area: null,
+            maximum_peoples_number: null,
+            price: null,
+            description: null,
+            police_and_terms: null,
+            list_images_id: null,
+            check: true
+          };
 
-        if (this.room.title === "") {
-          this.errors.title = ['Please enter Title.'];
-          this.errors.check = false;
-        } else if (this.room.title !== null && this.room.title.split(' ').length < 5) {
-          this.errors.title = ['Title at least 5 words.'];
-          this.errors.check = false;
-        }
+          if (this.room.title === "") {
+            this.errors.title = ['Please enter Title.'];
+            this.errors.check = false;
+          } else if (this.room.title !== null && this.room.title.split(' ').length < 5) {
+            this.errors.title = ['Title at least 5 words.'];
+            this.errors.check = false;
+          }
 
-        if (this.room.room_area < 10) {
-          this.errors.room_area = ['Room area is too small.'];
-          this.errors.check = false;
-        }
+          if (this.room.room_area < 10 && this.room.room_area != 0) {
+            this.errors.room_area = ['Room area is too small.'];
+            this.errors.check = false;
+          }
 
-        if (this.room.maximum_peoples_number === '') {
-          this.errors.maximum_peoples_number = ['Please enter Number of peoples.'];
-          this.errors.check = false;
-        }
+          if (this.room.maximum_peoples_number === 0) {
+            this.errors.maximum_peoples_number = ['Please enter Number of peoples.'];
+            this.errors.check = false;
+          }
 
-        if (this.room.price < 100000) {
-          this.errors.price = ['Room price is too small.'];
-          this.errors.check = false;
-        }
+          if (this.room.description === "") {
+            this.errors.description = ['Please enter Description.'];
+            this.errors.check = false;
+          }
 
-        if (this.room.description === "") {
-          this.errors.description = ['Please enter Description.'];
-          this.errors.check = false;
-        }
+          if (this.room.police_and_terms === "") {
+            this.errors.police_and_terms = ['Please enter PoliceAndTerms.'];
+            this.errors.check = false;
+          }
+        } else {
+          var _this$errors;
 
-        if (this.room.police_and_terms === "") {
-          this.errors.police_and_terms = ['Please enter PoliceAndTerms.'];
-          this.errors.check = false;
+          console.log('on on');
+          console.log(this.room.category_id);
+          this.errors = (_this$errors = {
+            address_id: null,
+            category_id: null,
+            title: null,
+            room_area: null,
+            maximum_peoples_number: null,
+            price: null,
+            description: null,
+            police_and_terms: null,
+            list_images_id: null
+          }, _defineProperty(_this$errors, "category_id", null), _defineProperty(_this$errors, "check", true), _defineProperty(_this$errors, "on", true), _this$errors);
+
+          if (!Number.isInteger(this.room.category_id)) {
+            this.errors.category_id = ['The room category field is required.'];
+            this.errors.category_id = false;
+          }
+
+          if (this.room.title === '' || this.room.title === null) {
+            this.errors.title = ['The room title field is required.'];
+            this.errors.check = false;
+          } else if (this.room.title !== null && this.room.title.split(' ').length < 5) {
+            this.errors.title = ['Title at least 5 words.'];
+            this.errors.check = false;
+          }
+
+          if (this.room.price === 0) {
+            this.errors.price = ['The room price field is required.'];
+            this.errors.check = false;
+          }
+
+          if (this.room.room_area < 10) {
+            this.errors.room_area = ['The room area field is required.'];
+            this.errors.check = false;
+          }
+
+          if (this.room.maximum_peoples_number === 0) {
+            this.errors.maximum_peoples_number = ['The people field is required.'];
+            this.errors.check = false;
+          }
+
+          if (this.room.description === "" || this.room.description === null) {
+            this.errors.description = ['The police and terms field is required.'];
+            this.errors.check = false;
+          }
+
+          if (this.room.police_and_terms === "" || this.room.description === null) {
+            this.errors.police_and_terms = ['The police and terms field is required.'];
+            this.errors.check = false;
+          }
+
+          if (this.room.list_images_id.length == 0) {
+            this.errors.list_images_id = ['Please enter PoliceAndTerms.'];
+            this.errors.check = false;
+          }
+
+          if (this.room.address_id === null) {
+            this.errors.address_id = ['The room address field is required.'];
+            this.errors.check = false;
+          }
         }
       },
       deep: true
@@ -4256,6 +4324,13 @@ __webpack_require__.r(__webpack_exports__);
         thousands: ',',
         precision: 0,
         suffix: ' M',
+        masked: false
+      },
+      people: {
+        decimal: ',',
+        thousands: ',',
+        precision: 0,
+        suffix: ' Pleople/Room',
         masked: false
       }
     };
@@ -57918,7 +57993,12 @@ var render = function() {
                               "option",
                               {
                                 key: province.id,
-                                domProps: { value: { id: province.id } }
+                                domProps: {
+                                  value: {
+                                    id: province.id,
+                                    name: province.name
+                                  }
+                                }
                               },
                               [_vm._v(_vm._s(province.name))]
                             )
@@ -57979,7 +58059,12 @@ var render = function() {
                               "option",
                               {
                                 key: district.id,
-                                domProps: { value: { id: district.id } }
+                                domProps: {
+                                  value: {
+                                    id: district.id,
+                                    name: district.name
+                                  }
+                                }
                               },
                               [_vm._v(_vm._s(district.name))]
                             )
@@ -58040,7 +58125,9 @@ var render = function() {
                               "option",
                               {
                                 key: ward.id,
-                                domProps: { value: { id: ward.id } }
+                                domProps: {
+                                  value: { id: ward.id, name: ward.name }
+                                }
                               },
                               [_vm._v(_vm._s(ward.name))]
                             )
@@ -58466,24 +58553,14 @@ var render = function() {
                             _vm._v(_vm._s(index + 1))
                           ]),
                           _vm._v(" "),
-                          _c("td", { staticClass: "center" }, [
-                            _vm._v(_vm._s(room.name))
-                          ]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "center" }, [
+                          _c("td", { staticClass: "text-primary" }, [
                             _vm._v(_vm._s(room.category.name))
                           ]),
                           _vm._v(" "),
-                          _c("td", { staticClass: "center" }, [
-                            _vm._v(_vm._s(room.title))
-                          ]),
+                          _c("td", [_vm._v(_vm._s(room.title))]),
                           _vm._v(" "),
                           _c("td", { staticClass: "center" }, [
-                            _vm._v(_vm._s(room.address.province.name))
-                          ]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "center" }, [
-                            _vm._v(_vm._s(room.room_area) + "m")
+                            _vm._v(_vm._s(room.room_area) + " m")
                           ]),
                           _vm._v(" "),
                           _c("td", { staticClass: "center" }, [
@@ -58492,6 +58569,10 @@ var render = function() {
                           _vm._v(" "),
                           _c("td", { staticClass: "center" }, [
                             _vm._v(_vm._s(room.price) + " vnd")
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "center" }, [
+                            _vm._v(_vm._s(room.address.province.name))
                           ]),
                           _vm._v(" "),
                           _c(
@@ -58558,7 +58639,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-head" }, [
-      _c("header", [_vm._v("All Bookings")]),
+      _c("header", [_vm._v("All Rooms")]),
       _vm._v(" "),
       _c("div", { staticClass: "tools" }, [
         _c("a", {
@@ -58629,9 +58710,9 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { staticClass: "center" }, [_vm._v(" # ")]),
         _vm._v(" "),
-        _c("th", { staticClass: "center" }, [_vm._v(" Type ")]),
+        _c("th", [_vm._v(" Category ")]),
         _vm._v(" "),
-        _c("th", { staticClass: "center" }, [_vm._v(" Title ")]),
+        _c("th", [_vm._v(" Title ")]),
         _vm._v(" "),
         _c("th", { staticClass: "center" }, [_vm._v(" Area ")]),
         _vm._v(" "),
@@ -58795,7 +58876,7 @@ var render = function() {
                             [_vm._v("Room Type")]
                           ),
                           _vm._v(" "),
-                          _vm.errors.category_id != null
+                          _vm.errors.category_id
                             ? _c("div", { staticClass: "errors" }, [
                                 _c("p", [
                                   _vm._v(_vm._s(_vm.errors.category_id[0]))
@@ -58852,7 +58933,7 @@ var render = function() {
                             _vm._v("Room Title")
                           ]),
                           _vm._v(" "),
-                          _vm.errors.title != null
+                          _vm.errors.title
                             ? _c("div", { staticClass: "errors" }, [
                                 _c("p", [_vm._v(_vm._s(_vm.errors.title[0]))])
                               ])
@@ -58894,7 +58975,7 @@ var render = function() {
                             _vm._v("Room Area")
                           ]),
                           _vm._v(" "),
-                          _vm.errors.room_area !== null
+                          _vm.errors.room_area
                             ? _c("div", { staticClass: "errors" }, [
                                 _c("p", [
                                   _vm._v(_vm._s(_vm.errors.room_area[0]))
@@ -58915,49 +58996,35 @@ var render = function() {
                           attrs: { "data-upgraded": ",MaterialTextfield" }
                         },
                         [
-                          _c("input", {
-                            directives: [
+                          _c(
+                            "money",
+                            _vm._b(
                               {
-                                name: "model",
-                                rawName: "v-model.number",
-                                value: _vm.room.maximum_peoples_number,
-                                expression: "room.maximum_peoples_number",
-                                modifiers: { number: true }
-                              }
-                            ],
-                            staticClass: "mdl-textfield__input",
-                            attrs: {
-                              type: "tel",
-                              name: "maximum_peoples_number",
-                              maxlength: "2",
-                              placeholder:
-                                "Enter maximum number of people in the room"
-                            },
-                            domProps: {
-                              value: _vm.room.maximum_peoples_number
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                                staticClass: "mdl-textfield__input",
+                                attrs: { maxlength: "15" },
+                                model: {
+                                  value: _vm.room.maximum_peoples_number,
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.room,
+                                      "maximum_peoples_number",
+                                      $$v
+                                    )
+                                  },
+                                  expression: "room.maximum_peoples_number"
                                 }
-                                _vm.$set(
-                                  _vm.room,
-                                  "maximum_peoples_number",
-                                  _vm._n($event.target.value)
-                                )
                               },
-                              blur: function($event) {
-                                return _vm.$forceUpdate()
-                              }
-                            }
-                          }),
+                              "money",
+                              _vm.people,
+                              false
+                            )
+                          ),
                           _vm._v(" "),
                           _c("label", { staticClass: "mdl-textfield__label" }, [
                             _vm._v("Room People")
                           ]),
                           _vm._v(" "),
-                          _vm.errors.maximum_peoples_number !== null
+                          _vm.errors.maximum_peoples_number
                             ? _c("div", { staticClass: "errors" }, [
                                 _c("p", [
                                   _vm._v(
@@ -58966,7 +59033,8 @@ var render = function() {
                                 ])
                               ])
                             : _vm._e()
-                        ]
+                        ],
+                        1
                       )
                     ]),
                     _vm._v(" "),
@@ -59003,7 +59071,7 @@ var render = function() {
                             _vm._v("Room Price")
                           ]),
                           _vm._v(" "),
-                          _vm.errors.price !== null
+                          _vm.errors.price
                             ? _c("div", { staticClass: "errors" }, [
                                 _c("p", [_vm._v(_vm._s(_vm.errors.price[0]))])
                               ])
@@ -59021,7 +59089,7 @@ var render = function() {
                           on: { "address-id": _vm.getAddressId }
                         }),
                         _vm._v(" "),
-                        _vm.errors.address_id !== null
+                        _vm.errors.address_id
                           ? _c("div", { staticClass: "errors" }, [
                               _c("p", [
                                 _vm._v(_vm._s(_vm.errors.address_id[0]))
@@ -59064,7 +59132,7 @@ var render = function() {
                   1
                 ),
                 _vm._v(" "),
-                _vm.errors.description != null
+                _vm.errors.description
                   ? _c("div", { staticClass: "errors" }, [
                       _c("p", [_vm._v(_vm._s(_vm.errors.description[0]))])
                     ])
@@ -59100,7 +59168,7 @@ var render = function() {
                   1
                 ),
                 _vm._v(" "),
-                _vm.errors.police_and_terms !== null
+                _vm.errors.police_and_terms
                   ? _c("div", { staticClass: "errors" }, [
                       _c("p", [_vm._v(_vm._s(_vm.errors.police_and_terms[0]))])
                     ])
@@ -59142,7 +59210,7 @@ var render = function() {
                   on: { "arr-images-id": _vm.getArrImagesId }
                 }),
                 _vm._v(" "),
-                _vm.errors.list_images_id !== null
+                _vm.errors.list_images_id
                   ? _c("div", { staticClass: "errors" }, [
                       _c("p", [_vm._v(_vm._s(_vm.errors.list_images_id[0]))])
                     ])
@@ -59572,41 +59640,29 @@ var render = function() {
                           attrs: { "data-upgraded": ",MaterialTextfield" }
                         },
                         [
-                          _c("input", {
-                            directives: [
+                          _c(
+                            "money",
+                            _vm._b(
                               {
-                                name: "model",
-                                rawName: "v-model.number",
-                                value: _vm.room.maximum_peoples_number,
-                                expression: "room.maximum_peoples_number",
-                                modifiers: { number: true }
-                              }
-                            ],
-                            staticClass: "mdl-textfield__input",
-                            attrs: {
-                              type: "tel",
-                              name: "maximum_peoples_number",
-                              maxlength: "2"
-                            },
-                            domProps: {
-                              value: _vm.room.maximum_peoples_number
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                                staticClass: "mdl-textfield__input",
+                                attrs: { maxlength: "15" },
+                                model: {
+                                  value: _vm.room.maximum_peoples_numbe,
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.room,
+                                      "maximum_peoples_numbe",
+                                      $$v
+                                    )
+                                  },
+                                  expression: "room.maximum_peoples_numbe"
                                 }
-                                _vm.$set(
-                                  _vm.room,
-                                  "maximum_peoples_number",
-                                  _vm._n($event.target.value)
-                                )
                               },
-                              blur: function($event) {
-                                return _vm.$forceUpdate()
-                              }
-                            }
-                          }),
+                              "money",
+                              _vm.people,
+                              false
+                            )
+                          ),
                           _vm._v(" "),
                           _c("label", { staticClass: "mdl-textfield__label" }, [
                             _vm._v("Room People")
@@ -59621,7 +59677,8 @@ var render = function() {
                                 ])
                               ])
                             : _vm._e()
-                        ]
+                        ],
+                        1
                       )
                     ]),
                     _vm._v(" "),

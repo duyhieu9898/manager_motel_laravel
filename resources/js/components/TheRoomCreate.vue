@@ -50,7 +50,7 @@
                                                     <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
                                                 </label>
                                                 <label for="category-room" class="mdl-textfield__label">Room Type</label>
-                                                <div class="errors" v-if="errors.category_id != null">
+                                                <div class="errors" v-if="errors.category_id">
                                                     <p>{{ errors.category_id[0] }}</p>
                                                 </div>
                                             </div>
@@ -59,7 +59,7 @@
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width is-dirty is-upgraded" data-upgraded=",MaterialTextfield">
                                                 <input type="text"  class="mdl-textfield__input" v-model.trim="room.title" placeholder="Enter title of the room" >
                                                 <label class="mdl-textfield__label">Room Title</label>
-                                                <div class="errors" v-if="errors.title != null">
+                                                <div class="errors" v-if="errors.title ">
                                                     <p>{{ errors.title[0] }}</p>
                                                 </div>
                                             </div>
@@ -69,16 +69,16 @@
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width is-dirty is-upgraded" data-upgraded=",MaterialTextfield">
                                                 <money v-model="room.room_area" v-bind="size" class="mdl-textfield__input" maxlength="6"></money>
                                                 <label class="mdl-textfield__label">Room Area</label>
-                                                <div class="errors" v-if="errors.room_area !== null">
+                                                <div class="errors" v-if="errors.room_area">
                                                     <p>{{ errors.room_area[0] }}</p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 p-t-20">
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width is-dirty is-upgraded" data-upgraded=",MaterialTextfield">
-                                                <input type="tel" name="maximum_peoples_number" class="mdl-textfield__input"  v-model.number="room.maximum_peoples_number" maxlength="2" placeholder="Enter maximum number of people in the room">
+                                                <money v-model="room.maximum_peoples_number" v-bind="people" class="mdl-textfield__input" maxlength='15'></money>
                                                 <label class="mdl-textfield__label">Room People</label>
-                                                <div class="errors" v-if="errors.maximum_peoples_number !== null">
+                                                <div class="errors" v-if="errors.maximum_peoples_number">
                                                     <p>{{ errors.maximum_peoples_number[0] }}</p>
                                                 </div>
                                             </div>
@@ -88,7 +88,7 @@
                                                 <!-- <input type="number"  v-model.lazy="dataRoomEdit.price" > -->
                                                 <money v-model="room.price" v-bind="money" class="mdl-textfield__input" maxlength="14"></money>
                                                 <label class="mdl-textfield__label">Room Price</label>
-                                                <div class="errors" v-if="errors.price !== null">
+                                                <div class="errors" v-if="errors.price">
                                                     <p>{{ errors.price[0] }}</p>
                                                 </div>
                                             </div>
@@ -96,7 +96,7 @@
                                         <div class="col-lg-6 p-t-20">
                                             <!--emit address id -->
                                             <room-address-component @address-id=getAddressId></room-address-component>
-                                            <div class="errors" v-if="errors.address_id !== null">
+                                            <div class="errors" v-if="errors.address_id">
                                                 <p>{{ errors.address_id[0] }}</p>
                                             </div>
                                         </div>
@@ -110,7 +110,7 @@
                                 <div class="">
                                     <ckeditor :editor="editor" v-model.lazy.trim="room.description" :config="editorConfig" ></ckeditor>
                                 </div>
-                                <div class="errors" v-if="errors.description != null">
+                                <div class="errors" v-if="errors.description">
                                     <p>{{ errors.description[0] }}</p>
                                 </div>
                             </div>
@@ -121,7 +121,7 @@
                                 <div class="">
                                     <ckeditor :editor="editor" v-model.lazy.trim="room.police_and_terms" :config="editorConfig"  ></ckeditor>
                                 </div>
-                                <div class="errors" v-if="errors.police_and_terms !== null">
+                                <div class="errors" v-if="errors.police_and_terms">
                                     <p>{{ errors.police_and_terms[0] }}</p>
                                 </div>
                             </div>
@@ -141,7 +141,7 @@
                         </div>
                         <div class="col-lg-12 p-t-20">
                             <room-photo-component @arr-images-id="getArrImagesId"></room-photo-component>
-                            <div class="errors" v-if="errors.list_images_id !== null">
+                            <div class="errors" v-if="errors.list_images_id">
                                 <p>{{ errors.list_images_id[0] }}</p>
                             </div>
                         </div>
@@ -173,15 +173,13 @@ export default {
             placeholder: {
                 title:"Enter title of the room",
                 address:"Enter address of the room",
-                maximum_peoples_number:"Enter maximum number of people in the room"
             },
             room: {
-                id:null,
                 category_id:'Chose type of the room',
                 address_id:null,
                 title:null,
                 room_area:0,
-                maximum_peoples_number:null,
+                maximum_peoples_number:1,
                 price:0,
                 description:null,
                 police_and_terms:null,
@@ -202,7 +200,7 @@ export default {
                 police_and_terms:null,
                 list_images_id:null,
                 check:true,
-
+                on:false,
             },
             money: {
                 decimal: ',',
@@ -216,6 +214,13 @@ export default {
                 thousands: ',',
                 precision: 0,
                 suffix: ' M',
+                masked: false
+            },
+            people: {
+                decimal: ',',
+                thousands: ',',
+                precision: 0,
+                suffix: ' Pleople/Room',
                 masked: false
             }
         }
@@ -270,6 +275,7 @@ export default {
                     .catch(err => {
                         console.log(err.response.data);
                         this.errors=err.response.data.errors
+                        this.errors.on=true;
                     });
             }
         }
@@ -278,7 +284,10 @@ export default {
         room:{
             handler: function () {
 
-                this.errors={
+
+                if(!this.errors.on){
+                    console.log('on off')
+                    this.errors={
                     address_id:null,
                     category_id:null,
                     title:null,
@@ -290,33 +299,90 @@ export default {
                     list_images_id:null,
                     check:true
                     }
-                if (this.room.title === "") {
+                    if (this.room.title === "") {
                     this.errors.title = ['Please enter Title.'];
                     this.errors.check = false;
-                } else if (this.room.title!== null && this.room.title.split(' ').length < 5) {
-                    this.errors.title = ['Title at least 5 words.'];
-                    this.errors.check = false;
+                    } else if (this.room.title!== null && this.room.title.split(' ').length < 5) {
+                        this.errors.title = ['Title at least 5 words.'];
+                        this.errors.check = false;
+                    }
+                    if(this.room.room_area < 10 && this.room.room_area != 0){
+                        this.errors.room_area = ['Room area is too small.'];
+                        this.errors.check = false;
+                    }
+                    if(this.room.maximum_peoples_number === 0){
+                        this.errors.maximum_peoples_number = ['Please enter Number of peoples.'];
+                        this.errors.check = false;
+                    }
+                    if(this.room.description === ""){
+                        this.errors.description = ['Please enter Description.'];
+                        this.errors.check = false;
+                    }
+                    if(this.room.police_and_terms === ""){
+                        this.errors.police_and_terms = ['Please enter PoliceAndTerms.'];
+                        this.errors.check = false;
+                    }
+                }else{
+                    console.log('on on')
+                    console.log(this.room.category_id);
+
+                    this.errors={
+                        address_id:null,
+                        category_id:null,
+                        title:null,
+                        room_area:null,
+                        maximum_peoples_number:null,
+                        price:null,
+                        description:null,
+                        police_and_terms:null,
+                        list_images_id:null,
+                        category_id:null,
+                        check:true,
+                        on:true,
+                    }
+                    if(!Number.isInteger(this.room.category_id)){
+                        this.errors.category_id = ['The room category field is required.'];
+                        this.errors.category_id = false;
+                    }
+
+                    if (this.room.title === '' || this.room.title === null ) {
+                        this.errors.title = ['The room title field is required.'];
+                        this.errors.check = false;
+                    } else if (this.room.title!== null && this.room.title.split(' ').length < 5) {
+                        this.errors.title = ['Title at least 5 words.'];
+                        this.errors.check = false;
+                    }
+                    if(this.room.price === 0 ){
+                        this.errors.price = ['The room price field is required.'];
+                        this.errors.check = false;
+                    }
+                    if(this.room.room_area < 10 ){
+                        this.errors.room_area = ['The room area field is required.'];
+                        this.errors.check = false;
+                    }
+                    if(this.room.maximum_peoples_number === 0){
+                        this.errors.maximum_peoples_number = ['The people field is required.'];
+                        this.errors.check = false;
+                    }
+                    if(this.room.description === "" || this.room.description === null){
+                        this.errors.description = ['The police and terms field is required.'];
+                        this.errors.check = false;
+                    }
+                    if(this.room.police_and_terms === "" || this.room.description === null){
+                        this.errors.police_and_terms = ['The police and terms field is required.'];
+                        this.errors.check = false;
+                    }
+                    if(this.room.list_images_id.length == 0){
+                        this.errors.list_images_id = ['Please enter PoliceAndTerms.'];
+                        this.errors.check = false;
+                    }
+                    if(this.room.address_id === null){
+                        this.errors.address_id = ['The room address field is required.'];
+                        this.errors.check = false;
+                    }
                 }
-                if(this.room.room_area < 10){
-                    this.errors.room_area = ['Room area is too small.'];
-                    this.errors.check = false;
-                }
-                if(this.room.maximum_peoples_number === ''){
-                    this.errors.maximum_peoples_number = ['Please enter Number of peoples.'];
-                    this.errors.check = false;
-                }
-                if(this.room.price < 100000){
-                    this.errors.price = ['Room price is too small.'];
-                    this.errors.check = false;
-                }
-                if(this.room.description === ""){
-                    this.errors.description = ['Please enter Description.'];
-                    this.errors.check = false;
-                }
-                if(this.room.police_and_terms === ""){
-                    this.errors.police_and_terms = ['Please enter PoliceAndTerms.'];
-                    this.errors.check = false;
-                }
+
+
             },
             deep: true
         }

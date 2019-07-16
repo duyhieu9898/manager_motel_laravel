@@ -22,7 +22,7 @@
             <div class="col-md-12">
                 <div class="card card-box">
                     <div class="card-head">
-                        <header>All Bookings</header>
+                        <header>All Rooms</header>
                         <div class="tools">
                             <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
                             <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
@@ -65,8 +65,8 @@
                                 <thead>
                                     <tr>
                                         <th class="center"> # </th>
-                                        <th class="center"> Type </th>
-                                        <th class="center"> Title </th>
+                                        <th> Category </th>
+                                        <th > Title </th>
                                         <th class="center"> Area </th>
                                         <th class="center"> People </th>
                                         <th class="center"> Rent </th>
@@ -77,14 +77,12 @@
                                 <tbody>
                                     <tr class="odd gradeX" v-for="(room,index) in list_rooms" :key="room.id"  >
                                         <td class="center">{{ index+1 }}</td>
-                                        <td class="center">{{ room.name }}</td>
-                                        <td class="center">{{ room.category.name }}</td>
-                                        <td class="center">{{ room.title }}</td>
-                                        <td class="center">{{ room.address.province.name }}</td>
-                                        <td class="center">{{ room.room_area }}m</td>
+                                        <td class="text-primary">{{ room.category.name }}</td>
+                                        <td >{{ room.title }}</td>
+                                        <td class="center">{{ room.room_area }} m</td>
                                         <td class="center">{{ room.maximum_peoples_number }}</td>
                                         <td class="center">{{ room.price }} vnd</td>
-
+                                        <td class="center">{{ room.address.province.name }}</td>
                                         <td class="center">
                                             <router-link :to="{ name: 'room-edit',params: { id: room.id }}" class='btn btn-tbl-edit btn-xs' >
                                                 <i class="fa fa-pencil"></i>

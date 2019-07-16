@@ -101,10 +101,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $dataUser = $request->input('userData');
-        dd($dataUser);
-
         $this->userRepository->updateById($id, $dataUser['name'], $dataUser['email'], $dataUser['role']);
-
         return response(
             [
                 'result' => 'success',
@@ -123,10 +120,6 @@ class UserController extends Controller
     public function destroy($id)
     {
         $this->userRepository->deleteById($id);
-        return response(
-            [
-            'result' => 'success',
-            ], 200
-        );
+        return response(['result' => 'success', 200]);
     }
 }

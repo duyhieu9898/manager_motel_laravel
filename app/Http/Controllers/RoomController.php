@@ -59,17 +59,16 @@ class RoomController extends Controller
     public function store(RoomCreateRequest $request)
     {
         $dataRoom = $request->all();
-        if ($request->filled('name')) {
-            $errors = new MessageBag(['errorlogin' => 'Email hoặc mật khẩu không đúng']); //use view {{Session::get('MessageBag')}}
-
-            return redirect()->withErrors($errors);
+        $roomId = $this->roomRepository->create($dataRoom);
+        if (!$roomId) {
+            return response()->json([
+                'message' => 'Server error while creating room'
+            ], 500);
         }
-        $roomId=$this->roomRepository->create($dataRoom);
-        if ($roomId) {
-            $this->imageRepository->setImagesToRoom($dataRoom['list_images_id'], $roomId);
-            return response(204);
-        }
-        return response(400);
+        $this->imageRepository->setImagesToRoom($dataRoom['list_images_id'], $roomId);
+        return response()->json([
+            'message' => 'store room success'
+        ], 200);
     }
 
     public function edit($id)
@@ -96,7 +95,13 @@ class RoomController extends Controller
         $room     = $this->roomRepository->findById($id);
         $result   = $this->roomRepository->update($room, $dataRoom);
         if ($result) {
-            return response('success', 204);
+            return response()->json([
+                'message' => 'update room success'
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Server error while updating room'
+            ], 500);
         }
     }
     public function category(int $id)
@@ -104,8 +109,8 @@ class RoomController extends Controller
         $category=$this->categoryRepository->getRoomByCategoryId($id);
         $listRooms=$category->rooms;
         return view('category_rooms', compact('listRooms'));
-
     }
+
     public function sendEmail()
     {
         Mail::send('home', ['user' => "hieu"], function ($m) {
