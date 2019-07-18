@@ -45,14 +45,37 @@
                 </div>
                 <div class="collapse navbar-collapse main-menu" id="myNavbar">
                     <ul class="nav navbar-nav mr-auto">
-                        <li><a href="#">Trang chủ</a></li>
-                        <li><a href="#cho-thue-phong-tro" data-toggle="tab">Thuê phòng trọ</a></li>
-                        <li><a href="#nha-cho-thue" data-toggle="tab">Thuê nhà</a></li>
-                        <li><a href="#cho-thue-can-ho" data-toggle="tab">Thuê căn hộ</a></li>
+                        <li><a href="#">Home</a></li>
+                        @foreach ($categories as $category)
+                            <li class="text-capitalize"><a href="{{ route('category_rooms',$category['id']) }}">{{ $category['name'] }}</a></li>
+                        @endforeach
+
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{{ route('register') }}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                        <li><a href="{{ route('login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        @if(Auth::guest())
+                            <li><a href="{{ route('login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                            <li><a href="{{ route('register') }}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                        @elseif(Auth::user()->isAdministrator())
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <i class="fa fa-user"></i> {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ url('/app') }}">Admin Manager</a></li>
+                                    <li><a href="{{ url('/logout') }}">Logout</a></li>
+                                </ul>
+                            </li>
+                        @else
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <i class="fa fa-user"></i> {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ url('/logout') }}">Logout</a></li>
+                                </ul>
+                            </li>
+                        @endif
+
                     </ul>
                 </div>
             </div>

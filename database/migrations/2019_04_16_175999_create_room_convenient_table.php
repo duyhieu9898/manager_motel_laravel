@@ -18,9 +18,15 @@ class CreateRoomConvenientTable extends Migration
             $table->bigInteger('room_id')->unsigned();
             $table->bigInteger('convenient_id')->unsigned();
             $table->timestamps();
-            //
-            $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('convenient_id')->references('id')->on('convenients')->onDelete('cascade')->onUpdate('cascade');
+            //relationship
+            $table->foreign('room_id')->references('id')
+                        ->on('rooms')
+                        ->onDelete('cascade')
+                        ->onUpdate('cascade');
+            $table->foreign('convenient_id')->references('id')
+                        ->on('convenients')
+                        ->onDelete('cascade')
+                        ->onUpdate('cascade');
         });
     }
 

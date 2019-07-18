@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ImageRequest;
 use App\Repositories\Image\ImageRepositoryInterface;
 use Illuminate\Support\Facades\Config;

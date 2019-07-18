@@ -11,8 +11,8 @@
                 <form class="ui-widget form-horizontal" action="ListRoom.php" method="post">
                     <p><strong>category</strong></p>
                     <select class="col-xs-12 form-control">
-                        @foreach($categoryList as $category)
-                        <option>{{$category['name']}}</option>
+                        @foreach($categories as $category)
+                        <option value="{{ $category['id'] }}">{{$category['name']}}</option>
                         @endforeach
                     </select>
                     <p><strong>address</strong></p>
@@ -45,25 +45,21 @@
     <!-- Widget hot category -->
     <!-- motel -->
     <div class="row">
-        <p class="alert alert-info col-sm-12" role="alert">
-            Thuê phòng căn hộ trực tuyến giá tốt nhất
-        </p>
+        <p class="alert alert-info col-sm-12" role="alert">Thuê phòng căn hộ trực tuyến giá tốt nhất</p>
     </div>
-    <div class="row pl-sm-15">
-        <ol class="breadcrumb">
-            <li class="active">
-                <a href="{{ route('index') }}">Trang chủ</a>
-            </li>
-        </ol>
+    <div class="row">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">Home</li>
+            </ol>
+        </nav>
     </div>
     <div class=" row">
-        <p class="mb-10 pl-sm-15 ">
-            Thứ 2, 16/08/2018
-        </p>
+        <p>Thứ 2, 16/08/2018</p>
     </div>
     {{-- show new room --}}
     @foreach ($newRoomsOfCategory as $category)
-    <div class=" row wiget-category " id=" cho-thue-phong-tro">
+    <div class="row wiget-category">
         <div class="col-sm-12 category">
             <div class="row category--name text-capitalize">
                 <a href="{{ route('category_rooms',$category['id']) }}" class="text-success">{{$category['name']}}</a>

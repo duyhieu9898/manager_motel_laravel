@@ -2561,486 +2561,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3167,8 +2687,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.host_name = window.location.origin;
-
     if (this.room_id) {
       //if isset prop room id bind address input
       this.getAddressOfRoom();
@@ -3180,7 +2698,7 @@ __webpack_require__.r(__webpack_exports__);
     getAddressOfRoom: function getAddressOfRoom() {
       var _this = this;
 
-      axios.get(this.host_name + '/api/address/' + this.room_id).then(function (res) {
+      axios.get('/api/address/' + this.room_id).then(function (res) {
         _this.current_address = res.data;
       })["catch"](function (err) {
         console.error(err);
@@ -3202,7 +2720,7 @@ __webpack_require__.r(__webpack_exports__);
     createAddress: function createAddress() {
       var _this2 = this;
 
-      axios.post(this.host_name + '/api/addresses/create', {
+      axios.post('/api/addresses/create', {
         street: this.address.street,
         ward: this.address.ward.id,
         district: this.address.district.id,
@@ -3217,7 +2735,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     updateAddress: function updateAddress() {
-      axios.put(this.host_name + '/api/address/' + this.room_id, {
+      axios.put('/api/address/' + this.room_id, {
         street: this.address.street,
         ward: this.address.ward.id,
         district: this.address.district.id,
@@ -3231,7 +2749,7 @@ __webpack_require__.r(__webpack_exports__);
     getListWardsByDistrict: function getListWardsByDistrict(disttictId) {
       var _this3 = this;
 
-      axios.get(this.host_name + '/api/wards/' + disttictId).then(function (res) {
+      axios.get('/api/wards/' + disttictId).then(function (res) {
         _this3.list_wards = res.data;
       })["catch"](function (err) {
         console.error(err);
@@ -3240,7 +2758,7 @@ __webpack_require__.r(__webpack_exports__);
     getListDistrictsByProvince: function getListDistrictsByProvince(provinceId) {
       var _this4 = this;
 
-      axios.get(this.host_name + '/api/districts/' + provinceId).then(function (res) {
+      axios.get('/api/districts/' + provinceId).then(function (res) {
         _this4.list_districts = res.data;
       })["catch"](function (err) {
         console.error(err);
@@ -3249,7 +2767,7 @@ __webpack_require__.r(__webpack_exports__);
     getListProvinces: function getListProvinces() {
       var _this5 = this;
 
-      axios.get(this.host_name + '/api/provinces').then(function (res) {
+      axios.get('/api/provinces').then(function (res) {
         _this5.list_provinces = res.data;
       })["catch"](function (err) {
         console.error(err);
@@ -3554,7 +3072,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (this.room_id) {
-        axios.get(this.host_name + "/api/list-images/" + this.room_id).then(function (response) {
+        axios.get("/api/list-images/" + this.room_id).then(function (response) {
           _this.list_images = response.data;
         })["catch"](function (err) {
           console.error(err.response.data);
@@ -3564,7 +3082,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteImage: function deleteImage(imageId, index) {
       var _this2 = this;
 
-      axios["delete"](this.host_name + "/api/delete-image/" + imageId).then(function (res) {
+      axios["delete"]("/api/delete-image/" + imageId).then(function (res) {
         _this2.list_images.splice(index, 1);
 
         ;
@@ -3693,27 +3211,100 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      room: {},
       list_rooms: [],
-      host_name: ''
+      pagination: {
+        total: 0,
+        per_page: 2,
+        from: 1,
+        to: 0,
+        current_page: 1
+      },
+      offset: 4
     };
   },
   created: function created() {
-    this.host_name = window.location.origin;
-    this.getlist_rooms();
+    this.getListRooms(1);
   },
   methods: {
-    getlist_rooms: function getlist_rooms() {
+    getListRooms: function getListRooms(numPage) {
       var _this = this;
 
-      axios.get(this.host_name + "/api/rooms").then(function (response) {
-        _this.list_rooms = response.data;
+      axios.get("/api/rooms?page=".concat(numPage)).then(function (response) {
+        _this.list_rooms = response.data.rooms;
+        _this.pagination = response.data.pagination;
       })["catch"](function (error) {
-        console.error(error);
+        console.error(error.response);
       });
+    },
+    changePage: function changePage(page) {
+      this.pagination.current_page = page;
+      this.getListRooms(page);
+    },
+    nextPage: function nextPage() {
+      if (this.pagination.current_page + 1 <= this.pagination.last_page) {
+        this.getListRooms(this.pagination.current_page + 1);
+      }
+    },
+    prevPage: function prevPage() {
+      if (this.pagination.current_page + 1 >= 1) {
+        this.getListRooms(this.pagination.current_page - 1);
+      }
+    },
+    linksPaginate: function linksPaginate() {
+      html = "";
+    }
+  },
+  computed: {
+    isActived: function isActived() {
+      return this.pagination.current_page;
+    },
+    pagesNumber: function pagesNumber() {
+      if (!this.pagination.to) {
+        return [];
+      }
+
+      var from = this.pagination.current_page - this.offset;
+
+      if (from < 1) {
+        from = 1;
+      }
+
+      var to = from + this.offset * 2;
+
+      if (to >= this.pagination.last_page) {
+        to = this.pagination.last_page;
+      }
+
+      var pagesArray = [];
+
+      while (from <= to) {
+        pagesArray.push(from);
+        from++;
+      }
+
+      return pagesArray;
     }
   }
 });
@@ -3951,14 +3542,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   created: function created() {
-    this.host_name = window.location.origin;
     this.getFormData();
   },
   methods: {
     getFormData: function getFormData() {
       var _this = this;
 
-      axios.get(this.host_name + '/api/rooms/create').then(function (res) {
+      axios.get('/api/rooms/create').then(function (res) {
         _this.list_categories = res.data.categories;
         _this.list_convenients = res.data.convenients;
       })["catch"](function (err) {
@@ -4335,8 +3925,10 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
+  // mounted() {
+  //     $("html, body").animate({ scrollTop: 0 }, 300);
+  // },
   created: function created() {
-    this.host_name = window.location.origin;
     this.room.id = parseInt(this.$route.params.id);
     this.getRoom(this.roomId);
   },
@@ -4344,7 +3936,7 @@ __webpack_require__.r(__webpack_exports__);
     getRoom: function getRoom(roomId) {
       var _this = this;
 
-      axios.get(this.host_name + "/api/rooms/".concat(this.room.id, "/edit")).then(function (response) {
+      axios.get("/api/rooms/".concat(this.room.id, "/edit")).then(function (response) {
         _this.room = response.data.room;
         _this.categories = response.data.categories;
         _this.list_convenients_id = response.data.arrListConvenientsId;
@@ -4363,7 +3955,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.errors.check) {
         // this.updateRoom();
         console.log('update');
-        axios.put(this.host_name + '/api/rooms/' + this.room.id, {
+        axios.put('/api/rooms/' + this.room.id, {
           category_id: this.room.category_id,
           title: this.room.title,
           price: this.room.price,
@@ -54632,7 +54224,7 @@ var render = function() {
     _c("div", { staticClass: "page-header navbar navbar-fixed-top" }, [
       _c("div", { staticClass: "page-header-inner " }, [
         _c("div", { staticClass: "page-logo" }, [
-          _c("a", { attrs: { href: "index.html" } }, [
+          _c("a", { attrs: { href: _vm.host_name } }, [
             _c("img", {
               attrs: { alt: "", src: _vm.asset("admin_rooms/img/logo.png") }
             }),
@@ -54847,37 +54439,7 @@ var render = function() {
                   _vm._v(" "),
                   _vm._m(18),
                   _vm._v(" "),
-                  _vm._m(19),
-                  _vm._v(" "),
-                  _vm._m(20),
-                  _vm._v(" "),
-                  _vm._m(21),
-                  _vm._v(" "),
-                  _vm._m(22),
-                  _vm._v(" "),
-                  _vm._m(23),
-                  _vm._v(" "),
-                  _vm._m(24),
-                  _vm._v(" "),
-                  _vm._m(25),
-                  _vm._v(" "),
-                  _vm._m(26),
-                  _vm._v(" "),
-                  _vm._m(27),
-                  _vm._v(" "),
-                  _vm._m(28),
-                  _vm._v(" "),
-                  _vm._m(29),
-                  _vm._v(" "),
-                  _vm._m(30),
-                  _vm._v(" "),
-                  _vm._m(31),
-                  _vm._v(" "),
-                  _vm._m(32),
-                  _vm._v(" "),
-                  _vm._m(33),
-                  _vm._v(" "),
-                  _vm._m(34)
+                  _vm._m(19)
                 ]
               )
             ])
@@ -54900,10 +54462,10 @@ var render = function() {
         },
         [
           _c("div", { staticClass: "chat-sidebar" }, [
-            _vm._m(35),
+            _vm._m(20),
             _vm._v(" "),
             _c("div", { staticClass: "tab-content" }, [
-              _vm._m(36),
+              _vm._m(21),
               _vm._v(" "),
               _c(
                 "div",
@@ -54924,7 +54486,7 @@ var render = function() {
                         }
                       },
                       [
-                        _vm._m(37),
+                        _vm._m(22),
                         _vm._v(" "),
                         _c("ul", { staticClass: "media-list list-items" }, [
                           _c("li", { staticClass: "media" }, [
@@ -54942,11 +54504,11 @@ var render = function() {
                             _vm._v(" "),
                             _c("i", { staticClass: "online dot" }),
                             _vm._v(" "),
-                            _vm._m(38)
+                            _vm._m(23)
                           ]),
                           _vm._v(" "),
                           _c("li", { staticClass: "media" }, [
-                            _vm._m(39),
+                            _vm._m(24),
                             _vm._v(" "),
                             _c("img", {
                               staticClass: "media-object",
@@ -54962,7 +54524,7 @@ var render = function() {
                             _vm._v(" "),
                             _c("i", { staticClass: "busy dot" }),
                             _vm._v(" "),
-                            _vm._m(40)
+                            _vm._m(25)
                           ]),
                           _vm._v(" "),
                           _c("li", { staticClass: "media" }, [
@@ -54980,11 +54542,11 @@ var render = function() {
                             _vm._v(" "),
                             _c("i", { staticClass: "away dot" }),
                             _vm._v(" "),
-                            _vm._m(41)
+                            _vm._m(26)
                           ]),
                           _vm._v(" "),
                           _c("li", { staticClass: "media" }, [
-                            _vm._m(42),
+                            _vm._m(27),
                             _vm._v(" "),
                             _c("img", {
                               staticClass: "media-object",
@@ -55000,7 +54562,7 @@ var render = function() {
                             _vm._v(" "),
                             _c("i", { staticClass: "online dot" }),
                             _vm._v(" "),
-                            _vm._m(43)
+                            _vm._m(28)
                           ]),
                           _vm._v(" "),
                           _c("li", { staticClass: "media" }, [
@@ -55018,7 +54580,7 @@ var render = function() {
                             _vm._v(" "),
                             _c("i", { staticClass: "busy dot" }),
                             _vm._v(" "),
-                            _vm._m(44)
+                            _vm._m(29)
                           ]),
                           _vm._v(" "),
                           _c("li", { staticClass: "media" }, [
@@ -55036,15 +54598,15 @@ var render = function() {
                             _vm._v(" "),
                             _c("i", { staticClass: "online dot" }),
                             _vm._v(" "),
-                            _vm._m(45)
+                            _vm._m(30)
                           ])
                         ]),
                         _vm._v(" "),
-                        _vm._m(46),
+                        _vm._m(31),
                         _vm._v(" "),
                         _c("ul", { staticClass: "media-list list-items" }, [
                           _c("li", { staticClass: "media" }, [
-                            _vm._m(47),
+                            _vm._m(32),
                             _vm._v(" "),
                             _c("img", {
                               staticClass: "media-object",
@@ -55060,7 +54622,7 @@ var render = function() {
                             _vm._v(" "),
                             _c("i", { staticClass: "offline dot" }),
                             _vm._v(" "),
-                            _vm._m(48)
+                            _vm._m(33)
                           ]),
                           _vm._v(" "),
                           _c("li", { staticClass: "media" }, [
@@ -55078,11 +54640,11 @@ var render = function() {
                             _vm._v(" "),
                             _c("i", { staticClass: "offline dot" }),
                             _vm._v(" "),
-                            _vm._m(49)
+                            _vm._m(34)
                           ]),
                           _vm._v(" "),
                           _c("li", { staticClass: "media" }, [
-                            _vm._m(50),
+                            _vm._m(35),
                             _vm._v(" "),
                             _c("img", {
                               staticClass: "media-object",
@@ -55098,7 +54660,7 @@ var render = function() {
                             _vm._v(" "),
                             _c("i", { staticClass: "offline dot" }),
                             _vm._v(" "),
-                            _vm._m(51)
+                            _vm._m(36)
                           ]),
                           _vm._v(" "),
                           _c("li", { staticClass: "media" }, [
@@ -55116,7 +54678,7 @@ var render = function() {
                             _vm._v(" "),
                             _c("i", { staticClass: "offline dot" }),
                             _vm._v(" "),
-                            _vm._m(52)
+                            _vm._m(37)
                           ])
                         ])
                       ]
@@ -55125,7 +54687,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "chat-sidebar-item" }, [
                     _c("div", { staticClass: "chat-sidebar-chat-user" }, [
-                      _vm._m(53),
+                      _vm._m(38),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -55140,7 +54702,7 @@ var render = function() {
                               }
                             }),
                             _vm._v(" "),
-                            _vm._m(54)
+                            _vm._m(39)
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "post in" }, [
@@ -55152,7 +54714,7 @@ var render = function() {
                               }
                             }),
                             _vm._v(" "),
-                            _vm._m(55)
+                            _vm._m(40)
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "post out" }, [
@@ -55164,7 +54726,7 @@ var render = function() {
                               }
                             }),
                             _vm._v(" "),
-                            _vm._m(56)
+                            _vm._m(41)
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "post in" }, [
@@ -55176,7 +54738,7 @@ var render = function() {
                               }
                             }),
                             _vm._v(" "),
-                            _vm._m(57)
+                            _vm._m(42)
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "post out" }, [
@@ -55188,7 +54750,7 @@ var render = function() {
                               }
                             }),
                             _vm._v(" "),
-                            _vm._m(58)
+                            _vm._m(43)
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "post out" }, [
@@ -55200,7 +54762,7 @@ var render = function() {
                               }
                             }),
                             _vm._v(" "),
-                            _vm._m(59)
+                            _vm._m(44)
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "post in" }, [
@@ -55212,25 +54774,25 @@ var render = function() {
                               }
                             }),
                             _vm._v(" "),
-                            _vm._m(60)
+                            _vm._m(45)
                           ])
                         ]
                       ),
                       _vm._v(" "),
-                      _vm._m(61)
+                      _vm._m(46)
                     ])
                   ])
                 ]
               ),
               _vm._v(" "),
-              _vm._m(62)
+              _vm._m(47)
             ])
           ])
         ]
       )
     ]),
     _vm._v(" "),
-    _vm._m(63)
+    _vm._m(48)
   ])
 }
 var staticRenderFns = [
@@ -55891,991 +55453,6 @@ var staticRenderFns = [
               ])
             ]
           )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "menu-heading m-t-20" }, [
-      _c("span", [_vm._v("-- Layout, Apps & Widget")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c("a", { staticClass: "nav-link nav-toggle", attrs: { href: "#" } }, [
-        _c("i", { staticClass: "material-icons" }, [_vm._v("desktop_mac")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "title" }, [_vm._v("Layout")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "arrow" })
-      ]),
-      _vm._v(" "),
-      _c("ul", { staticClass: "sub-menu" }, [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "layout_boxed.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Boxed")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "layout_full_width.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("Full Width")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "layout_collapse.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("Collapse Menu")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "layout_right_sidebar.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("Right Sidebar")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "layout_sidebar_hover_menu.html" }
-            },
-            [
-              _c("span", { staticClass: "title" }, [
-                _vm._v("Hover Sidebar Menu")
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "layout_mega_menu.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("Mega Menu")])]
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c("a", { staticClass: "nav-link nav-toggle", attrs: { href: "#" } }, [
-        _c("i", { staticClass: "material-icons" }, [_vm._v("grain")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "title" }, [_vm._v("Apps")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "arrow" })
-      ]),
-      _vm._v(" "),
-      _c("ul", { staticClass: "sub-menu" }, [
-        _c("li", { staticClass: "nav-item" }, [
-          _c("a", { staticClass: "nav-link ", attrs: { href: "chat.html" } }, [
-            _c("span", { staticClass: "title" }, [_vm._v("Chat")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "contact_list.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Contact List")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "contact_grid.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Contact Grid")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "gallery.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Gallery")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "support.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Support")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "calendar.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Calendar")])]
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c(
-        "a",
-        { staticClass: "nav-link nav-toggle", attrs: { href: "widget.html" } },
-        [
-          _c("i", { staticClass: "material-icons" }, [_vm._v("widgets")]),
-          _vm._v(" "),
-          _c("span", { staticClass: "title" }, [_vm._v("Widget")])
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "menu-heading m-t-20" }, [
-      _c("span", [_vm._v("-- Elements, Forms & Tables")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c("a", { staticClass: "nav-link nav-toggle", attrs: { href: "#" } }, [
-        _c("i", { staticClass: "material-icons" }, [_vm._v("dvr")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "title" }, [_vm._v("UI Elements")]),
-        _vm._v(" "),
-        _c(
-          "span",
-          { staticClass: "label label-rouded label-menu label-warning" },
-          [_vm._v("new")]
-        ),
-        _vm._v(" "),
-        _c("span", { staticClass: "arrow" })
-      ]),
-      _vm._v(" "),
-      _c("ul", { staticClass: "sub-menu" }, [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "buttons.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Buttons")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c("a", { staticClass: "nav-link ", attrs: { href: "alert.html" } }, [
-            _c("span", { staticClass: "title" }, [_vm._v("Alert")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "tabs_accordions_navs.html" }
-            },
-            [
-              _c("span", { staticClass: "title" }, [
-                _vm._v("Tabs & Accordions")
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "typography.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Typography")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "notification.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Notifications")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "sweet_alert.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Sweet Alert")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "panels.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Panels")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c("a", { staticClass: "nav-link ", attrs: { href: "grid.html" } }, [
-            _c("span", { staticClass: "title" }, [_vm._v("Grids")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c("a", { staticClass: "nav-link ", attrs: { href: "tree.html" } }, [
-            _c("span", { staticClass: "title" }, [_vm._v("Tree View")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "carousel.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Carousel")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "animation.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Animations")])]
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c("a", { staticClass: "nav-link nav-toggle", attrs: { href: "#" } }, [
-        _c("i", { staticClass: "material-icons" }, [_vm._v("store")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "title" }, [_vm._v("Material Elements")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "arrow" })
-      ]),
-      _vm._v(" "),
-      _c("ul", { staticClass: "sub-menu" }, [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "material_button.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("Buttons")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "material_tab.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Tabs")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "material_chips.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("Chips")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "material_grid.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Grid")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "material_form.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Form")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "material_datepicker.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("DatePicker")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "material_select.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("Select Item")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "material_loading.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("Loading")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "material_menu.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Menu")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "material_slider.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("Slider")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "material_tables.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("Tables")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "material_toggle.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("Toggle")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "material_badges.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("Badges")])]
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c(
-        "a",
-        { staticClass: "nav-link nav-toggle", attrs: { href: "javascript:;" } },
-        [
-          _c("i", { staticClass: "material-icons" }, [_vm._v("subtitles")]),
-          _vm._v(" "),
-          _c("span", { staticClass: "title" }, [_vm._v("Forms ")]),
-          _vm._v(" "),
-          _c("span", { staticClass: "arrow" })
-        ]
-      ),
-      _vm._v(" "),
-      _c("ul", { staticClass: "sub-menu" }, [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "layouts_form.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Form Layout")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "advance_form.html" } },
-            [
-              _c("span", { staticClass: "title" }, [
-                _vm._v("Advance Component")
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "validation_form.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("Form Validation")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c("a", { staticClass: "nav-link ", attrs: { href: "steps.html" } }, [
-            _c("span", { staticClass: "title" }, [_vm._v("Wizard")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "file_upload.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("File Upload")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "editable_form.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Editor")])]
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c(
-        "a",
-        { staticClass: "nav-link nav-toggle", attrs: { href: "javascript:;" } },
-        [
-          _c("i", { staticClass: "material-icons" }, [_vm._v("list")]),
-          _vm._v(" "),
-          _c("span", { staticClass: "title" }, [_vm._v("Data Tables")]),
-          _vm._v(" "),
-          _c("span", { staticClass: "arrow" })
-        ]
-      ),
-      _vm._v(" "),
-      _c("ul", { staticClass: "sub-menu" }, [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "basic_table.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Basic Tables")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "advanced_table.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("Advance Tables")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "editable_table.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("Editable Tables")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "group_table.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Grouping")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "table_data.html" } },
-            [
-              _c("span", { staticClass: "title" }, [
-                _vm._v("Tables With Sourced Data")
-              ])
-            ]
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "menu-heading m-t-20" }, [
-      _c("span", [_vm._v("-- Extra Components")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c(
-        "a",
-        { staticClass: "nav-link nav-toggle", attrs: { href: "javascript:;" } },
-        [
-          _c("i", { staticClass: "material-icons" }, [_vm._v("timeline")]),
-          _vm._v(" "),
-          _c("span", { staticClass: "title" }, [_vm._v("Charts")]),
-          _vm._v(" "),
-          _c("span", { staticClass: "arrow" })
-        ]
-      ),
-      _vm._v(" "),
-      _c("ul", { staticClass: "sub-menu" }, [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "charts_echarts.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("eCharts")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "charts_morris.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Morris Charts")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "charts_chartjs.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("Chartjs")])]
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c(
-        "a",
-        { staticClass: "nav-link nav-toggle", attrs: { href: "javascript:;" } },
-        [
-          _c("i", { staticClass: "material-icons" }, [_vm._v("map")]),
-          _vm._v(" "),
-          _c("span", { staticClass: "title" }, [_vm._v("Maps")]),
-          _vm._v(" "),
-          _c("span", { staticClass: "arrow" })
-        ]
-      ),
-      _vm._v(" "),
-      _c("ul", { staticClass: "sub-menu" }, [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "google_maps.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Google Maps")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "vector_maps.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Vector Maps")])]
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c("a", { staticClass: "nav-link nav-toggle", attrs: { href: "#" } }, [
-        _c("i", { staticClass: "material-icons" }, [_vm._v("album")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "title" }, [_vm._v("Icons")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "arrow" })
-      ]),
-      _vm._v(" "),
-      _c("ul", { staticClass: "sub-menu" }, [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "fontawesome_icons.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("Font Awesome")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "simpleline_icons.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("Simple Line Icon")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link ",
-              attrs: { href: "material_icons.html" }
-            },
-            [_c("span", { staticClass: "title" }, [_vm._v("Material Icon")])]
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c(
-        "a",
-        { staticClass: "nav-link nav-toggle", attrs: { href: "javascript:;" } },
-        [
-          _c("i", { staticClass: "material-icons" }, [_vm._v("description")]),
-          _vm._v(" "),
-          _c("span", { staticClass: "title" }, [_vm._v("Extra pages")]),
-          _vm._v(" "),
-          _c("span", { staticClass: "arrow" })
-        ]
-      ),
-      _vm._v(" "),
-      _c("ul", { staticClass: "sub-menu" }, [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "timeline.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Timeline")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c("a", { staticClass: "nav-link ", attrs: { href: "login.html" } }, [
-            _c("span", { staticClass: "title" }, [_vm._v("Login")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "sign_up.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Registration")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "user_profile.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Profile")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "pricing.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Pricing")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "contactus.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Contact Us")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "invoice.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Invoice")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c("a", { staticClass: "nav-link ", attrs: { href: "faq.html" } }, [
-            _c("span", { staticClass: "title" }, [_vm._v("Faq")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "lock_screen.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Lock Screen")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "page-404.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("404 Page")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "page-500.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("500 Page")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            { staticClass: "nav-link ", attrs: { href: "blank_page.html" } },
-            [_c("span", { staticClass: "title" }, [_vm._v("Blank Page")])]
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c(
-        "a",
-        { staticClass: "nav-link nav-toggle", attrs: { href: "javascript:;" } },
-        [
-          _c("i", { staticClass: "material-icons" }, [_vm._v("slideshow")]),
-          _vm._v(" "),
-          _c("span", { staticClass: "title" }, [_vm._v("Multi Level Menu")]),
-          _vm._v(" "),
-          _c("span", { staticClass: "arrow " })
-        ]
-      ),
-      _vm._v(" "),
-      _c("ul", { staticClass: "sub-menu" }, [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link nav-toggle",
-              attrs: { href: "javascript:;" }
-            },
-            [
-              _c("i", { staticClass: "fa fa-university" }),
-              _vm._v(" Item 1\n                                        "),
-              _c("span", { staticClass: "arrow" })
-            ]
-          ),
-          _vm._v(" "),
-          _c("ul", { staticClass: "sub-menu" }, [
-            _c("li", { staticClass: "nav-item" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "nav-link nav-toggle",
-                  attrs: { href: "javascript:;" }
-                },
-                [
-                  _c("i", { staticClass: "fa fa-bell-o" }),
-                  _vm._v(
-                    " Arrow Toggle\n                                                "
-                  ),
-                  _c("span", { staticClass: "arrow " })
-                ]
-              ),
-              _vm._v(" "),
-              _c("ul", { staticClass: "sub-menu" }, [
-                _c("li", { staticClass: "nav-item" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "nav-link",
-                      attrs: { href: "javascript:;" }
-                    },
-                    [
-                      _c("i", { staticClass: "fa fa-calculator" }),
-                      _vm._v(" Sample Link 1")
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "nav-item" }, [
-                  _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-                    _c("i", { staticClass: "fa fa-clone" }),
-                    _vm._v(" Sample Link 2")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "nav-item" }, [
-                  _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-                    _c("i", { staticClass: "fa fa-cogs" }),
-                    _vm._v(" Sample Link 3")
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "nav-item" }, [
-              _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-                _c("i", { staticClass: "fa fa-file-pdf-o" }),
-                _vm._v(" Sample Link 1")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "nav-item" }, [
-              _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-                _c("i", { staticClass: "fa fa-rss" }),
-                _vm._v(" Sample Link 2")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "nav-item" }, [
-              _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-                _c("i", { staticClass: "fa fa-hdd-o" }),
-                _vm._v(" Sample Link 3")
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link nav-toggle",
-              attrs: { href: "javascript:;" }
-            },
-            [
-              _c("i", { staticClass: "fa fa-gavel" }),
-              _vm._v(" Arrow Toggle\n                                        "),
-              _c("span", { staticClass: "arrow" })
-            ]
-          ),
-          _vm._v(" "),
-          _c("ul", { staticClass: "sub-menu" }, [
-            _c("li", { staticClass: "nav-item" }, [
-              _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-                _c("i", { staticClass: "fa fa-paper-plane" }),
-                _vm._v(" Sample Link 1")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "nav-item" }, [
-              _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-                _c("i", { staticClass: "fa fa-power-off" }),
-                _vm._v(" Sample Link 1")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "nav-item" }, [
-              _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-                _c("i", { staticClass: "fa fa-recycle" }),
-                _vm._v(
-                  " Sample Link 1\n                                             "
-                )
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-            _c("i", { staticClass: "fa fa-volume-up" }),
-            _vm._v(" Item 3 ")
-          ])
         ])
       ])
     ])
@@ -58607,6 +57184,102 @@ var render = function() {
             ])
           ])
         ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("nav", {}, [
+        _c(
+          "ul",
+          { staticClass: "pagination" },
+          [
+            _c(
+              "li",
+              {
+                staticClass: "page-item",
+                class: [_vm.pagination.current_page === 1 ? "disabled" : ""]
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "page-link",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.changePage(_vm.pagination.current_page - 1)
+                      }
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("prev")
+                    ])
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _vm._l(_vm.pagesNumber, function(page) {
+              return _c(
+                "li",
+                {
+                  key: page,
+                  staticClass: "page-item",
+                  class: [page == _vm.isActived ? "active" : ""]
+                },
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "page-link",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.changePage(page)
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(page))]
+                  )
+                ]
+              )
+            }),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                staticClass: "page-item",
+                class: [
+                  _vm.pagination.current_page === _vm.pagination.last_page
+                    ? "disabled"
+                    : ""
+                ]
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "page-link",
+                    attrs: { "aria-label": "Next" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.changePage(_vm.pagination.current_page + 1)
+                      }
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("next")
+                    ])
+                  ]
+                )
+              ]
+            )
+          ],
+          2
+        )
       ])
     ])
   ])
@@ -75233,6 +73906,9 @@ __webpack_require__.r(__webpack_exports__);
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+var token = 'be81524776d1a1cf18f877aca7fb740fdecf9b69a7c5e6f8cc1a125b7b2d3d12';
+axios.defaults.baseURL = window.location.origin;
+axios.defaults.headers.common['Authorization'] = "Bearer ".concat(token);
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /**
  * The following block of code may be used to automatically register your
@@ -75283,13 +73959,22 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
     path: '/app/admin/rooms/create',
     name: 'room-create',
     component: _components_TheRoomCreate_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
-  }]
+  }],
+  scrollBehavior: function scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return {
+        x: 0,
+        y: 0
+      };
+    }
+  }
 });
 var app = new Vue({
   el: '#app',
   router: router
 });
-;
 
 /***/ }),
 

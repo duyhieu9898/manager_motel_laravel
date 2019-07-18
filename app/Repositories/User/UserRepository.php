@@ -27,12 +27,13 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return User::get()->load('roles');
     }
 
-    public function createUser($userName, $userEmail, $userPassword, $nameRole)
+    public function createUser($dataUser)
     {
         $user = new User();
-        $user->name = $userName;
-        $user->email = $userEmail;
-        $user->password = bcrypt($userPassword);
+        $user->name = $dataUser['name'];
+        $user->email = $dataUser['email'];
+        $user->password = bcrypt($dataUser['password']);
+        $user->api_token = $dataUser['api_token'];
         $user->save();
         return $user;
     }

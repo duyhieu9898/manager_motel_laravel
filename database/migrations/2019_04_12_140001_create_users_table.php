@@ -19,12 +19,17 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('api_token', 80)->unique()->nullable()->default(null);
             $table->string('phone')->nullable();
             $table->bigInteger('address_id')->unsigned()->nullable();
             $table->rememberToken();
             $table->timestamps();
+
             //relationship
-            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade')->onUpdate('cascade'); //n-1
+            $table->foreign('address_id')->references('id')
+                        ->on('addresses')
+                        ->onDelete('cascade')
+                        ->onUpdate('cascade'); //n-1
         });
     }
 

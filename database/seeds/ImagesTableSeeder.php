@@ -13,92 +13,31 @@ class ImagesTableSeeder extends Seeder
     public function run()
     {
         //
-        $image = new Image;
-        $image->id = 1;
-        $image->original_name = "image 1";
-        $image->slug = "motel-1.jpg";
-        $image->file_name = "/images/motel-1.jpg";
-        $image->room_id = 1;
-        $image->save();
+        for ($i = 1; $i <= 100; $i++) {
+            Image::create([
+            'original_name' => "image {$i}",
+            'slug' => "motel-{$i}.jpg",
+            'file_name' => '/images/motel-1.jpg',
+            'room_id' => $i,
+            ]);
+        }
 
-        $image = new Image;
-        $image->id = 2;
-        $image->original_name = "image 1";
-        $image->slug = "motel-1.jpg";
-        $image->file_name = "/images/motel-2.jpg";
-        $image->room_id = 1;
-        $image->save();
+        for ($i = 101; $i <= 200; $i++) {
+            Image::create([
+            'original_name' => "image {$i}",
+            'slug' => "motel-{$i}.jpg",
+            'file_name' => '/images/house-1.jpg',
+            'room_id' => $i,
+            ]);
+        }
 
-        $image = new Image;
-        $image->id = 3;
-        $image->original_name = "image 1";
-        $image->slug = "motel-1.jpg";
-        $image->file_name = "/images/hinh5.png";
-        $image->room_id = 2;
-        $image->save();
-
-        $image = new Image;
-        $image->id = 4;
-        $image->original_name = "image 1";
-        $image->slug = "motel-1.jpg";
-        $image->file_name = "/images/hinh5.png";
-        $image->room_id = 3;
-        $image->save();
-
-        $image = new Image;
-        $image->id = 5;
-        $image->original_name = "image 1";
-        $image->slug = "motel-1.jpg";
-        $image->file_name = "/images/hinh5.png";
-        $image->room_id = 4;
-        $image->save();
-
-        $image = new Image;
-        $image->id = 6;
-        $image->original_name = "image 1";
-        $image->slug = "motel-1.jpg";
-        $image->file_name = "/images/house-1.jpg";
-        $image->room_id = 5;
-        $image->save();
-
-        $image = new Image;
-        $image->id = 7;
-        $image->original_name = "image 1";
-        $image->slug = "motel-1.jpg";
-        $image->file_name = "/images/apartment-1.jpg";
-        $image->room_id = 6;
-        $image->save();
-
-        $image = new Image;
-        $image->id = 8;
-        $image->original_name = "image 1";
-        $image->slug = "motel-1.jpg";
-        $image->file_name = "/images/apartment-1.jpg";
-        $image->room_id = 7;
-        $image->save();
-
-        $image = new Image;
-        $image->id = 9;
-        $image->original_name = "image 1";
-        $image->slug = "motel-1.jpg";
-        $image->file_name = "/images/apartment-1.jpg";
-        $image->room_id = 8;
-        $image->save();
-
-        $image = new Image;
-        $image->id = 10;
-        $image->original_name = "image 1";
-        $image->slug = "motel-1.jpg";
-        $image->file_name = "/images/apartment-1.jpg";
-        $image->room_id = 9;
-        $image->save();
-
-        $image = new Image;
-        $image->id = 11;
-        $image->original_name = "image 1";
-        $image->slug = "motel-1.jpg";
-        $image->file_name = "/images/apartment-1.jpg";
-        $image->room_id = 10;
-        $image->save();
+        for ($i = 201; $i <= 300; $i++) {
+            Image::create([
+            'original_name' => "image {$i}",
+            'slug' => "motel-{$i}.jpg",
+            'file_name' => '/images/apartment-1.jpg',
+            'room_id' => $i,
+            ]);
+        }
     }
 }

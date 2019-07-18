@@ -92,7 +92,6 @@
             };
         },
         created() {
-            this.host_name = window.location.origin;
             if(this.room_id){
                 //if isset prop room id bind address input
                 this.getAddressOfRoom();
@@ -103,7 +102,7 @@
         methods: {
             getAddressOfRoom() {
                 axios
-                    .get(this.host_name + '/api/address/' + this.room_id)
+                    .get('/api/address/' + this.room_id)
                     .then(res => {
                         this.current_address = res.data;
                     })
@@ -127,7 +126,7 @@
             },
             createAddress(){
                 axios
-                    .post(this.host_name + '/api/addresses/create', {
+                    .post('/api/addresses/create', {
                         street:this.address.street,
                         ward:this.address.ward.id,
                         district:this.address.district.id,
@@ -144,7 +143,7 @@
             },
             updateAddress() {
                 axios
-                    .put(this.host_name + '/api/address/' + this.room_id, {
+                    .put('/api/address/' + this.room_id, {
                         street:this.address.street,
                         ward:this.address.ward.id,
                         district:this.address.district.id,
@@ -159,7 +158,7 @@
             },
             getListWardsByDistrict(disttictId) {
                 axios
-                    .get(this.host_name + '/api/wards/' + disttictId)
+                    .get('/api/wards/' + disttictId)
                     .then(res => {
                         this.list_wards = res.data;
                     })
@@ -169,7 +168,7 @@
             },
             getListDistrictsByProvince(provinceId) {
                 axios
-                    .get(this.host_name + '/api/districts/' + provinceId)
+                    .get('/api/districts/' + provinceId)
                     .then(res => {
                         this.list_districts = res.data;
                     })
@@ -179,7 +178,7 @@
             },
             getListProvinces() {
                 axios
-                    .get(this.host_name + '/api/provinces')
+                    .get('/api/provinces')
                     .then(res => {
                         this.list_provinces = res.data;
                     })

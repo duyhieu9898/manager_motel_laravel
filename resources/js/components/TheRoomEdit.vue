@@ -206,15 +206,17 @@ export default {
             }
         }
     },
+    // mounted() {
+    //     $("html, body").animate({ scrollTop: 0 }, 300);
+    // },
     created(){
-        this.host_name = window.location.origin;
         this.room.id = parseInt(this.$route.params.id);
         this.getRoom(this.roomId);
     },
     methods: {
         getRoom(roomId) {
             axios
-                .get(this.host_name + `/api/rooms/${this.room.id}/edit`)
+                .get(`/api/rooms/${this.room.id}/edit`)
                 .then(response => {
                     this.room = response.data.room;
                     this.categories = response.data.categories;
@@ -233,11 +235,8 @@ export default {
             if(this.errors.check){
                 // this.updateRoom();
                 console.log('update');
-
-
-
                 axios
-                    .put(this.host_name + '/api/rooms/' + this.room.id,
+                    .put('/api/rooms/' + this.room.id,
                         {
                             category_id:this.room.category_id,
                             title:this.room.title,

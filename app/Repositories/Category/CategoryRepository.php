@@ -22,13 +22,14 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
         parent::__construct($model);
     }
 
-    public function getNewRoomsOfCategory($categories)
+    public function getNewRoomsOfAllCategories($numItem)
     {
+        $categories  = $this->getAll();
         foreach ($categories as $category) {
             $rooms[] = Category::ofName($category['name'])->first()->load(
                 [
-                    'rooms' => function ($query) {
-                        $query->limit(3);
+                    'rooms' => function ($query) use ($numItem) {
+                        $query->limit($numItem);
                     },
                     'rooms.address.ward',
                     'rooms.address.district',
@@ -49,7 +50,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
             'rooms.address.province',
             'rooms.images',
             ]
-        );
+        )->pagination(15);
         if ($listRooms) {
             return $listRooms;
         }

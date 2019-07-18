@@ -226,13 +226,12 @@ export default {
         }
     },
     created(){
-        this.host_name = window.location.origin;
         this.getFormData();
     },
     methods: {
         getFormData(){
             axios
-                .get(this.host_name + '/api/rooms/create')
+                .get('/api/rooms/create')
                 .then(res => {
                     this.list_categories=res.data.categories;
                     this.list_convenients=res.data.convenients;

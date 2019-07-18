@@ -13,146 +13,61 @@ class RoomsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
-        $listIdConvenient = DB::table('convenients')->pluck('id');
-        $room = new Room();
-        $room->id = 1;
-        $room->title = "Phòng trọ và giường KTX Đường số 1 Phạm Hùng";
-        $room->description = 'Tòa nhà gồm 1 trệt, 3 lầu, có 3 phòng và 16 giường ở ghếp cho thuê.';
-        $room->category_id = 1;
-        $room->police_and_terms = 'Khách thuê giường ở ghép thì đã bao gồm tất cả chi phí.';
-        $room->room_area = 12;
-        $room->price = 100000;
-        $room->maximum_peoples_number = 3;
-        $room->status_booking_id = 1;
-        $room->address_id = 1;
-        $room->save();
-        //$room->convenients()->attach($listIdConvenient);
+        $textListDemo="<ul>
+        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+        <li>Nam aliquet metus sed dolor accumsan, eget consequat est semper.</li>
+        <li>Integer convallis ipsum sit amet vehicula consequat.</li>
+        <li>Praesent non nibh egestas, bibendum orci quis, elementum felis.</li>
+        <li>Nam et sem ac turpis varius facilisis ut id mauris.</li>
+        </ul>";
+        $paragraphs="<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Donec tincidunt fermentum libero non viverra. Maecenas sit amet imperdiet elit.
+        Sed non elementum augue, et tincidunt nulla.
+        Vestibulum pellentesque ex ex, et laoreet tortor elementum sed. Etiam ac sollicitudin arcu.
+        Suspendisse erat justo, luctus et cursus in, gravida vel velit.
+        Maecenas vehicula vestibulum elit, in iaculis nisi pharetra at. Duis non libero velit.
+        Quisque ultrices nulla a viverra faucibus. Mauris ac tellus tortor.
+        Aliquam nec rutrum diam, sed elementum arcu. Mauris pulvinar ligula id vulputate condimentum.
+        Quisque ut dui a turpis congue molestie. Cras bibendum vestibulum sodales.
+        In hac habitasse platea dictumst.</p>";
 
-        $room = new Room();
-        $room->id = 2;
-        $room->title = "Phòng trọ no 2";
-        $room->description = 'Tòa nhà gồm 1 trệt, 3 lầu, có 3 phòng và 16 giường ở ghếp cho thuê.';
-        $room->category_id = 1;
-        $room->police_and_terms = 'Khách thuê giường ở ghép thì đã bao gồm tất cả chi phí.';
-        $room->room_area = 12;
-        $room->price = 100000;
-        $room->maximum_peoples_number = 3;
-        $room->status_booking_id = 1;
-        $room->address_id = 2;
-        $room->save();
-        //$room->convenients()->attach($listIdConvenient);
+        for ($i = 1; $i <= 100; $i++) {
+            Room::create([
+            'title' => "Room no {$i}",
+            'description' => $paragraphs,
+            'category_id' => 1,
+            'police_and_terms' => $textListDemo,
+            'room_area' => 10,
+            'price' => 12345678,
+            'maximum_peoples_number'=>2,
+            'address_id' => $i
+            ]);
+        }
 
-        $room = new Room();
-        $room->id = 3;
-        $room->title = "Phòng trọ no 3";
-        $room->description = 'Tòa nhà gồm 1 trệt, 3 lầu, có 3 phòng và 16 giường ở ghếp cho thuê.';
-        $room->category_id = 1;
-        $room->police_and_terms = 'Khách thuê giường ở ghép thì đã bao gồm tất cả chi phí.';
-        $room->room_area = 12;
-        $room->price = 100000;
-        $room->maximum_peoples_number = 3;
-        $room->status_booking_id = 1;
-        $room->address_id = 3;
-        $room->save();
-        //$room->convenients()->attach($listIdConvenient);
+        for ($i = 101; $i <= 200; $i++) {
+            Room::create([
+            'title' => "Room no {$i}",
+            'description' => $paragraphs,
+            'category_id' => 2,
+            'police_and_terms' => $textListDemo,
+            'room_area' => 10,
+            'price' => 12345678,
+            'maximum_peoples_number'=>2,
+            'address_id' => $i
+            ]);
+        }
 
-        $room = new Room();
-        $room->id = 4;
-        $room->title = "Phòng trọ no 4";
-        $room->description = 'Tòa nhà gồm 1 trệt, 3 lầu, có 3 phòng và 16 giường ở ghếp cho thuê.';
-        $room->category_id = 1;
-        $room->police_and_terms = 'Khách thuê giường ở ghép thì đã bao gồm tất cả chi phí.';
-        $room->room_area = 12;
-        $room->price = 100000;
-        $room->maximum_peoples_number = 3;
-        $room->status_booking_id = 1;
-        $room->address_id = 4;
-        $room->save();
-        //$room->convenients()->attach($listIdConvenient);
-
-        $room = new Room();
-        $room->id = 5;
-        $room->title = "Nhà nguyên căn Nguyễn Biểu 1";
-        $room->description = 'Tòa nhà gồm 1 trệt, 3 lầu, có 3 phòng và 16 giường ở ghếp cho thuê.';
-        $room->category_id = 2;
-        $room->police_and_terms = 'Khách thuê giường ở ghép thì đã bao gồm tất cả chi phí.';
-        $room->room_area = 14;
-        $room->price = 150000;
-        $room->maximum_peoples_number = 2;
-        $room->status_booking_id = 1;
-        $room->address_id = 5;
-        $room->save();
-        //$room->convenients()->attach($listIdConvenient);
-
-        $room = new Room();
-        $room->id = 6;
-        $room->title = "Nhà nguyên căn Nguyễn Biểu 2";
-        $room->description = 'Tòa nhà gồm 1 trệt, 3 lầu, có 3 phòng và 16 giường ở ghếp cho thuê.';
-        $room->category_id = 2;
-        $room->police_and_terms = 'Khách thuê giường ở ghép thì đã bao gồm tất cả chi phí.';
-        $room->room_area = 14;
-        $room->price = 150000;
-        $room->maximum_peoples_number = 2;
-        $room->status_booking_id = 1;
-        $room->address_id = 6;
-        $room->save();
-        //$room->convenients()->attach($listIdConvenient);
-
-        $room = new Room();
-        $room->id = 7;
-        $room->title = "Nhà nguyên căn Nguyễn Biểu 3";
-        $room->description = 'Tòa nhà gồm 1 trệt, 3 lầu, có 3 phòng và 16 giường ở ghếp cho thuê.';
-        $room->category_id = 2;
-        $room->police_and_terms = 'Khách thuê giường ở ghép thì đã bao gồm tất cả chi phí.';
-        $room->room_area = 14;
-        $room->price = 150000;
-        $room->maximum_peoples_number = 2;
-        $room->status_booking_id = 1;
-        $room->address_id = 7;
-        $room->save();
-        //$room->convenients()->attach($listIdConvenient);
-
-        $room = new Room();
-        $room->id = 8;
-        $room->title = "Căn hộ đường Nguyễn Đình Chiểu 1";
-        $room->description = 'Tòa nhà gồm 1 trệt, 3 lầu, có 3 phòng và 16 giường ở ghếp cho thuê.';
-        $room->category_id = 3;
-        $room->police_and_terms = 'Khách thuê giường ở ghép thì đã bao gồm tất cả chi phí.';
-        $room->room_area = 16;
-        $room->price = 180000;
-        $room->maximum_peoples_number = 1;
-        $room->status_booking_id = 1;
-        $room->address_id = 8;
-        $room->save();
-        //$room->convenients()->attach($listIdConvenient);
-
-        $room = new Room();
-        $room->id = 9;
-        $room->title = "Căn hộ đường Nguyễn Đình Chiểu 2";
-        $room->description = 'Tòa nhà gồm 1 trệt, 3 lầu, có 3 phòng và 16 giường ở ghếp cho thuê.';
-        $room->category_id = 3;
-        $room->police_and_terms = 'Khách thuê giường ở ghép thì đã bao gồm tất cả chi phí.';
-        $room->room_area = 16;
-        $room->price = 180000;
-        $room->maximum_peoples_number = 1;
-        $room->status_booking_id = 1;
-        $room->address_id = 9;
-        $room->save();
-        //$room->convenients()->attach($listIdConvenient);
-
-        $room = new Room();
-        $room->id = 10;
-        $room->title = "Căn hộ đường Nguyễn Đình Chiểu 3";
-        $room->description = 'Tòa nhà gồm 1 trệt, 3 lầu, có 3 phòng và 16 giường ở ghếp cho thuê.';
-        $room->category_id = 3;
-        $room->police_and_terms = 'Khách thuê giường ở ghép thì đã bao gồm tất cả chi phí.';
-        $room->room_area = 16;
-        $room->price = 180000;
-        $room->maximum_peoples_number = 1;
-        $room->status_booking_id = 1;
-        $room->address_id = 10;
-        $room->save();
-        //$room->convenients()->attach($listIdConvenient);
+        for ($i = 201; $i <= 300; $i++) {
+            Room::create([
+            'title' => "Room no {$i}",
+            'description' => $paragraphs,
+            'category_id' => 3,
+            'police_and_terms' => $textListDemo,
+            'room_area' => 10,
+            'price' => 12345678,
+            'maximum_peoples_number'=>2,
+            'address_id' => $i
+            ]);
+        }
     }
 }

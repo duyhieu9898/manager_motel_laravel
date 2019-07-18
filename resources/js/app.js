@@ -4,7 +4,12 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+
 require('./bootstrap');
+
+const token = 'be81524776d1a1cf18f877aca7fb740fdecf9b69a7c5e6f8cc1a125b7b2d3d12'
+axios.defaults.baseURL = window.location.origin
+axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
 window.Vue = require('vue');
 
@@ -62,10 +67,19 @@ const router = new VueRouter({
             component: TheRoomCreate
         }
     ],
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            return { x: 0, y: 0 }
+        }
+    }
 });
+
+
+
 
 const app = new Vue({
     el: '#app',
     router,
-
-});;
+});

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Role;
@@ -64,7 +64,9 @@ class UserController extends Controller
             ]
         );
         $dataUser = $request->input('user');
-        $user = $this->userRepository->createUser($dataUser['name'], $dataUser['email'], '', $dataUser['role']);
+        $dataUser['password'] = 123456;
+        $dataUser['api_token'] = hash('sha256', Str::random(60));
+        $user = $this->userRepository->createUser($dataUser);
         $role = Role::where('name', $dataUser['role'])->first();
         $user->roles()->attach($role);
         return response('created');

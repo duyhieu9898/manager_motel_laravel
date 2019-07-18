@@ -4,6 +4,16 @@
 @endsection
 @section('content')
 <div class="container main-content" id="app">
+
+    <div class="row mt-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Category</li>
+            </ol>
+        </nav>
+    </div>
+
     <div class="row">
         @foreach ($listRooms as $room)
             <div class="col-md-3">
@@ -16,7 +26,7 @@
                     </div>
                     <div class="box-room__info">
                         <div class="info__title"><p class="info__title--content fix-length">{{ $room->title }}</p> </div>
-                        <div class="info__address"><p class="info__address--content fix-length">{{ $room->address->district->name }}-{{ $room->address->province->name }}  </p> </div>
+                        <div class="info__address"><p class="info__address--content fix-length">{{ $room->category->name }}</p> </div>
                         <div class="info_description"><p class="info__description--content">{!! $room->description !!}</p></div>
                     </div>
                     <div class="box-room__price">
@@ -26,24 +36,9 @@
             </div>
         @endforeach
     </div>
-    <div class="row">
-        <div class="col-md-4 col-md-push-4">
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href=""><i class="fa fa-arrow-left"></i></a></li>
-                    <li class="page-item"><a class="page-link" href="">1</a></li>
-                    <li class="page-item"><a class="page-link" href="">2</a></li>
-                    <li class="page-item"><a class="page-link" href="">3</a></li>
-                    <li class="page-item"><a class="page-link" href="">4</a></li>
-                    <li class="page-item"><a class="page-link" href="">5</a></li>
-                    <li class="page-item"><a class="page-link" href="">6</a></li>
-                    <li class="page-item"><a class="page-link" href="">7</a></li>
-                    <li class="page-item"><a class="page-link" href="">8</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href=""><i class="fa fa-arrow-right"></i> </a>
-                    </li>
-                </ul>
-            </nav>
+    <div class="row" id="pagination">
+        <div class="col-md-6 col-md-push-3">
+            {{ $listRooms->links() }}
         </div>
 
     </div>

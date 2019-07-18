@@ -86,7 +86,6 @@
                                         <td class="center">
                                             <router-link :to="{ name: 'room-edit',params: { id: room.id }}" class='btn btn-tbl-edit btn-xs' >
                                                 <i class="fa fa-pencil"></i>
-
                                             </router-link>
                                             <a href="#" target="_blank" class='btn btn-tbl-delete btn-xs'>
                                                 <i class="fa fa-trash-o "></i>
@@ -100,32 +99,102 @@
                 </div>
             </div>
         </div>
+        <div class="row justify-content-center">
+            <nav class="">
+                <ul class="pagination">
+                    <li :class="[ pagination.current_page === 1 ? 'disabled' : '']" class="page-item">
+                        <a class="page-link"
+                        @click.prevent="changePage(pagination.current_page - 1)">
+                            <span aria-hidden="true">prev</span>
+                        </a>
+                    </li>
+                    <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[ page == isActived ? 'active' : '']">
+                        <a class="page-link" @click.prevent="changePage(page)">{{ page }}</a>
+                    </li>
+                    <li :class="[ pagination.current_page === pagination.last_page ? 'disabled' : '']" class="page-item">
+                        <a class="page-link" aria-label="Next" @click.prevent="changePage(pagination.current_page + 1)">
+                            <span aria-hidden="true">next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </template>
 <script>
 export default {
     data() {
         return {
-            room: {},
             list_rooms:[],
-            host_name: '',
-    }
+            pagination: {
+                total: 0,
+                per_page: 2,
+                from: 1,
+                to: 0,
+                current_page: 1
+            },
+            offset: 4,
+        }
     },
     created(){
-        this.host_name = window.location.origin;
-        this.getlist_rooms();
+        this.getListRooms(1);
     },
     methods: {
-        getlist_rooms() {
+        getListRooms(numPage) {
         axios
-            .get(this.host_name + "/api/rooms")
+            .get(`/api/rooms?page=${numPage}`)
             .then(response => {
-                this.list_rooms = response.data;
+                this.list_rooms = response.data.rooms;
+                this.pagination = response.data.pagination;
             })
             .catch(error => {
-                console.error(error);
+                console.error(error.response);
             });
         },
+        changePage: function (page) {
+          this.pagination.current_page = page;
+          this.getListRooms(page);
+        },
+        nextPage(){
+            if(this.pagination.current_page + 1 <= this.pagination.last_page){
+                this.getListRooms(this.pagination.current_page + 1);
+            }
+
+        },
+        prevPage(){
+            if(this.pagination.current_page + 1 >= 1){
+                this.getListRooms(this.pagination.current_page - 1);
+            }
+        },
+        linksPaginate(){
+            html =``
+        }
+    },
+    computed: {
+        isActived: function () {
+            return this.pagination.current_page;
+        },
+        pagesNumber: function () {
+            if (!this.pagination.to) {
+                return [];
+            }
+            var from = this.pagination.current_page - this.offset;
+            if (from < 1) {
+                from = 1;
+            }
+            var to = from + (this.offset * 2);
+            if (to >= this.pagination.last_page) {
+                to = this.pagination.last_page;
+            }
+            var pagesArray = [];
+            while (from <= to) {
+                pagesArray.push(from);
+                from++;
+            }
+            return pagesArray;
+
+        },
+
     },
 }
 </script>

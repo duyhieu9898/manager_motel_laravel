@@ -6,7 +6,7 @@ use App\Repositories\RepositoryInterface;
 
 interface UserRepositoryInterface extends RepositoryInterface
 {
-    public function createUser($userName, $userEmail, $nameRole, $userPassword);
+    public function createUser($dataUser);
     public function updateById($user, $userName, $userEmail, $roles);
     public function deleteById($user);
 }

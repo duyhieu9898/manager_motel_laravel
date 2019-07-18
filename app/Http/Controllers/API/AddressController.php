@@ -1,13 +1,37 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class AddressController extends Controller
 {
+    public function create(Request $request)
+    {
+        if ($request->has(['street', 'province', 'district', 'ward' ])) {
+            $addressId=DB::table('addresses')
+                ->insertGetId(
+                    [
+                    'street' => $request->street,
+                    'ward_id' => $request->ward,
+                    'district_id' => $request->district,
+                    'province_id' => $request->province,
+                    ]
+                );
+            if ($addressId) {
+                return response()->json([
+                    'message' => 'create address success',
+                    "address_id" => $addressId
+                ], 200);
+            }
+        }
+        return response()->json([
+            'message'=> 'Server error while creating address ', 500
+            ]);
+    }
+
     /**
      * Get list wards of the district by district id
      *
@@ -104,28 +128,5 @@ class AddressController extends Controller
         return response()->json([
             'message' => 'Server error while updating address',
         ], 500);
-    }
-    public function create(Request $request)
-    {
-        if ($request->has(['street', 'province', 'district', 'ward' ])) {
-            $addressId=DB::table('addresses')
-                ->insertGetId(
-                    [
-                    'street' => $request->street,
-                    'ward_id' => $request->ward,
-                    'district_id' => $request->district,
-                    'province_id' => $request->province,
-                    ]
-                );
-            if ($addressId) {
-                return response()->json([
-                    'message' => 'create address success',
-                    "address_id" => $addressId
-                ], 200);
-            }
-        }
-        return response()->json([
-            'message'=> 'Server error while creating address ', 500
-            ]);
     }
 }

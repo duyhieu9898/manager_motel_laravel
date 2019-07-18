@@ -6,6 +6,6 @@ use App\Repositories\RepositoryInterface;
 
 interface CategoryRepositoryInterface extends RepositoryInterface
 {
-    public function getNewRoomsOfCategory($categories);
+    public function getNewRoomsOfAllCategories($numItem);
     public function getRoomByCategoryId(int $id);
 }

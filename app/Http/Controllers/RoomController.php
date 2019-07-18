@@ -2,45 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use Mail;
-use App\Http\Requests\RoomEditRequest;
-use App\Http\Requests\RoomCreateRequest;
 use App\Repositories\Room\RoomRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
-use App\Repositories\Convenient\ConvenientRepositoryInterface;
-use App\Repositories\Image\ImageRepositoryInterface;
-use Illuminate\Support\MessageBag;
+use App\Room;
 
 class RoomController extends Controller
 {
     private $roomRepository;
     private $categoryRepository;
-    private $convenientRepository;
-    private $imageRepository;
 
     public function __construct(
         RoomRepositoryInterface $roomRepository,
-        CategoryRepositoryInterface $categoryRepository,
-        ConvenientRepositoryInterface $convenientRepository,
-        ImageRepositoryInterface $imageRepository
+        CategoryRepositoryInterface $categoryRepository
     ) {
         $this->roomRepository = $roomRepository;
         $this->categoryRepository = $categoryRepository;
-        $this->convenientRepository = $convenientRepository;
-        $this->imageRepository = $imageRepository;
-    }
-
-    public function index()
-    {
-        $rooms = $this->roomRepository->getAll()->load('category', 'address.province');
-        return response()->json($rooms);
     }
 
     public function latest()
     {
-        $categoryList       = $this->categoryRepository->getAll();
-        $newRoomsOfCategory = $this->categoryRepository->getNewRoomsOfCategory($categoryList);
-        return view('index', compact(['categoryList', 'newRoomsOfCategory']));
+
+        $numItem=3;
+        $newRoomsOfCategory = $this->categoryRepository->getNewRoomsOfAllCategories($numItem);
+        return view('index', compact(['newRoomsOfCategory']));
     }
 
     public function show($id)
@@ -49,74 +33,10 @@ class RoomController extends Controller
         return view('detail_room', compact('room'));
     }
 
-    public function create()
+    public function getByCategoryId(int $id)
     {
-        $listCategory   = $this->categoryRepository->getAll();
-        $listConvenient = $this->convenientRepository->getAll();
-        return response()->json(['convenients' => $listConvenient, 'categories' => $listCategory]);
-    }
-
-    public function store(RoomCreateRequest $request)
-    {
-        $dataRoom = $request->all();
-        $roomId = $this->roomRepository->create($dataRoom);
-        if (!$roomId) {
-            return response()->json([
-                'message' => 'Server error while creating room'
-            ], 500);
-        }
-        $this->imageRepository->setImagesToRoom($dataRoom['list_images_id'], $roomId);
-        return response()->json([
-            'message' => 'store room success'
-        ], 200);
-    }
-
-    public function edit($id)
-    {
-        $categories       = $this->categoryRepository->getAll();
-        $convenients      = $this->convenientRepository->getAll();
-        $room             = $this->roomRepository->findById($id)->load('convenients');
-        $AllConvenientsId = $room->convenients->map(function ($item) {
-            return $item['id'];
-        });
-        $arrListConvenientsId = $AllConvenientsId->all();
-        $arrData = [
-            'room'                 => $room,
-            'categories'           => $categories,
-            'convenients'          => $convenients,
-            'arrListConvenientsId' => $arrListConvenientsId,
-        ];
-        return response()->json($arrData);
-    }
-
-    public function update(RoomEditRequest $request, $id)
-    {
-        $dataRoom = $request->all();
-        $room     = $this->roomRepository->findById($id);
-        $result   = $this->roomRepository->update($room, $dataRoom);
-        if ($result) {
-            return response()->json([
-                'message' => 'update room success'
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Server error while updating room'
-            ], 500);
-        }
-    }
-    public function category(int $id)
-    {
-        $category=$this->categoryRepository->getRoomByCategoryId($id);
-        $listRooms=$category->rooms;
+        $itemPerPage=8;
+        $listRooms=$this->roomRepository->getByCategoryId($id, $itemPerPage);
         return view('category_rooms', compact('listRooms'));
-    }
-
-    public function sendEmail()
-    {
-        Mail::send('home', ['user' => "hieu"], function ($m) {
-            $m->from('duyhieu9898@gmail.com', 'LARAVEL MAIL');
-
-            $m->to('duyhieu9898@gmail.com', "data-name")->subject('cai lon gi the!');
-        });
     }
 }

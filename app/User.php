@@ -78,4 +78,8 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(Room::class)->withPivot('check_in', 'check_out')->withTimestamps();
     }
+    public function isAdministrator()
+    {
+        return $this->roles()->where('name', 'admin')->exists();
+    }
 }

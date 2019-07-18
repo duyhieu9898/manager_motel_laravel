@@ -21,6 +21,10 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
     {
         parent::__construct($model);
     }
+    public function getByCategoryId($idCategory, $perPage)
+    {
+        return $this->model::where('category_id', $idCategory)->paginate($perPage);
+    }
     public function create($dataRoom)
     {
         $room = new $this->model;
@@ -55,5 +59,9 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
             return true;
         }
         return false;
+    }
+    public function jsonPagination($perPage)
+    {
+        return $this->model::paginate($perPage);
     }
 }

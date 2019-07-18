@@ -145,7 +145,7 @@ export default {
         getListImages() {
             if (this.room_id) {
                 axios
-                    .get(this.host_name + "/api/list-images/" + this.room_id)
+                    .get("/api/list-images/" + this.room_id)
                     .then(response => {
                         this.list_images = response.data;
                     })
@@ -156,7 +156,7 @@ export default {
         },
         deleteImage(imageId, index) {
             axios
-                .delete(this.host_name + "/api/delete-image/" + imageId)
+                .delete("/api/delete-image/" + imageId)
                 .then(res => {
                     this.list_images.splice(index, 1);;
                 })
