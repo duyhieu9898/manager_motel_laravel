@@ -16,8 +16,9 @@
     <link href="{{ asset('admin_rooms/plugins/simple-line-icons/simple-line-icons.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin_rooms/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
     <!--bootstrap -->
-    <link href="{{ asset('admin_rooms/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('admin_rooms/plugins/summernote/summernote.css" rel="stylesheet')}}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    {{-- <link href="{{ asset('admin_rooms/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('admin_rooms/plugins/summernote/summernote.css" rel="stylesheet')}}"> --}}
     <!-- Material Design Lite CSS -->
     <link rel="stylesheet" href="{{ asset('admin_rooms/plugins/material/material.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin_rooms/css/material_style.css')}}">
@@ -28,8 +29,12 @@
     <link href="{{ asset('admin_rooms/css/plugins.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin_rooms/css/responsive.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin_rooms/css/theme-color.css')}}" rel="stylesheet" type="text/css">
+    <!-- data table -->
+    <link href="{{ asset('admin_rooms/plugins/datatables/plugins/bootstrap/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css">
     <!-- favicon -->
     <link rel="shortcut icon" href="{{ asset('admin_rooms/img/favicon.ico') }}">
+    <!-- icon -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/open-iconic-bootstrap.min.css') }}">
     {{-- option --}}
     @yield('css')
 </head>
@@ -55,6 +60,10 @@
     <script src="{{ asset('admin_rooms/plugins/material/material.min.js')}}"></script>
     <!-- animation -->
     <script src="{{ asset('admin_rooms/js/pages/ui/animations.js') }}"></script>
+    <!-- data table -->
+    <script src="{{ asset('admin_rooms/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('admin_rooms/plugins/datatables/plugins/bootstrap/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('admin_rooms/js/pages/table/table_data.js') }}"></script>
     <!-- end js include path -->
     <!-- app -->
     <script src="{!! asset('/js/app.js') !!}"></script>

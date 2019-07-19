@@ -35,11 +35,11 @@ Vue.use(BootstrapVue)
 Vue.use(CKEditor);
 Vue.use(VueRouter);
 
-Vue.component('user-component', require('./components/User.vue').default);
 Vue.component('room-photo-component', require('./components/RoomPhoto.vue').default);
 Vue.component('room-address-component', require('./components/RoomAddress.vue').default);
 Vue.component('app-admin-component', require('./components/AppAdmin.vue').default);
 Vue.component('room-convenients-component', require('./components/RoomConvenients.vue').default);
+Vue.component('todo-list-component', require('./components/TodoList.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -48,11 +48,18 @@ Vue.component('room-convenients-component', require('./components/RoomConvenient
 import TheListRooms from './components/TheListRooms.vue';
 import TheRoomEdit from './components/TheRoomEdit.vue';
 import TheRoomCreate from './components/TheRoomCreate.vue';
+import TheUser from './components/TheUser.vue';
+import TheDashBoard from './components/TheDashBoard.vue';
 
 const router = new VueRouter({
     mode: 'history',
     routes: [{
             path: '/app',
+            name: 'dash-board',
+            component: TheDashBoard
+        },
+        {
+            path: '/app/rooms',
             name: 'all-room',
             component: TheListRooms
         },
@@ -65,12 +72,22 @@ const router = new VueRouter({
             path: '/app/admin/rooms/create',
             name: 'room-create',
             component: TheRoomCreate
+        },
+        {
+            path: '/app/admin/users',
+            name: 'user',
+            component: TheUser
         }
     ],
     scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {
             return savedPosition
         } else {
+            // return new Promise((resolve, reject) => {
+            //         setTimeout(() => {
+            //             resolve({ x: 0, y: 0 })
+            //         }, 500)
+            //     })
             return { x: 0, y: 0 }
         }
     }

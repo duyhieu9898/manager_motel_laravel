@@ -217,23 +217,11 @@
                                 <span>-- Main</span>
                             </li>
                             <li class="nav-item start">
-                                <a href="#" class="nav-link nav-toggle">
-                                    <i class="material-icons">dashboard</i>
+                                <router-link :to="{ name: 'dash-board'}" class="nav-link nav-toggle">
                                     <span class="title">Dashboard</span>
-                                    <span class="arrow"></span>
-                                </a>
-                                <ul class="sub-menu">
-                                    <li class="nav-item">
-                                        <a href="index.html" class="nav-link ">
-                                            <span class="title">Dashboard 1</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item ">
-                                        <a href="dashboard2.html" class="nav-link ">
-                                            <span class="title">Dashboard 2</span>
-                                        </a>
-                                    </li>
-                                </ul>
+                                    <span class="selected"></span>
+                                </router-link>
+
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link nav-toggle">
@@ -272,63 +260,33 @@
                                             <span class="title">New Booking</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="view_booking.html" class="nav-link ">
-                                            <span class="title">View Booking</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="edit_booking.html" class="nav-link ">
-                                            <span class="title">Edit Booking</span>
-                                        </a>
-                                    </li>
+
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link nav-toggle">
+                                <router-link :to="{ name: 'all-room'}" class="nav-link nav-toggle" >
                                     <i class="material-icons">vpn_key</i>
                                     <span class="title">Rooms</span>
                                     <span class="selected"></span>
-                                    <span class="arrow"></span>
-                                </a>
-                                <ul class="sub-menu" style="display: none;">
-
-                                    <li class="nav-item js-route-link">
-                                        <router-link :to="{ name: 'room-create' }" >
-                                            <span class="title">Add Room Details</span>
-                                            <span class="selected"></span>
-                                        </router-link>
-                                    </li>
-                                    <li class="nav-item js-route-link">
-                                        <router-link :to="{ name: 'all-room'}" >
-                                            <span class="title">View All Rooms</span>
-                                            <span class="selected"></span>
-                                        </router-link>
-
-                                    </li>
-                                </ul>
+                                </router-link>
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link nav-toggle">
                                     <i class="material-icons">group</i>
-                                    <span class="title">Staff</span>
+                                    <span class="title">User</span>
                                     <span class="arrow"></span>
                                 </a>
                                 <ul class="sub-menu">
                                     <li class="nav-item">
                                         <a href="add_staff.html" class="nav-link ">
-                                            <span class="title">Add Staff Details</span>
+                                            <span class="title">Add User Details</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="all_staffs.html" class="nav-link ">
-                                            <span class="title">View All Staffs</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="edit_staff.html" class="nav-link ">
-                                            <span class="title">Edit Staff Details</span>
-                                        </a>
+                                    <li class="nav-item js-route-link">
+                                        <router-link :to="{ name: 'user'}" >
+                                            <span class="title">View All User</span>
+                                            <span class="selected"></span>
+                                        </router-link>
                                     </li>
                                 </ul>
                             </li>
@@ -349,11 +307,6 @@
                                             <span class="title">View All Vehicle</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="edit_vehicle.html" class="nav-link ">
-                                            <span class="title">Edit Vehicle Details</span>
-                                        </a>
-                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -363,7 +316,11 @@
              <!-- end sidebar menu -->
             <!-- start page content -->
             <div class="page-content-wrapper">
-                 <router-view></router-view>
+                <transition name="fade-down" mode="out-in" appear>
+                    <keep-alive>
+                        <router-view></router-view>
+                    </keep-alive>
+                </transition>
             </div>
 
             <!-- end page content -->
@@ -793,4 +750,22 @@ export default {
         color:#DC3545;
         font-size:14px
     }
+    .fade-down-enter-active {
+    animation-name: fadeInDown;
+    animation-duration: 0.5s;
+}
+.fade-down-leave-active {
+    animation-name: fadeOutDown;
+    animation-duration: 0.4s;
+}
+
+@keyframes fadeInDown {
+  from { transform: translate3d(50px, 0, 0) }
+  to { transform: none; }
+}
+
+@keyframes fadeOutDown {
+  from { transform: none; }
+  to { transform: translate3d(50px, 0, 0); }
+}
 </style>

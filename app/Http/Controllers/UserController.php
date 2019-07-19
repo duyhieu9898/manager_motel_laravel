@@ -103,7 +103,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $dataUser = $request->input('userData');
-        $this->userRepository->updateById($id, $dataUser['name'], $dataUser['email'], $dataUser['role']);
+        $this->userRepository->updateById($id, $dataUser['name'], $dataUser['email'], $dataUser['roles']);
         return response(
             [
                 'result' => 'success',

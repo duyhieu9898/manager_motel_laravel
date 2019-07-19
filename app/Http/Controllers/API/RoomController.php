@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Room;
 use App\Http\Requests\RoomEditRequest;
 use App\Http\Requests\RoomCreateRequest;
 use App\Repositories\Room\RoomRepositoryInterface;
@@ -12,6 +11,7 @@ use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Convenient\ConvenientRepositoryInterface;
 use App\Repositories\Image\ImageRepositoryInterface;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Log;
 
 class RoomController extends Controller
 {
@@ -37,14 +37,12 @@ class RoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-
+        // Log::info($request);
         $pagination = $this->roomRepository->jsonPagination(10);
 
         $rooms = $pagination->load('category', 'address.province');
-
-        unset($pagination['data']);
         return response()->json(['rooms' => $rooms, 'pagination' => $pagination]);
     }
     public function create()

@@ -35,7 +35,7 @@
                 </div>
                 <div class="card-body ">
                         <div class="col-lg-12 p-t-20">
-                            <div class="card-box">
+                            <div class=" card card-box">
                                 <div class="card-header">Room Infomation</div>
                                 <div class="card-body">
                                     <div class="row">
@@ -173,7 +173,6 @@ export default {
                 title:'',
                 list_convenients_id:[]
             },
-            host_name : '',
             errors:{
                 title:null,
                 area:null,
@@ -211,7 +210,7 @@ export default {
     // },
     created(){
         this.room.id = parseInt(this.$route.params.id);
-        this.getRoom(this.roomId);
+        this.getRoom();
     },
     methods: {
         getRoom(roomId) {
