@@ -2,7 +2,7 @@
 
 SET FOREIGN_KEY_CHECKS=0
 
-DROP TABLE IF EXISTS "districts"
+
 CREATE TABLE "districts" (
   'id' varchar(5) CHARACTER SET utf8 NOT NULL,
   'name' varchar(100) CHARACTER SET utf8 NOT NULL,
@@ -727,7 +727,7 @@ INSERT INTO 'districts' VALUES ('972', 'Huyện Phú Tân', 'Huyện', '96')
 INSERT INTO 'districts' VALUES ('973', 'Huyện Ngọc Hiển', 'Huyện', '96')
 
 
-DROP TABLE IF EXISTS "provinces"
+
 CREATE TABLE "provinces" (
   'id' varchar(5) CHARACTER SET utf8 NOT NULL,
   'name' varchar(100) CHARACTER SET utf8 NOT NULL,
@@ -801,7 +801,6 @@ INSERT INTO 'provinces' VALUES ('95', 'Tỉnh Bạc Liêu', 'Tỉnh')
 INSERT INTO 'provinces' VALUES ('96', 'Tỉnh Cà Mau', 'Tỉnh')
 
 
-DROP TABLE IF EXISTS "wards"
 CREATE TABLE "wards" (
   'id' varchar(5) CHARACTER SET utf8 NOT NULL,
   'name' varchar(100) CHARACTER SET utf8 NOT NULL,
