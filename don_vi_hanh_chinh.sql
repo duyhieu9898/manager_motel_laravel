@@ -1,22 +1,7 @@
-/*
-Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50625
-Source Host           : localhost:3306
-Source Database       : dia_gioi_hanh_chinh
-
-Target Server Type    : MYSQL
-Target Server Version : 50625
-File Encoding         : 65001
-
-Date: 2016-12-23 01:52:24
-*/
 
 SET FOREIGN_KEY_CHECKS=0
--- ----------------------------
--- Table structure for 'districts'
--- ----------------------------
+
 DROP TABLE IF EXISTS `districts`
 CREATE TABLE `districts` (
   'id' varchar(5) CHARACTER SET utf8 NOT NULL,
@@ -26,9 +11,7 @@ CREATE TABLE `districts` (
   PRIMARY KEY ('id')
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
 
--- ----------------------------
--- Records of districts
--- ----------------------------
+
 INSERT INTO 'districts' VALUES ('001', 'Quận Ba Đình', 'Quận', '01')
 INSERT INTO 'districts' VALUES ('002', 'Quận Hoàn Kiếm', 'Quận', '01')
 INSERT INTO 'districts' VALUES ('003', 'Quận Tây Hồ', 'Quận', '01')
@@ -743,9 +726,7 @@ INSERT INTO 'districts' VALUES ('971', 'Huyện Năm Căn', 'Huyện', '96')
 INSERT INTO 'districts' VALUES ('972', 'Huyện Phú Tân', 'Huyện', '96')
 INSERT INTO 'districts' VALUES ('973', 'Huyện Ngọc Hiển', 'Huyện', '96')
 
--- ----------------------------
--- Table structure for 'provinces'
--- ----------------------------
+
 DROP TABLE IF EXISTS `provinces`
 CREATE TABLE `provinces` (
   'id' varchar(5) CHARACTER SET utf8 NOT NULL,
@@ -754,9 +735,7 @@ CREATE TABLE `provinces` (
   PRIMARY KEY ('id')
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT
 
--- ----------------------------
--- Records of provinces
--- ----------------------------
+
 INSERT INTO 'provinces' VALUES ('01', 'Thành phố Hà Nội', 'Thành phố Trung ương')
 INSERT INTO 'provinces' VALUES ('02', 'Tỉnh Hà Giang', 'Tỉnh')
 INSERT INTO 'provinces' VALUES ('04', 'Tỉnh Cao Bằng', 'Tỉnh')
@@ -821,9 +800,7 @@ INSERT INTO 'provinces' VALUES ('94', 'Tỉnh Sóc Trăng', 'Tỉnh')
 INSERT INTO 'provinces' VALUES ('95', 'Tỉnh Bạc Liêu', 'Tỉnh')
 INSERT INTO 'provinces' VALUES ('96', 'Tỉnh Cà Mau', 'Tỉnh')
 
--- ----------------------------
--- Table structure for 'wards'
--- ----------------------------
+
 DROP TABLE IF EXISTS `wards`
 CREATE TABLE `wards` (
   'id' varchar(5) CHARACTER SET utf8 NOT NULL,
@@ -833,9 +810,7 @@ CREATE TABLE `wards` (
   PRIMARY KEY ('id')
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
 
--- ----------------------------
--- Records of wards
--- ----------------------------
+
 INSERT INTO 'wards' VALUES ('00001', 'Phường Phúc Xá', 'Phường', '001')
 INSERT INTO 'wards' VALUES ('00004', 'Phường Trúc Bạch', 'Phường', '001')
 INSERT INTO 'wards' VALUES ('00006', 'Phường Vĩnh Phúc', 'Phường', '001')
