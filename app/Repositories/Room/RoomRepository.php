@@ -64,4 +64,12 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
     {
         return $this->model::paginate($perPage);
     }
+    public function deleteById(int $id)
+    {
+        $room = $this->findById($id);
+        if ($room->delete()) {
+            return true;
+        }
+        return false;
+    }
 }

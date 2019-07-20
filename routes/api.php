@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('/rooms', 'API\RoomController@store');
     Route::get('/rooms/{id}/edit', 'API\RoomController@edit')->name('room_edit');
     Route::put('/rooms/{id}', 'API\RoomController@update')->name('room_update');
+    Route::delete('/rooms/{id}', 'API\RoomController@destroy');
 
     // Route::get('/rooms/', function () {
     //     return new RoomCollection(Room::paginate(10));

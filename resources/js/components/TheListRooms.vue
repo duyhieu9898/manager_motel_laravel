@@ -107,7 +107,7 @@
                         <router-link :to="{ name: 'room-edit',params: { id: room.id }}" class='btn btn-tbl-edit btn-xs'>
                             <i class="fa fa-pencil"></i>
                         </router-link>
-                        <a href="#" target="_blank" class='btn btn-tbl-delete btn-xs'>
+                        <a @click="deleteRoom(room, index)" href="#"  class='btn btn-tbl-delete btn-xs'>
                             <i class="fa fa-trash-o "></i>
                         </a>
                         </td>
@@ -181,23 +181,49 @@ export default {
                 console.error(error.response);
             });
         },
+        deleteRoom(room, index) {
+            this.isComfirmDeLete()
+                .then((res)=>{
+                    return axios.delete("/api/rooms/" + room.id)
+                })
+                .then(response => {
+                    this.list_rooms.splice(index, 1);
+                })
+                .catch(errors => {
+                    if (typeof errors == 'string') {
+                        console.log(errors);
+                    } else{
+                        if (errors.response.data.errors) {
+                            console.log(errors.response.data.errors);
+                        }
+                    }
+
+                });
+        },
         changePage: function (page) {
           this.pagination.current_page = page;
           this.getListRooms(page);
         },
-        nextPage(){
-            if(this.pagination.current_page + 1 <= this.pagination.last_page){
-                this.getListRooms(this.pagination.current_page + 1);
-            }
-
-        },
-        prevPage(){
-            if(this.pagination.current_page + 1 >= 1){
-                this.getListRooms(this.pagination.current_page - 1);
-            }
-        },
-        linksPaginate(){
-            html =``
+        isComfirmDeLete(callback){
+            return new Promise(function(resolve, reject) {
+                swal({
+                    title: "Are you sure?",
+                    text: "You will not be able to recover this imaginary file!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, delete it!",
+                    cancelButtonText: "No, cancel plx!",
+                    closeOnConfirm: false,
+                }, function(isConfirm) {
+                    if (isConfirm) {
+                        swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                        resolve('delete success');
+                    } else {
+                        reject("canelled delete");
+                    }
+                });
+            });
         }
     },
     computed: {

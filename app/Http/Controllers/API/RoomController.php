@@ -129,8 +129,12 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        //
+        $result=$this->roomRepository->deleteById($id);
+        if ($result) {
+            return response()->json(['message' => 'delete room success', 200]);
+        }
+        return response()->json(['message' => 'delete room errors', 500]);
     }
 }

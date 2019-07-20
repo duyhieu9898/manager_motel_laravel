@@ -3245,22 +3245,66 @@ __webpack_require__.r(__webpack_exports__);
         console.error(error.response);
       });
     },
+    deleteRoom: function deleteRoom(room, index) {
+      var _this2 = this;
+
+      this.isComfirmDeLete().then(function (res) {
+        return axios["delete"]("/api/rooms/" + room.id);
+      }).then(function (response) {
+        _this2.list_rooms.splice(index, 1);
+      })["catch"](function (errors) {
+        if (typeof errors == 'string') {
+          console.log(errors);
+        } else {
+          if (errors.response.data.errors) {
+            console.log(errors.response.data.errors);
+          }
+        }
+      });
+    },
     changePage: function changePage(page) {
       this.pagination.current_page = page;
       this.getListRooms(page);
     },
-    nextPage: function nextPage() {
-      if (this.pagination.current_page + 1 <= this.pagination.last_page) {
-        this.getListRooms(this.pagination.current_page + 1);
-      }
-    },
-    prevPage: function prevPage() {
-      if (this.pagination.current_page + 1 >= 1) {
-        this.getListRooms(this.pagination.current_page - 1);
-      }
-    },
-    linksPaginate: function linksPaginate() {
-      html = "";
+    isComfirmDeLete: function isComfirmDeLete(callback) {
+      return new Promise(function (resolve, reject) {
+        swal({
+          title: "Are you sure?",
+          text: "You will not be able to recover this imaginary file!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Yes, delete it!",
+          cancelButtonText: "No, cancel plx!",
+          closeOnConfirm: false
+        }, function (isConfirm) {
+          if (isConfirm) {
+            swal("Deleted!", "Your imaginary file has been deleted.", "success");
+            resolve('delete success');
+          } else {
+            reject("canelled delete");
+          }
+        });
+      }); // var isConfirm = swal({
+      //     title: "Are you sure?",
+      //     text: "You will not be able to recover this imaginary file!",
+      //     type: "warning",
+      //     showCancelButton: true,
+      //     confirmButtonColor: "#DD6B55",
+      //     confirmButtonText: "Yes, delete it!",
+      //     cancelButtonText: "No, cancel plx!",
+      //     closeOnConfirm: false,
+      //     closeOnCancel: false
+      // }, function(isConfirm) {
+      //     if (isConfirm) {
+      //         swal("Deleted!", "Your imaginary file has been deleted.", "success");
+      //         resolve();
+      //     } else {
+      //         swal("Cancelled", "Your imaginary file is safe :)", "error");
+      //         reject();
+      //     }
+      // });
+      // // return isConfirm;
     }
   },
   computed: {
@@ -75820,7 +75864,24 @@ var render = function() {
                                         ]
                                       ),
                                       _vm._v(" "),
-                                      _vm._m(5, true)
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass:
+                                            "btn btn-tbl-delete btn-xs",
+                                          attrs: { href: "#" },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.deleteRoom(room, index)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fa fa-trash-o "
+                                          })
+                                        ]
+                                      )
                                     ],
                                     1
                                   )
@@ -75838,7 +75899,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
-              _vm._m(6),
+              _vm._m(5),
               _vm._v(" "),
               _c("div", { staticClass: "col-sm-12 col-md-7" }, [
                 _c(
@@ -76172,19 +76233,6 @@ var staticRenderFns = [
         )
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "btn btn-tbl-delete btn-xs",
-        attrs: { href: "#", target: "_blank" }
-      },
-      [_c("i", { staticClass: "fa fa-trash-o " })]
-    )
   },
   function() {
     var _vm = this
@@ -76696,7 +76744,20 @@ var render = function() {
                 [_vm._v("Submit"), _vm._m(4)]
               ),
               _vm._v(" "),
-              _vm._m(5)
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-default",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.$router.go(-1)
+                    }
+                  }
+                },
+                [_vm._v("Cancel"), _vm._m(5)]
+              )
             ])
           ])
         ])
@@ -76827,20 +76888,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass:
-          "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-default",
-        attrs: { type: "button" }
-      },
-      [
-        _vm._v("Cancel"),
-        _c("span", { staticClass: "mdl-button__ripple-container" }, [
-          _c("span", { staticClass: "mdl-ripple" })
-        ])
-      ]
-    )
+    return _c("span", { staticClass: "mdl-button__ripple-container" }, [
+      _c("span", { staticClass: "mdl-ripple" })
+    ])
   }
 ]
 render._withStripped = true
@@ -77325,7 +77375,20 @@ var render = function() {
                 [_vm._v("Submit"), _vm._m(4)]
               ),
               _vm._v(" "),
-              _vm._m(5)
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-default",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.$router.go(-1)
+                    }
+                  }
+                },
+                [_vm._v("Cancel"), _vm._m(5)]
+              )
             ])
           ])
         ])
@@ -77450,20 +77513,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass:
-          "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-default",
-        attrs: { type: "button" }
-      },
-      [
-        _vm._v("Cancel"),
-        _c("span", { staticClass: "mdl-button__ripple-container" }, [
-          _c("span", { staticClass: "mdl-ripple" })
-        ])
-      ]
-    )
+    return _c("span", { staticClass: "mdl-button__ripple-container" }, [
+      _c("span", { staticClass: "mdl-ripple" })
+    ])
   }
 ]
 render._withStripped = true
@@ -93265,14 +93317,16 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 
 
- // register directive v-money and component <money>
+ // import VueSweetalert2 from 'vue-sweetalert2';
+// register directive v-money and component <money>
 
 Vue.use(v_money__WEBPACK_IMPORTED_MODULE_3___default.a, {
   precision: 3
 });
 Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
 Vue.use(_ckeditor_ckeditor5_vue__WEBPACK_IMPORTED_MODULE_1___default.a);
-Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
+Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]); // Vue.use(VueSweetalert2);
+
 Vue.component('room-photo-component', __webpack_require__(/*! ./components/RoomPhoto.vue */ "./resources/js/components/RoomPhoto.vue")["default"]);
 Vue.component('room-address-component', __webpack_require__(/*! ./components/RoomAddress.vue */ "./resources/js/components/RoomAddress.vue")["default"]);
 Vue.component('app-admin-component', __webpack_require__(/*! ./components/AppAdmin.vue */ "./resources/js/components/AppAdmin.vue")["default"]);

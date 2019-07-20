@@ -1,35 +1,27 @@
+$(function() {
+    $('.btn-sweetalert').on('click', function() {
+        console.log('okkk');
 
-$(function () {
-    $('.btn-sweetalert button').on('click', function () {
         var type = $(this).data('type');
         if (type === 'basic') {
             showBasicMessage();
-        }
-        else if (type === 'with-title') {
+        } else if (type === 'with-title') {
             showWithTitleMessage();
-        }
-        else if (type === 'success') {
+        } else if (type === 'success') {
             showSuccessMessage();
-        }
-        else if (type === 'confirm') {
+        } else if (type === 'confirm') {
             showConfirmMessage();
-        }
-        else if (type === 'cancel') {
+        } else if (type === 'cancel') {
             showCancelMessage();
-        }
-        else if (type === 'with-custom-icon') {
+        } else if (type === 'with-custom-icon') {
             showWithCustomIconMessage();
-        }
-        else if (type === 'html-message') {
+        } else if (type === 'html-message') {
             showHtmlMessage();
-        }
-        else if (type === 'autoclose-timer') {
+        } else if (type === 'autoclose-timer') {
             showAutoCloseTimerMessage();
-        }
-        else if (type === 'prompt') {
+        } else if (type === 'prompt') {
             showPromptMessage();
-        }
-        else if (type === 'ajax-loader') {
+        } else if (type === 'ajax-loader') {
             showAjaxLoaderMessage();
         }
     });
@@ -57,7 +49,7 @@ function showConfirmMessage() {
         confirmButtonColor: "#DD6B55",
         confirmButtonText: "Yes, delete it!",
         closeOnConfirm: false
-    }, function () {
+    }, function() {
         swal("Deleted!", "Your imaginary file has been deleted.", "success");
     });
 }
@@ -73,7 +65,7 @@ function showCancelMessage() {
         cancelButtonText: "No, cancel plx!",
         closeOnConfirm: false,
         closeOnCancel: false
-    }, function (isConfirm) {
+    }, function(isConfirm) {
         if (isConfirm) {
             swal("Deleted!", "Your imaginary file has been deleted.", "success");
         } else {
@@ -116,10 +108,11 @@ function showPromptMessage() {
         closeOnConfirm: false,
         animation: "slide-from-top",
         inputPlaceholder: "Write something"
-    }, function (inputValue) {
+    }, function(inputValue) {
         if (inputValue === false) return false;
         if (inputValue === "") {
-            swal.showInputError("You need to write something!"); return false
+            swal.showInputError("You need to write something!");
+            return false
         }
         swal("Nice!", "You wrote: " + inputValue, "success");
     });
@@ -133,8 +126,8 @@ function showAjaxLoaderMessage() {
         showCancelButton: true,
         closeOnConfirm: false,
         showLoaderOnConfirm: true,
-    }, function () {
-        setTimeout(function () {
+    }, function() {
+        setTimeout(function() {
             swal("Ajax request finished!");
         }, 2000);
     });

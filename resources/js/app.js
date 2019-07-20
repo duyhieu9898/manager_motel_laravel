@@ -27,6 +27,9 @@ import VueRouter from 'vue-router';
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import BootstrapVue from 'bootstrap-vue'
 import money from 'v-money'
+// import VueSweetalert2 from 'vue-sweetalert2';
+
+
 
 // register directive v-money and component <money>
 Vue.use(money, { precision: 3 })
@@ -34,6 +37,7 @@ Vue.use(money, { precision: 3 })
 Vue.use(BootstrapVue)
 Vue.use(CKEditor);
 Vue.use(VueRouter);
+// Vue.use(VueSweetalert2);
 
 Vue.component('room-photo-component', require('./components/RoomPhoto.vue').default);
 Vue.component('room-address-component', require('./components/RoomAddress.vue').default);

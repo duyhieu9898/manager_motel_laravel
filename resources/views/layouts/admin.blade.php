@@ -31,6 +31,8 @@
     <link href="{{ asset('admin_rooms/css/theme-color.css')}}" rel="stylesheet" type="text/css">
     <!-- data table -->
     <link href="{{ asset('admin_rooms/plugins/datatables/plugins/bootstrap/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css">
+    <!-- Sweet Alert -->
+    <link rel="stylesheet" href="{{ asset('admin_rooms/plugins/sweet-alert/sweetalert.min.css') }}">
     <!-- favicon -->
     <link rel="shortcut icon" href="{{ asset('admin_rooms/img/favicon.ico') }}">
     <!-- icon -->
@@ -64,6 +66,9 @@
     <script src="{{ asset('admin_rooms/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin_rooms/plugins/datatables/plugins/bootstrap/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('admin_rooms/js/pages/table/table_data.js') }}"></script>
+    <!-- Sweet Alert -->
+    <script src="{{ asset('admin_rooms/plugins/sweet-alert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('admin_rooms/js/pages/sweet-alert/sweet-alert-data.js') }}"></script>
     <!-- end js include path -->
     <!-- app -->
     <script src="{!! asset('/js/app.js') !!}"></script>
