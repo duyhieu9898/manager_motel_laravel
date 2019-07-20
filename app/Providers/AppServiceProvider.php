@@ -14,6 +14,7 @@ use App\Repositories\Convenient\ConvenientRepository;
 use App\Repositories\Convenient\ConvenientRepositoryInterface;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Routing\UrlGenerator;
 
 
 class AppServiceProvider extends ServiceProvider
