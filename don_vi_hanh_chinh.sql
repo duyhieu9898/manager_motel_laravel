@@ -4,11 +4,11 @@ SET FOREIGN_KEY_CHECKS=0;
 
 
 CREATE TABLE districts (
-  id varchar(5);  NOT NULL,
-  name varchar(100);  NOT NULL,
-  type varchar(30);  NOT NULL,
-  province_id varchar(5);  NOT NULL,
-  PRIMARY KEY (id);
+  id varchar(5)  NOT NULL,
+  name varchar(100)  NOT NULL,
+  type varchar(30)  NOT NULL,
+  province_id varchar(5)  NOT NULL,
+  PRIMARY KEY (id)
 );
 
 
@@ -801,12 +801,12 @@ INSERT INTO provinces VALUES ('95', 'Tỉnh Bạc Liêu', 'Tỉnh');
 INSERT INTO provinces VALUES ('96', 'Tỉnh Cà Mau', 'Tỉnh');
 
 
-CREATE TABLE "wards" (
-  id varchar(5);  NOT NULL,
-  name varchar(100);  NOT NULL,
-  type varchar(30);  NOT NULL,
-  district_id varchar(5);  NOT NULL,
-  PRIMARY KEY (id);
+CREATE TABLE wards (
+  id varchar(5)  NOT NULL,
+  name varchar(100)  NOT NULL,
+  type varchar(30)  NOT NULL,
+  district_id varchar(5)  NOT NULL,
+  PRIMARY KEY (id)
 );
 
 
