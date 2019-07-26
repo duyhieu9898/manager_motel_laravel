@@ -4,22 +4,22 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
-class Admin extends Middleware
+class Admin
 {
-     /**
-     * Get the path the user should be redirected to when they are not authenticated.
+    /**
+     * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return string
+     * @param  \Closure  $next
+     * @return mixed
      */
-    protected function redirectTo($request)
+    public function handle($request, Closure $next)
     {
-        if (!Auth::check()) {
-            return route('login');
-        }
-        if (Auth::user()->hasAnyRole(['admin','customer'])) {
+        // if (!Auth::check()) {
+        //     return redirect('login');
+        // }
+        if (Auth::user()->isAdministrator()) {
             return $next($request);
         }
         return abort('401');

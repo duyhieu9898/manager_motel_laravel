@@ -32,6 +32,17 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="tel" class="col-md-4 control-label text-md-right">{{ __('Phone') }}</label>
+                            <div class="col-md-6">
+                                <input id="tel" type=tel" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}" required>
+                                @if ($errors->has('phone'))
+                                <span class="text-danger" role="alert">
+                                    <strong>{{ $errors->first('phone') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="password" class="col-md-4 control-label text-md-right">{{ __('Password') }}</label>
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>

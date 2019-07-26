@@ -23,7 +23,7 @@ return [
             | This value determines the "environment" your application is currently
             | running in. This may determine how you prefer to configure various
             | services the application utilizes. Set this in your ".env" file.
-            |
+            |Barryvdh\Debugbar
     */
 
     'env' => env('APP_ENV', 'production'),
@@ -44,7 +44,7 @@ return [
     /*
             |--------------------------------------------------------------------------
             | Application URL
-            |--------------------------------------------------------------------------
+            |----------------------Barryvdh\Debugbar----------------------------------------------------
             |
             | This URL is used by the console to properly generate URLs when using
             | the Artisan command line tool. You should set this to the root of
@@ -165,6 +165,7 @@ return [
         /*
                      * Package Service Providers...
         */
+        Barryvdh\Debugbar\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         /*
                      * Application Service Providers...

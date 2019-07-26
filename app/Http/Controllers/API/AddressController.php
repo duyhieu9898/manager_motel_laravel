@@ -38,14 +38,14 @@ class AddressController extends Controller
      * @param integer $districtId
      * @return Response
      */
-    public function getWardsByDistrict(int $districtId)
+    public function getWardsByDistrictId(int $districtId)
     {
         $listWards = DB::table('wards')->where('district_id', $districtId)->get();
         if ($listWards) {
             return response()->json($listWards, 200);
         }
         return response()->json([
-            'message'=> 'Server error while get  list Ward ', 500
+            'message'=> 'Server error while get list Ward ', 500
         ]);
     }
     /**
@@ -54,7 +54,7 @@ class AddressController extends Controller
      * @param integer $provinceId
      * @return Response
      */
-    public function getDistrictsByProvince(int $provinceId)
+    public function getDistrictsByProvinceId(int $provinceId)
     {
         $listDistricts = DB::table('districts')->where('province_id', $provinceId)->get();
         if ($listDistricts) {
@@ -79,7 +79,7 @@ class AddressController extends Controller
      * @param integer $roomId
      * @return Response
      */
-    public function getAddressByRoom(int $roomId)
+    public function getByRoomId(int $roomId)
     {
         $address= DB::table('rooms')
                 ->select('street', 'wards.name as ward', 'districts.name as district', 'provinces.name as province')
@@ -90,12 +90,28 @@ class AddressController extends Controller
                 ->where('rooms.id', $roomId)
                 ->first();
         if ($address) {
-            $stdAddress ="$address->street - $address->ward, $address->district, $address->province";
-            return response()->json($stdAddress, 200);
+            $strAddress ="$address->street - $address->ward, $address->district, $address->province";
+            return response()->json($strAddress, 200);
         }
         return response()->json([
-            'message'=> 'Server error while get address ', 500
-            ]);
+            'message'=> 'Server error while get address '
+        ], 500);
+    }
+    public function getById($id)
+    {
+        $address= DB::table('addresses')
+            ->select('street', 'wards.name as ward', 'districts.name as district', 'provinces.name as province')
+            ->join('wards', 'addresses.ward_id', 'wards.id')
+            ->join('districts', 'addresses.district_id', 'districts.id')
+            ->join('provinces', 'addresses.province_id', 'provinces.id')
+            ->where('addresses.id', $id)
+            ->first();
+        if ($address) {
+            return response()->json(['address' => $address], 200);
+        }
+        return response()->json([
+            'message'=> 'Server error while get address ',
+        ], 500);
     }
     /**
      * Update address of the room by room id
@@ -105,7 +121,7 @@ class AddressController extends Controller
      *
      * @return void
      */
-    public function updateAddressByRoom(Request $request, int $roomId)
+    public function updateByRoomId(Request $request, int $roomId)
     {
         if ($request->has(['street', 'province', 'district', 'ward' ])) {
             $address=DB::table('rooms')

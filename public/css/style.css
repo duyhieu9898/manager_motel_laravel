@@ -375,6 +375,11 @@ hr {
     }
 }
 
+.booking-success {
+    position: fixed;
+    z-index: 9;
+    left: calc(100% - 300px);
+}
 .register, .verify, .login{
 margin-top: 75px;
 }

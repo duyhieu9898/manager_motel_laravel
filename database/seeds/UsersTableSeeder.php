@@ -22,16 +22,16 @@ class UsersTableSeeder extends Seeder
         $customer = new User();
         $customer->name = 'customer Name';
         $customer->email = 'customer@example.com';
-        $customer->api_token = Str::random(60);
         $customer->password = bcrypt('123456');
+        $customer->phone = '0366025756';
         $customer->save();
         $customer->roles()->attach($role_customer);
 
         $owner = new User();
         $owner->name = 'owner Name';
         $owner->email = 'owner@example.com';
-        $owner->api_token = hash('sha256', Str::random(60));
         $owner->password = bcrypt('123456');
+        $owner->phone = '0366025756';
         $owner->save();
         $owner->roles()->attach($role_owner);
 
@@ -40,6 +40,7 @@ class UsersTableSeeder extends Seeder
         $admin->email = 'admin@example.com';
         $admin->api_token = hash('sha256', Str::random(60));
         $admin->password = bcrypt('123456');
+        $admin->phone = '0366025756';
         $admin->save();
         $admin->roles()->attach($role_admin);
     }

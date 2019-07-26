@@ -8,12 +8,13 @@ use App\User;
 use App\Ward;
 use App\District;
 use App\Province;
+
 class Address extends Model
 {
     //
     public $timestamps = false;
     protected $table = 'addresses';
-    protected $fillable = ['provincial'];
+    protected $fillable = ['street, ward_id, district_id, province_id'];
 
     //relationship
     public function rooms()

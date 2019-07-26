@@ -61,7 +61,7 @@
                                     <i class="fa fa-user"></i> {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{{ url('/app') }}">Admin Manager</a></li>
+                                    <li><a href="{{ url('/admin') }}">Admin Manager</a></li>
                                     <li><a href="{{ url('/logout') }}">Logout</a></li>
                                 </ul>
                             </li>
@@ -118,7 +118,7 @@
         </footer>
     </div>
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
     <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/jquery-ui.js') }}"></script>

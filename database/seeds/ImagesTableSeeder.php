@@ -13,7 +13,7 @@ class ImagesTableSeeder extends Seeder
     public function run()
     {
         //
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 1; $i <= 200; $i++) {
             Image::create([
             'original_name' => "image {$i}",
             'slug' => "motel-{$i}.jpg",

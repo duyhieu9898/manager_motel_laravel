@@ -25,6 +25,8 @@ class CreateRoomsTable extends Migration
             $table->integer('maximum_peoples_number')->unsigned()->default(1);
             $table->mediumText('police_and_terms');
             $table->bigInteger('price')->unsigned();
+            $table->integer('number_peoples')->default(0);
+            $table->boolean('active')->default(true);
             $table->timestamps();
             //relationship
             $table->foreign('status_booking_id')->references('id')
@@ -32,7 +34,7 @@ class CreateRoomsTable extends Migration
                         ->onDelete('cascade')
                         ->onUpdate('cascade'); //1-n
             $table->foreign('category_id')->references('id')
-                        ->on('category')
+                        ->on('categories')
                         ->onDelete('cascade')
                         ->onUpdate('cascade'); //n-1
             $table->foreign('address_id')->references('id')

@@ -112,3 +112,9 @@ hr {
         padding: 0px;
     }
 }
+
+.booking-success {
+    position: fixed;
+    z-index: 9;
+    left: calc(100% - 300px);
+}

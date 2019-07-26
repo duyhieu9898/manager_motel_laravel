@@ -2,53 +2,40 @@
 
 namespace App;
 
-use App\Address;
-use App\Category;
 use App\Convenient;
-use App\Image;
-use App\StatusBooking;
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model
 {
-    //
-    protected $table = 'rooms';
     public $timestamps = true;
     protected $guarded = [];//all attributes mass assignable
 
     //relationship
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo('App\Category');
     }
     public function images()
     {
-        return $this->hasMany(Image::class);
+        return $this->hasMany('App\Image');
     }
     public function convenients()
     {
-        return $this->belongsToMany(Convenient::class, 'room_convenient');
+        return $this->belongsToMany('App\Convenient');
     }
     public function address()
     {
-        return $this->belongsTo(Address::class);
+        return $this->belongsTo('App\Address');
     }
     public function statusBooking()
     {
-        return $this->belongsTo(statusBooking::class);
+        return $this->belongsTo('App\StatusBooking');
     }
-    /**
-     * function help detach, attack
-     *
-     * @return eloquent_model
-     */
-    public function roles()
-    {
-        return $this->belongsToMany(Convenient::class, 'room_convenient');
-    }
+
     public function users()
     {
-        return $this->belongsToMany(User::class)->withPivot('check_in', 'check_out')->withTimestamps();
+        return $this->belongsToMany('App\User')
+                ->withPivot('check_in', 'check_out', 'status_id')
+                ->withTimestamps();
     }
 }

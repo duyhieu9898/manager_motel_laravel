@@ -18,13 +18,14 @@
         <div class="row">
             <div class="col-xs-12 col-md-12 content pr15-min-992">
                 <h3 class="title-detail">{{ $room['title'] }}</h3>
-                <span><i class="fa fa-clock-o"></i> Date Submitted: {{ date('F d, Y', strtotime($room['updated_at'])) }}</span>
+                <span><i class="fa fa-clock-o"></i> Date Submitted:
+                    {{ date('F d, Y', strtotime($room['updated_at'])) }}</span>
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-12 col-md-6">
                                 <div class="box-image">
-                                    <img src="{{ $room['images'][0]['file_name'] }}" alt="">
+                                    <img src="{{ $room['images'][0]['file_name'] }}" alt="representative image">
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
@@ -35,13 +36,14 @@
                                     {{ $room->address->district->name }}
                                     {{ $room->address->province->name }}
                                 </p>
-                                <p><strong>Room area: </strong>{{ $room['room_area'] }}m</p>
-                                <p><strong>Price: </strong>{{ $room['price'] }} vnd/month</p>
-                                <p><strong>People Maximum: </strong>{{ $room['maximum_peoples_number'] }}</p>
+                                <p><strong>Room area: </strong>{{ $room->room_area }}m</p>
+                                <p><strong>Price: </strong>{{ $room->price }} vnd/month</p>
+                                <p><strong>Number of current people: </strong>{{ $room->number_peoples }}</p>
+                                <p><strong>Maximum number of people: </strong>{{ $room->maximum_peoples_number }}</p>
                                 <div>
-                                    <form action="#" method="post" accept-charset="utf-8">
-                                        <button type="submit" name="pay" class="btn btn-primary btn-block">Đặt phòng ngay !</button>
-                                    </form>
+                                    <a href="{{ url("/booking-room/$room->id") }}">
+                                        <button type="submit" class="btn btn-primary btn-block">Đặt phòngngay !</button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -55,7 +57,7 @@
                         </div>
                     </div>
                     <div class="row  mb-10 slide-img">
-                        {{-- slide --}}
+
                     </div>
                 </div>
                 <div class="panel panel-default">
@@ -73,7 +75,9 @@
                             @foreach($room['convenients'] as $convenient)
                             <div style="margin-top:6px;margin-left:0px" class="row col-md-4 col-sm-4 col-xs-6">
                                 <div class="row">
-                                    <img class="go-right" style="max-height:30px;max-witdh:40px;vertical-align: text-bottom;" src="{{ asset('images/ok.png') }}">
+                                    <img class="go-right"
+                                        style="max-height:30px;max-witdh:40px;vertical-align: text-bottom;"
+                                        src="{{ asset('images/ok.png') }}">
                                     <span class="text-left go-text-right size14">
                                         {{ $convenient['amount'].' '.$convenient['name'] }} </span>
                                 </div>
@@ -86,10 +90,12 @@
             </div>
             <!-- phan commnet -->
             <div class="comment">
-                <div class="fb-like" data-href="http://localhost/detail-post.php" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+                <div class="fb-like" data-href="http://localhost/detail-post.php" data-layout="button_count"
+                    data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
                 <div class="fb-save" data-uri="http://localhost" data-size="small"></div>
                 <!-- comment -->
-                <div class="fb-comments" data-href="https://www.facebook.com/ndh6998" data-width="100%" data-numposts="5">
+                <div class="fb-comments" data-href="https://www.facebook.com/ndh6998" data-width="100%"
+                    data-numposts="5">
                 </div>
             </div>
         </div>

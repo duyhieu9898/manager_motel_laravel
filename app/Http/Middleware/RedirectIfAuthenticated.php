@@ -20,7 +20,10 @@ class RedirectIfAuthenticated
         if (Auth::guard($guard)->check()) {
             return redirect('/redirecIfAuthencattion');
         }
-
         return $next($request);
+    }
+    protected function redirectTo()
+    {
+        return '/path';
     }
 }

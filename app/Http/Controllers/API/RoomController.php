@@ -10,8 +10,6 @@ use App\Repositories\Room\RoomRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Convenient\ConvenientRepositoryInterface;
 use App\Repositories\Image\ImageRepositoryInterface;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Log;
 
 class RoomController extends Controller
 {
@@ -116,11 +114,30 @@ class RoomController extends Controller
             return response()->json([
                 'message' => 'update room success'
             ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Server error while updating room'
-            ], 500);
         }
+
+        return response()->json([
+            'message' => 'Server error while updating room'
+        ], 500);
+    }
+
+    public function active(Request $request, int $roomId)
+    {
+        $valActive = $request->active;
+        $result = $this->roomRepository->active($valActive, $roomId);
+        if ($result) {
+            return response()->json([
+                'message' => 'update room active success'
+            ], 200);
+        }
+        return response()->json([
+            'message' => 'Server error while updating room active'
+        ], 500);
+    }
+
+    public function people(Request $request)
+    {
+        //$this->roomRepository->people($roomId, $numPleoples = 1);
     }
 
     /**

@@ -20,7 +20,7 @@
                 <div class="box-room">
                     <div class="box-room__image">
                         <div class="actions">
-                            <button type="button" class="btn btn-primary">More info</button>
+                            <a href="{{ url("/detail-room/$room->id") }}"><button type="button" class="btn btn-primary"> More info</button></a>
                         </div>
                         <img src="{{ $room->images[0]->file_name}}" alt="">
                     </div>

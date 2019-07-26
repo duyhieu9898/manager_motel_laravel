@@ -13,29 +13,32 @@ $(document).ready(function() {
     weekday[6] = "Thứ Bảy";
 
     var weekOfday = weekday[dateObj.getDay()];
-    newdate = weekOfday+", "+day+ "/" + month + "/" + year;
+    newdate = weekOfday + ", " + day + "/" + month + "/" + year;
     $('.date-curent').html(newdate);
 
 
-    $("#next").click(function (e) {
+    $("#next").click(function(e) {
         // body...
         console.log("cc");
-        var root=$(".active");
-        var next=$(".active").next();
+        var root = $(".active");
+        var next = $(".active").next();
         console.log(root);
         console.log(next);
         console.log(next.next());
         console.log(next.next().next());
         console.log(next.next().next().next());
         // var root=document.getElementsByClassName("active");
-        
+
         // root.classList.remove("active");
         // next.classList.add("active");
     });
-    $("#prev").click(function (e) {
+    $("#prev").click(function(e) {
         // body...
         console.log("cc");
     });
-    
+    window.setTimeout(function() {
+        $(".booking-success").fadeTo(500, 0).slideUp(500, function() {
+            $(this).remove();
+        });
+    }, 4000);
 });
-

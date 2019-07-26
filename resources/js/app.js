@@ -7,7 +7,7 @@
 
 require('./bootstrap');
 
-const token = 'be81524776d1a1cf18f877aca7fb740fdecf9b69a7c5e6f8cc1a125b7b2d3d12'
+const token = 'aef20e94e80340ce4c5a2952879e7387bc1cb6d533f275e3fd0c9888b377b9a1'
 axios.defaults.baseURL = window.location.origin
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
@@ -27,23 +27,29 @@ import VueRouter from 'vue-router';
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import BootstrapVue from 'bootstrap-vue'
 import money from 'v-money'
+import ToggleButton from 'vue-js-toggle-button'
 // import VueSweetalert2 from 'vue-sweetalert2';
+
+
 
 
 
 // register directive v-money and component <money>
 Vue.use(money, { precision: 3 })
-
 Vue.use(BootstrapVue)
 Vue.use(CKEditor);
 Vue.use(VueRouter);
-// Vue.use(VueSweetalert2);
+Vue.use(ToggleButton)
+    // Vue.use(VueSweetalert2);
 
 Vue.component('room-photo-component', require('./components/RoomPhoto.vue').default);
 Vue.component('room-address-component', require('./components/RoomAddress.vue').default);
+Vue.component('user-address-component', require('./components/UserAddress.vue').default);
 Vue.component('app-admin-component', require('./components/AppAdmin.vue').default);
 Vue.component('room-convenients-component', require('./components/RoomConvenients.vue').default);
 Vue.component('todo-list-component', require('./components/TodoList.vue').default);
+Vue.component('user-component', require('./components/TheUser.vue').default);
+Vue.component('contact-form-component', require('./components/ContactForm.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -54,33 +60,45 @@ import TheRoomEdit from './components/TheRoomEdit.vue';
 import TheRoomCreate from './components/TheRoomCreate.vue';
 import TheUser from './components/TheUser.vue';
 import TheDashBoard from './components/TheDashBoard.vue';
+import TheBooking from './components/TheBooking.vue';
+import TheCategory from './components/TheCategory.vue';
 
 const router = new VueRouter({
     mode: 'history',
     routes: [{
-            path: '/app',
+            path: '/admin',
             name: 'dash-board',
             component: TheDashBoard
         },
         {
-            path: '/app/rooms',
+            path: '/admin/rooms',
             name: 'all-room',
             component: TheListRooms
         },
         {
-            path: '/app/admin/rooms/:id/edit',
+            path: '/admin/rooms/:id/edit',
             name: 'room-edit',
             component: TheRoomEdit
         },
         {
-            path: '/app/admin/rooms/create',
+            path: '/admin/rooms/create',
             name: 'room-create',
             component: TheRoomCreate
         },
         {
-            path: '/app/admin/users',
+            path: '/admin/users',
             name: 'user',
             component: TheUser
+        },
+        {
+            path: '/admin/bookings',
+            name: 'booking',
+            component: TheBooking
+        },
+        {
+            path: '/admin/categories',
+            name: 'categories',
+            component: TheCategory
         }
     ],
     scrollBehavior(to, from, savedPosition) {

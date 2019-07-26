@@ -22,13 +22,14 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('/upload-image/{room_id}', 'API\ImageController@saveImage')->name('upload_image');
     Route::delete('/delete-image/{image_id?}', 'API\ImageController@destroy')->name('delete_image');
     //address
-    Route::get('/wards/{idDistrict}', 'API\AddressController@getWardsByDistrict');
-    Route::get('/districts/{idProvince}', 'API\AddressController@getDistrictsByProvince');
+    Route::get('/wards/{idDistrict}', 'API\AddressController@getWardsByDistrictId');
+    Route::get('/districts/{idProvince}', 'API\AddressController@getDistrictsByProvinceId');
     Route::get('/provinces', 'API\AddressController@getProvinces');
 
-    Route::get('/address/{id}', 'API\AddressController@getAddressByRoom');
+    Route::get('/address/room/{id}', 'API\AddressController@getByRoomId');
+    Route::get('/address/{id}', 'API\AddressController@getById');
     Route::post('/addresses/create', 'API\AddressController@create');
-    Route::put('/address/{id}', 'API\AddressController@updateAddressByRoom');
+    Route::put('/address/{id}', 'API\AddressController@updateByRoomId');
     //room
     Route::get('/rooms', 'API\RoomController@index');
     Route::get('/rooms/create', 'API\RoomController@create');
@@ -36,8 +37,14 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/rooms/{id}/edit', 'API\RoomController@edit')->name('room_edit');
     Route::put('/rooms/{id}', 'API\RoomController@update')->name('room_update');
     Route::delete('/rooms/{id}', 'API\RoomController@destroy');
+    Route::post('/rooms/{id}/active', 'API\RoomController@active');
 
     // Route::get('/rooms/', function () {
     //     return new RoomCollection(Room::paginate(10));
     // });
+    //booking
+    Route::get('/booking', 'API\BookingController@index');
+    //user
+    Route::resource('/users', 'API\UserController');
+    Route::resource('/categories', 'API\CategoryController');
 });

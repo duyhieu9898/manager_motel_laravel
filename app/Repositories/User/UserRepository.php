@@ -27,34 +27,41 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return User::get()->load('roles');
     }
 
-    public function createUser($dataUser)
+    public function createUser(array $dataUser)
     {
-        $user = new User();
-        $user->name = $dataUser['name'];
-        $user->email = $dataUser['email'];
-        $user->password = bcrypt($dataUser['password']);
+        $user            = new User();
+        $user->name      = $dataUser['name'];
+        $user->email     = $dataUser['email'];
+        $user->phone     = $dataUser['phone'];
+        $user->password  = bcrypt($dataUser['password']);
         $user->api_token = $dataUser['api_token'];
-        $user->save();
-        return $user;
+        $result = $user->save();
+        if ($result) {
+            return $user;
+        }
+        return false;
     }
 
-    public function updateById($id, $userName, $userEmail, $roles)
+    public function updateById(int $id, array $dataUser)
     {
-        $user = $this->findById($id);
-        $user->name = $userName;
-        $user->email = $userEmail;
-        $user->save();
-        $user->roles()->detach();
-        //get array role_id user from client
-        foreach ($roles as $role) {
-            $rolesId[] = $role['id'];
+        $user        = $this->findById($id);
+        $user->name  = $dataUser['name'];
+        $user->email = $dataUser['email'];
+        $user->phone = $dataUser['phone'];
+        if ($dataUser['phone']) {
+            $user->address_id = $dataUser['address_id'];
         }
-        $user->roles()->attach($rolesId);
+        $result = $user->save();
+        if ($result) {
+            return $user;
+        }
+        return false;
     }
-    public function deleteById($id)
+    public function deleteById(int $id)
     {
         $user = $this->findById($id);
         $user->roles()->detach();
-        $user->delete();
+        $result = $user->delete();
+        return $result;
     }
 }

@@ -18,13 +18,13 @@ class ImageController extends Controller
         $this->imageRepository = $imageRepository;
     }
 
-     /**
-     * store image for room create
-     *
-     * @param  App\Http\Requests\ImageRequest  $request
-     * @param  int  $roomId
-     * @return \Illuminate\Http\Response
-     */
+    /**
+    * store image for room create
+    *
+    * @param  App\Http\Requests\ImageRequest  $request
+    * @param  int  $roomId
+    * @return \Illuminate\Http\Response
+    */
     public function store(ImageRequest $request)
     {
         $photo = $request->file;
@@ -95,7 +95,7 @@ class ImageController extends Controller
     public function saveImage(ImageRequest $request, int $roomId)
     {
         $photo = $request->file;
-        $dataImage=$this->uploadImageToServer($photo);
+        $dataImage = $this->uploadImageToServer($photo);
 
         if (!$dataImage) {
             return response()->json([

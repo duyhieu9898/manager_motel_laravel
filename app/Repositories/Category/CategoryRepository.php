@@ -30,6 +30,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
                 [
                     'rooms' => function ($query) use ($numItem) {
                         $query->limit($numItem);
+                        $query->where('active', 1);
                     },
                     'rooms.address.ward',
                     'rooms.address.district',
@@ -41,19 +42,32 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
         return $rooms;
     }
 
-    public function getRoomByCategoryId(int $id)
+    public function create(array $dataCategory)
     {
-        $listRooms=$this->model->findOrFail($id)->load(
-            [
-            'rooms',
-            'rooms.address.district',
-            'rooms.address.province',
-            'rooms.images',
-            ]
-        )->pagination(15);
-        if ($listRooms) {
-            return $listRooms;
+        $category            = new category();
+        $category->name      = $dataCategory['name'];
+        $result = $category->save();
+        if ($result) {
+            return $category;
         }
         return false;
+    }
+
+    public function updateById(int $id, array $dataCategory)
+    {
+        $category        = $this->findById($id);
+        $category->name  = $dataCategory['name'];
+        $result = $category->save();
+        if ($result) {
+            return $category;
+        }
+        return false;
+    }
+
+    public function deleteById(int $id)
+    {
+        $category = $this->findById($id);
+        $result = $category->delete();
+        return $result;
     }
 }

@@ -8,7 +8,6 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Room;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -20,7 +19,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'phone', 'address_id'
     ];
 
     /**
@@ -76,7 +75,9 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function rooms()
     {
-        return $this->belongsToMany(Room::class)->withPivot('check_in', 'check_out')->withTimestamps();
+        return $this->belongsToMany('App\Room')
+                ->withPivot('check_in', 'check_out', 'status_id')
+                ->withTimestamps();
     }
     public function isAdministrator()
     {

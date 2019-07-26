@@ -23,7 +23,17 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
     }
     public function getByCategoryId($idCategory, $perPage)
     {
-        return $this->model::where('category_id', $idCategory)->paginate($perPage);
+
+        // return Room::whereHas('images', function ($query) use ($idCategory) {
+        //     $query->where(['category_id'=> $idCategory, 'active' => true]);
+        // })
+        //     ->with(['images','category'])
+        //     ->paginate($perPage);
+
+
+        return $this->model::where(['category_id' => $idCategory ,'active' => true])
+                ->with(['images', 'category'])
+                ->paginate($perPage);
     }
     public function create($dataRoom)
     {
@@ -36,9 +46,10 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
         $room->price = $dataRoom['price'];
         $room->police_and_terms = $dataRoom['police_and_terms'];
         $room->maximum_peoples_number = $dataRoom['maximum_peoples_number'];
-        $room->save();
-        $room->roles()->attach($dataRoom['list_convenients_id']);
-        if ($room->save()) {
+        $result = $room->save();
+        $room->convenients()->attach($dataRoom['list_convenients_id']);
+
+        if ($result) {
             return $room->id;
         }
         return false;
@@ -52,22 +63,48 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
         $room->police_and_terms = $dataRoom['police_and_terms'];
         $room->price = $dataRoom['price'];
         $room->maximum_peoples_number = $dataRoom['maximum_peoples_number'];
-        $room->save();
-        $room->roles()->detach();
-        $room->roles()->attach($dataRoom['list_convenients_id']);
-        if ($room) {
+        $result = $room->save();
+        //
+        $room->convenients()->sync($dataRoom['list_convenients_id']);
+
+        if ($result) {
             return true;
         }
         return false;
     }
+
     public function jsonPagination($perPage)
     {
         return $this->model::paginate($perPage);
     }
+
     public function deleteById(int $id)
     {
         $room = $this->findById($id);
-        if ($room->delete()) {
+        $room->convenients()->detach();
+        $result =$room->delete();
+        if ($result) {
+            return true;
+        }
+        return false;
+    }
+
+    public function active(bool $val, int $roomId)
+    {
+        $room = $this->findById($roomId);
+        $room->active = $val;
+        $result = $room->save();
+        if ($result) {
+            return true;
+        }
+        return false;
+    }
+    public function people($roomId, $numPeoples)
+    {
+        $room = $this->findById($roomId);
+        $room->number_peoples = $room->number_peoples + $numPeoples;
+        $result = $room->save();
+        if ($result) {
             return true;
         }
         return false;

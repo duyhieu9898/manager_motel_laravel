@@ -18,6 +18,7 @@ class CreateRoomUserTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('room_id')->unsigned();
+            $table->bigInteger('status_id')->unsigned()->default(1);
             $table->timestamp('check_in')->nullable();
             $table->timestamp('check_out')->nullable();
             $table->timestamps();
@@ -28,6 +29,10 @@ class CreateRoomUserTable extends Migration
                         ->onUpdate('cascade');
             $table->foreign('room_id')->references('id')
                         ->on('rooms')
+                        ->onDelete('cascade')
+                        ->onUpdate('cascade');
+            $table->foreign('status_id')->references('id')
+                        ->on('status_bookings')
                         ->onDelete('cascade')
                         ->onUpdate('cascade');
         });

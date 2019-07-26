@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Repositories\Room\RoomRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
-use App\Room;
 
 class RoomController extends Controller
 {
@@ -21,7 +20,6 @@ class RoomController extends Controller
 
     public function latest()
     {
-
         $numItem=3;
         $newRoomsOfCategory = $this->categoryRepository->getNewRoomsOfAllCategories($numItem);
         return view('index', compact(['newRoomsOfCategory']));
@@ -38,5 +36,11 @@ class RoomController extends Controller
         $itemPerPage=8;
         $listRooms=$this->roomRepository->getByCategoryId($id, $itemPerPage);
         return view('category_rooms', compact('listRooms'));
+    }
+
+    public function booking($id)
+    {
+        $room = $this->roomRepository->findById($id);
+        return view('booking_rooms', compact('room'));
     }
 }

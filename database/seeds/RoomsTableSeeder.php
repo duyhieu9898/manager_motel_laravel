@@ -11,6 +11,7 @@ class RoomsTableSeeder extends Seeder
      *
      * @return void
      */
+
     public function run()
     {
         $textListDemo="<ul>
@@ -30,10 +31,10 @@ class RoomsTableSeeder extends Seeder
         Aliquam nec rutrum diam, sed elementum arcu. Mauris pulvinar ligula id vulputate condimentum.
         Quisque ut dui a turpis congue molestie. Cras bibendum vestibulum sodales.
         In hac habitasse platea dictumst.</p>";
-
+        $listIdConvenient = DB::table('convenients')->pluck('id');
         for ($i = 1; $i <= 100; $i++) {
-            Room::create([
-            'title' => "Room no {$i}",
+            $id=Room::create([
+            'title' => "Room Motel No  {$i}",
             'description' => $paragraphs,
             'category_id' => 1,
             'police_and_terms' => $textListDemo,
@@ -41,12 +42,14 @@ class RoomsTableSeeder extends Seeder
             'price' => 12345678,
             'maximum_peoples_number'=>2,
             'address_id' => $i
-            ]);
+            ])->id;
+            $room=Room::find($id);
+            $room->convenients()->attach($listIdConvenient);
         }
 
         for ($i = 101; $i <= 200; $i++) {
-            Room::create([
-            'title' => "Room no {$i}",
+            $id=Room::create([
+            'title' => "Room House no {$i}",
             'description' => $paragraphs,
             'category_id' => 2,
             'police_and_terms' => $textListDemo,
@@ -54,12 +57,14 @@ class RoomsTableSeeder extends Seeder
             'price' => 12345678,
             'maximum_peoples_number'=>2,
             'address_id' => $i
-            ]);
+            ])->id;
+            $room=Room::find($id);
+            $room->convenients()->attach($listIdConvenient);
         }
 
         for ($i = 201; $i <= 300; $i++) {
-            Room::create([
-            'title' => "Room no {$i}",
+            $id=Room::create([
+            'title' => "Room Apartment No {$i}",
             'description' => $paragraphs,
             'category_id' => 3,
             'police_and_terms' => $textListDemo,
@@ -67,7 +72,9 @@ class RoomsTableSeeder extends Seeder
             'price' => 12345678,
             'maximum_peoples_number'=>2,
             'address_id' => $i
-            ]);
+            ])->id;
+            $room=Room::find($id);
+            $room->convenients()->attach($listIdConvenient);
         }
     }
 }
