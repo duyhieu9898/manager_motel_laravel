@@ -9,6 +9,6 @@ namespace App\Repositories;
  */
 interface RepositoryInterface
 {
-    public function getAll();
+    public function get();
     public function findById(int $id);
 }

@@ -19,6 +19,17 @@ class UserController extends Controller
     {
         $this->userRepository = $userRepository;
     }
+
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $users = $this->userRepository->getUsersWithRoles();
+        return $users;
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -33,6 +44,7 @@ class UserController extends Controller
                 'user.name' => 'required|min:8|max:16',
                 'user.email' => 'required|email',
                 'user.role' => 'required|exists:roles,name',
+                'user.phone' => 'required|string|min:10|max:10'
             ],
             [
                 'required' => 'Name is a required field',
@@ -82,11 +94,6 @@ class UserController extends Controller
             ]
         );
         $dataUser = $request->input('user');
-        // $user        = $this->userRepository->findById($id);
-        // $user->name  = $dataUser['name'];
-        // $user->email = $dataUser['email'];
-        // $user->phone = $dataUser['phone'];
-        // $user->save();
         $this->userRepository->updateById($id, $dataUser);
         $user = $this->userRepository->updateById($id, $dataUser);
         if (!$user) {
@@ -102,6 +109,14 @@ class UserController extends Controller
             ],
             200
         );
+    }
+
+    public function bookings()
+    {
+        $user = $this->userRepository->bookings();
+        if ($user) {
+            return response()->json(['user_booking'=>$user], 200);
+        }
     }
 
     /**

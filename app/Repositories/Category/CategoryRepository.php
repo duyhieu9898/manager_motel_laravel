@@ -24,11 +24,12 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
 
     public function getNewRoomsOfAllCategories($numItem)
     {
-        $categories  = $this->getAll();
+        $categories  = $this->get();
         foreach ($categories as $category) {
             $rooms[] = Category::ofName($category['name'])->first()->load(
                 [
                     'rooms' => function ($query) use ($numItem) {
+                        $query->orderBy('created_at', 'desc');
                         $query->limit($numItem);
                         $query->where('active', 1);
                     },

@@ -12,10 +12,13 @@ use App\Repositories\Image\ImageRepository;
 use App\Repositories\Image\ImageRepositoryInterface;
 use App\Repositories\Convenient\ConvenientRepository;
 use App\Repositories\Convenient\ConvenientRepositoryInterface;
+use App\Repositories\Province\ProvinceRepository;
+use App\Repositories\Province\ProvinceRepositoryInterface;
+use App\Repositories\Address\AddressRepository;
+use App\Repositories\Address\AddressRepositoryInterface;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Routing\UrlGenerator;
-
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,6 +38,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->singleton(ImageRepositoryInterface::class, ImageRepository::class);
         $this->app->singleton(ConvenientRepositoryInterface::class, ConvenientRepository::class);
+        $this->app->singleton(ProvinceRepositoryInterface::class, ProvinceRepository::class);
+        $this->app->singleton(AddressRepositoryInterface::class, AddressRepository::class);
     }
 
     /**

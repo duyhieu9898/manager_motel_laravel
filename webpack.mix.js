@@ -13,11 +13,12 @@ const mix = require('laravel-mix');
 
 mix.styles([
     // 'resources/css/category-rooms.css',
-    'resources/css/detail-posts.css',
+    'resources/css/detail-room.css',
     'resources/css/footer.css',
     'resources/css/header.css',
     'resources/css/index.css',
     'resources/css/login.css',
     'resources/css/nav.css',
+    'resources/css/list-room.css',
 ], 'public/css/style.css');
 mix.js('resources/js/app.js', 'public/js/app.js')

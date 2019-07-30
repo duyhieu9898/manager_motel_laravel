@@ -76,7 +76,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function rooms()
     {
         return $this->belongsToMany('App\Room')
-                ->withPivot('check_in', 'check_out', 'status_id')
+                ->withPivot('arrival_date', 'departure_date', 'peoples', 'status_id')
                 ->withTimestamps();
     }
     public function isAdministrator()

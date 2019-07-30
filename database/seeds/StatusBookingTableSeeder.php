@@ -17,19 +17,23 @@ class StatusBookingTableSeeder extends Seeder
 
         $pending = new StatusBooking();
         $pending->id = 1;
-        $pending->name = "pending";
+        $pending->name = "processing";
         $pending->save();
 
         $completed = new StatusBooking();
         $completed->id = 2;
-        $completed->name = "completed";
+        $completed->name = "pending";
         $completed->save();
 
         $cancelled = new StatusBooking();
         $cancelled->id = 3;
-        $cancelled->name = "cancelled";
+        $cancelled->name = "completed";
         $cancelled->save();
 
+        $cancelled = new StatusBooking();
+        $cancelled->id = 4;
+        $cancelled->name = "cancelled";
+        $cancelled->save();
 
     }
 }

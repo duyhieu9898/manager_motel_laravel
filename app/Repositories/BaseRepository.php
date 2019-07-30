@@ -30,7 +30,7 @@ class BaseRepository implements RepositoryInterface
     /**
      * @inheritdoc
      */
-    public function getAll()
+    public function get()
     {
         return $this->model::get();
     }

@@ -75,7 +75,7 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
 
     public function jsonPagination($perPage)
     {
-        return $this->model::paginate($perPage);
+        return $this->model->orderBy('created_at', 'DESC')->paginate($perPage);
     }
 
     public function deleteById(int $id)
@@ -108,5 +108,9 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
             return true;
         }
         return false;
+    }
+    public function bookingProcessing($userId, $dataBooking)
+    {
+        return $this->model->users()->attach($userId, $dataBooking);
     }
 }

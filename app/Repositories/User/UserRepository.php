@@ -22,7 +22,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         parent::__construct($model);
     }
-    public function getAllUsersAndRoles()
+    public function getUsersWithRoles()
     {
         return User::get()->load('roles');
     }
@@ -61,7 +61,34 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         $user = $this->findById($id);
         $user->roles()->detach();
-        $result = $user->delete();
-        return $result;
+        return $user->delete();
+    }
+    public function bookings()
+    {
+        return $this->model::has('rooms')->get();
+    }
+    public function getCartRoomByUserId(int $userId)
+    {
+        // $user = $this->model::find($userId)->whereHas('rooms')->wherePivot('status_id', '=', 1)->get();
+        return $this->model::find($userId)->rooms()->wherePivot('status_id', 1)->get();
+
+        // foreach ($user->rooms as $user) {
+        //     $ds[]=$user->pivot->peoples;
+        // }
+        // dd($ds);
+    }
+
+
+    public function bookingPending(int $userId)
+    {
+        $rooms = $this->findById($userId)->load('rooms')->rooms;
+        foreach ($rooms as $room) {
+            $room->users()->updateExistingPivot($userId, ['status_id' => 2]);
+        }
+    }
+    public function countRoomsInCartByUserId(int $userId)
+    {
+        $user = $this->findById($userId);
+        return $user->rooms()->wherePivot('status_id', 1)->count();
     }
 }

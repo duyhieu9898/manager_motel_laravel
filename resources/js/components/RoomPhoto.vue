@@ -84,7 +84,7 @@ export default {
   },
   mounted() {
     var token =
-      "837090eb6b997fa8567bd6d718c7d7bae7d964af51fe5a955d816bd503facb05";
+      "8bbd88ccd51fd163bf59c84c820d98246f258fbefecf41073160b183d2fe86e6";
     if (this.room_id) {
       var URL_PATH_UPLOAD =
         "/api/upload-image/" + this.room_id + `/?api_token=${token}`;

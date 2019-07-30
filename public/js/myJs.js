@@ -17,28 +17,49 @@ $(document).ready(function() {
     $('.date-curent').html(newdate);
 
 
-    $("#next").click(function(e) {
-        // body...
-        console.log("cc");
-        var root = $(".active");
-        var next = $(".active").next();
-        console.log(root);
-        console.log(next);
-        console.log(next.next());
-        console.log(next.next().next());
-        console.log(next.next().next().next());
-        // var root=document.getElementsByClassName("active");
-
-        // root.classList.remove("active");
-        // next.classList.add("active");
-    });
-    $("#prev").click(function(e) {
-        // body...
-        console.log("cc");
-    });
     window.setTimeout(function() {
         $(".booking-success").fadeTo(500, 0).slideUp(500, function() {
             $(this).remove();
         });
     }, 4000);
+
+
+
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+    var checkin = $('#datepickerarrival').datepicker({
+        format: 'yyyy-mm-dd',
+        beforeShowDay: function(date) {
+            return date.valueOf() >= now.valueOf();
+        },
+        autoclose: true
+
+    }).on('changeDate', function(ev) {
+        if (ev.date.valueOf() > checkout.datepicker("getDate").valueOf() || !checkout.datepicker("getDate").valueOf()) {
+
+            var newDate = new Date(ev.date);
+            newDate.setDate(newDate.getDate() + 1);
+            checkout.datepicker("update", newDate);
+
+        }
+        $('#datepickerdeparture')[0].focus();
+    });
+
+
+    var checkout = $('#datepickerdeparture').datepicker({
+        format: 'yyyy-mm-dd',
+        beforeShowDay: function(date) {
+            if (!checkin.datepicker("getDate").valueOf()) {
+                return date.valueOf() >= new Date().valueOf();
+            } else {
+                return date.valueOf() > checkin.datepicker("getDate").valueOf();
+            }
+        },
+        autoclose: true
+
+    }).on('changeDate', function(ev) {});
+
+
+
 });

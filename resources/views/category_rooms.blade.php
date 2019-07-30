@@ -16,22 +16,20 @@
 
     <div class="row">
         @foreach ($listRooms as $room)
-            <div class="col-md-3">
-                <div class="box-room">
-                    <div class="box-room__image">
-                        <div class="actions">
-                            <a href="{{ url("/detail-room/$room->id") }}"><button type="button" class="btn btn-primary"> More info</button></a>
-                        </div>
-                        <img src="{{ $room->images[0]->file_name}}" alt="">
+            <div class="box-room col-lg-3 col-md-4 col-sm-6 col-xs-10 col-xs-offset-1 col-sm-offset-0 ">
+                <div class="box-room__image">
+                    <div class="actions">
+                        <a href="{{ url("/detail-room/$room->id") }}"><button type="button" class="btn btn-primary"> More info</button></a>
                     </div>
-                    <div class="box-room__info">
-                        <div class="info__title"><p class="info__title--content fix-length">{{ $room->title }}</p> </div>
-                        <div class="info__address"><p class="info__address--content fix-length">{{ $room->category->name }}</p> </div>
-                        <div class="info_description"><p class="info__description--content">{!! $room->description !!}</p></div>
-                    </div>
-                    <div class="box-room__price">
-                        <p class="box-room__price--content text-warning" > price: <span>12,345,478 </span>vnd/month</p>
-                    </div>
+                    <img  class="reponsive" src="{{ $room->images[0]->file_name}}" alt="">
+                </div>
+                <div class="box-room__info">
+                    <div class="info__title"><p class="info__title--content fix-length">{{ $room->title }}</p> </div>
+                    <div class="info__address"><p class="info__address--content fix-length">{{ $room->category->name }}</p> </div>
+                    <div class="info_description"><p class="info__description--content">{!! $room->description !!}</p></div>
+                </div>
+                <div class="box-room__price">
+                    <p class="box-room__price--content text-warning" > price: <span>12,345,478 </span>vnd/month</p>
                 </div>
             </div>
         @endforeach

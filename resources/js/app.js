@@ -7,7 +7,7 @@
 
 require('./bootstrap');
 
-const token = 'aef20e94e80340ce4c5a2952879e7387bc1cb6d533f275e3fd0c9888b377b9a1'
+const token = '8bbd88ccd51fd163bf59c84c820d98246f258fbefecf41073160b183d2fe86e6'
 axios.defaults.baseURL = window.location.origin
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
@@ -48,8 +48,7 @@ Vue.component('user-address-component', require('./components/UserAddress.vue').
 Vue.component('app-admin-component', require('./components/AppAdmin.vue').default);
 Vue.component('room-convenients-component', require('./components/RoomConvenients.vue').default);
 Vue.component('todo-list-component', require('./components/TodoList.vue').default);
-Vue.component('user-component', require('./components/TheUser.vue').default);
-Vue.component('contact-form-component', require('./components/ContactForm.vue').default);
+Vue.component('info-user-component', require('./components/InfoUser.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -58,10 +57,12 @@ Vue.component('contact-form-component', require('./components/ContactForm.vue').
 import TheListRooms from './components/TheListRooms.vue';
 import TheRoomEdit from './components/TheRoomEdit.vue';
 import TheRoomCreate from './components/TheRoomCreate.vue';
-import TheUser from './components/TheUser.vue';
+import TheListUser from './components/TheListUser.vue';
 import TheDashBoard from './components/TheDashBoard.vue';
-import TheBooking from './components/TheBooking.vue';
-import TheCategory from './components/TheCategory.vue';
+import TheListBooking from './components/TheListBooking.vue';
+import TheBookingDetail from './components/TheBookingDetail.vue';
+import TheListCategory from './components/TheListCategory.vue';
+
 
 const router = new VueRouter({
     mode: 'history',
@@ -88,18 +89,24 @@ const router = new VueRouter({
         {
             path: '/admin/users',
             name: 'user',
-            component: TheUser
+            component: TheListUser
         },
         {
             path: '/admin/bookings',
+            name: 'list-bookings',
+            component: TheListBooking
+        },
+        {
+            path: '/admin/bookings/:id',
             name: 'booking',
-            component: TheBooking
+            component: TheBookingDetail
         },
         {
             path: '/admin/categories',
             name: 'categories',
-            component: TheCategory
-        }
+            component: TheListCategory
+        },
+
     ],
     scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {

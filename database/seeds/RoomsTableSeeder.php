@@ -32,45 +32,23 @@ class RoomsTableSeeder extends Seeder
         Quisque ut dui a turpis congue molestie. Cras bibendum vestibulum sodales.
         In hac habitasse platea dictumst.</p>";
         $listIdConvenient = DB::table('convenients')->pluck('id');
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 1; $i <= 300; $i++) {
+            $categoryId = rand(1, 3);
+            if ($categoryId == 1) {
+                $categoryName = "Motel";
+            } elseif ($categoryId == 2) {
+                $categoryName = "House";
+            } else {
+                $categoryName = "Apartment";
+            }
             $id=Room::create([
-            'title' => "Room Motel No  {$i}",
+            'title' => "Room {$categoryName} No  {$i}",
             'description' => $paragraphs,
-            'category_id' => 1,
+            'category_id' => $categoryId,
             'police_and_terms' => $textListDemo,
-            'room_area' => 10,
-            'price' => 12345678,
-            'maximum_peoples_number'=>2,
-            'address_id' => $i
-            ])->id;
-            $room=Room::find($id);
-            $room->convenients()->attach($listIdConvenient);
-        }
-
-        for ($i = 101; $i <= 200; $i++) {
-            $id=Room::create([
-            'title' => "Room House no {$i}",
-            'description' => $paragraphs,
-            'category_id' => 2,
-            'police_and_terms' => $textListDemo,
-            'room_area' => 10,
-            'price' => 12345678,
-            'maximum_peoples_number'=>2,
-            'address_id' => $i
-            ])->id;
-            $room=Room::find($id);
-            $room->convenients()->attach($listIdConvenient);
-        }
-
-        for ($i = 201; $i <= 300; $i++) {
-            $id=Room::create([
-            'title' => "Room Apartment No {$i}",
-            'description' => $paragraphs,
-            'category_id' => 3,
-            'police_and_terms' => $textListDemo,
-            'room_area' => 10,
-            'price' => 12345678,
-            'maximum_peoples_number'=>2,
+            'room_area' => rand(10, 50),
+            'price' => rand(5, 20)*100000,
+            'maximum_peoples_number'=>rand(1, 10),
             'address_id' => $i
             ])->id;
             $room=Room::find($id);

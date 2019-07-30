@@ -38,13 +38,20 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::put('/rooms/{id}', 'API\RoomController@update')->name('room_update');
     Route::delete('/rooms/{id}', 'API\RoomController@destroy');
     Route::post('/rooms/{id}/active', 'API\RoomController@active');
+    Route::post('rooms/updatePeople', 'API\RoomController@updatePeopleInRoom');
 
     // Route::get('/rooms/', function () {
     //     return new RoomCollection(Room::paginate(10));
     // });
     //booking
-    Route::get('/booking', 'API\BookingController@index');
+    Route::get('/bookings', 'API\BookingController@index');
+    Route::get('/bookings/{id}', 'API\BookingController@show');
+    Route::post('/bookings/{id}/status-update', 'API\BookingController@updateStatus');
+    Route::delete('/bookings/{id}', 'API\BookingController@destroy');
+    Route::get('/users/bookings', 'API\UserController@bookings');
     //user
+
     Route::resource('/users', 'API\UserController');
     Route::resource('/categories', 'API\CategoryController');
+
 });

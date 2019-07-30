@@ -45,8 +45,8 @@ class RoomController extends Controller
     }
     public function create()
     {
-        $listCategory   = $this->categoryRepository->getAll();
-        $listConvenient = $this->convenientRepository->getAll();
+        $listCategory   = $this->categoryRepository->get();
+        $listConvenient = $this->convenientRepository->get();
         return response()->json(['convenients' => $listConvenient, 'categories' => $listCategory]);
     }
     /**
@@ -80,11 +80,26 @@ class RoomController extends Controller
     {
         //
     }
+    public function updatePeopleInRoom(Request $request)
+    {
+        $room =  $this->roomRepository->findById($request->room_id);
+        $room->number_peoples = $request->number_people;
+        $result = $room->save();
+        if ($result) {
+            return response()->json([
+                'message' => 'update peoples in room success',
+                'people' => $request->number_people
+            ], 200);
+        }
+        return response()->json([
+            'message' => 'Server error while updating peoples in room'
+        ], 500);
+    }
 
     public function edit($id)
     {
-        $categories       = $this->categoryRepository->getAll();
-        $convenients      = $this->convenientRepository->getAll();
+        $categories       = $this->categoryRepository->get();
+        $convenients      = $this->convenientRepository->get();
         $room             = $this->roomRepository->findById($id)->load('convenients');
         $AllConvenientsId = $room->convenients->map(function ($item) {
             return $item['id'];
@@ -148,7 +163,7 @@ class RoomController extends Controller
      */
     public function destroy(int $id)
     {
-        $result=$this->roomRepository->deleteById($id);
+        $result = $this->roomRepository->deleteById($id);
         if ($result) {
             return response()->json(['message' => 'delete room success', 200]);
         }

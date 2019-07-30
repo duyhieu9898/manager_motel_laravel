@@ -35,7 +35,7 @@ class Room extends Model
     public function users()
     {
         return $this->belongsToMany('App\User')
-                ->withPivot('check_in', 'check_out', 'status_id')
+                ->withPivot('arrival_date', 'departure_date', 'peoples', 'status_id')
                 ->withTimestamps();
     }
 }

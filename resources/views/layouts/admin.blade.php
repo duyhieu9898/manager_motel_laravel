@@ -41,7 +41,7 @@
     @yield('css')
 </head>
 
-<body class='page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark'>
+<body class='page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark page-header-fixed'>
     <div id="app" class="page-wrapper">
             @yield('admin-app')
     </div>

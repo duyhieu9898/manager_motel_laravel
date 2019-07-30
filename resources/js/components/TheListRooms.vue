@@ -82,14 +82,7 @@
                             aria-controls="example4"
                             aria-label=" Meal : activate to sort column ascending"
                           >
-                            <div class="dataTables_sizing">pleoples</div>
-                          </th>
-                          <th
-                            class="center sorting"
-                            aria-controls="example4"
-                            aria-label=" Bad Capacity : activate to sort column ascending"
-                          >
-                            <div class="dataTables_sizing">Peoples Max</div>
+                            <div class="dataTables_sizing">Pleople of Room</div>
                           </th>
                           <th
                             class="center sorting"
@@ -119,8 +112,7 @@
                           <td class="center">{{ room.id }}</td>
                           <td class="text-primary">{{ room.category.name }}</td>
                           <td>{{ room.title }}</td>
-                          <td class="center">{{ room.number_peoples  }}</td>
-                          <td class="center">{{ room.maximum_peoples_number }}</td>
+                          <td class="center">{{ room.number_peoples+'/'+room.maximum_peoples_number  }}</td>
                           <td class="center">{{ room.address.province.name }}</td>
                           <td class="center">
                               <toggle-button
@@ -248,8 +240,7 @@ export default {
               console.log(errors.response.data.errors);
             }
           }
-        });article = document.querySelector('#electric-cars');
-        console.log(article.dataset.indexNumber);
+        });
     },
     changePage: function(page) {
       this.pagination.current_page = page;
@@ -260,7 +251,7 @@ export default {
         swal(
           {
             title: "Are you sure?",
-            text: "You will not be able to recover this imaginary file!",
+            text: "You will not be able to recover this room!",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
@@ -272,7 +263,7 @@ export default {
             if (isConfirm) {
               swal(
                 "Deleted!",
-                "Your imaginary file has been deleted.",
+                "This room has been deleted.",
                 "success"
               );
               resolve("delete success");
@@ -281,7 +272,7 @@ export default {
             }
           }
         );
-      });{{ room.active }}
+      });
     },
     activeChange(element) {
         var value = element.value;
