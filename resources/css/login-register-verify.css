@@ -1,0 +1,59 @@
+/*login*/
+
+#login,
+#register,
+.verify,
+.profile-user {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    background-color: rgb(0, 0, 0, 0.5);
+    padding: 50px;
+    border-radius: 8px;
+    z-index: 1041;
+}
+
+#login:hover,
+#register:hover,
+.verify:hover {
+    box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 0 20px 20px rgba(0, 0, 0, 1);
+    transform: translate(-50%, -51%);
+    opacity: 0.7;
+}
+
+.profile-user:hover {
+    box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 0 20px 20px rgba(0, 0, 0, 1);
+    transform: translate(-50%, -51%);
+}
+
+.panel-heading.lead {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.profile-user .card {
+    background: inherit !important;
+}
+
+.profile-user .btn {
+    display: inline-block;
+    padding: 1.4em 1.6em;
+    margin-bottom: 2em;
+    border-radius: 50em;
+    background-color: #343b3b;
+    color: #fff;
+    font-weight: bold;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.profile-user .errors {
+    color: #FD7E14 !important;
+}

@@ -1,31 +1,40 @@
 @extends('layouts.app')
 
-@section('content')
+@section('head')
+<style>
+    header {
+        height: auto !important;
+    }
+</style>
+
+<link rel="stylesheet" href="{{ asset('./plugins/DataPicker/bootstrap-datepicker.min.css') }}">
+@endsection
+
+@section('main-container')
 <!-- main content -->
-<div class="container main-content">
-    <div class="col-md-10">
-        <div class="row mb-10 pl-sm-15 date-curent">
-            Thứ 4, 27/2/2019
-        </div>
-        <div class="row pl-sm-15">
+<div class="container mt-5">
+    <div class="col-lg-12">
+
+        <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li>
-                    <a href="{{ route('index') }}">Trang chủ</a>
-                </li>
-                <li class="active">detail</li>
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Rooms</a></li>
+                <li class="breadcrumb-item active" aria-current="page">id={{ $room->id }}</li>
             </ol>
-        </div>
+        </nav>
+
         <div class="row">
-            <div class="col-xs-12 col-md-12 content pr15-min-992">
+            <div class="col-xs-12 col-md-12 content">
                 <h3 class="title-detail">{{ $room['title'] }}</h3>
                 <span><i class="fa fa-clock-o"></i> Date Submitted:
                     {{ date('F d, Y', strtotime($room['updated_at'])) }}</span>
-                <div class="panel panel-default">
-                    <div class="panel-body">
+                <div class="card">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12 col-md-6">
                                 <div class="box-image">
-                                    <img class="reponsive" src="{{ $room['images'][0]['file_name'] }}" alt="representative image">
+                                    <img class="responsive" src="{{ $room['images'][0]['file_name'] }}"
+                                        alt="representative image">
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
@@ -41,69 +50,88 @@
                                 <p><strong>People per Room:
                                     </strong>{{ $room->number_peoples }}/{{ $room->maximum_peoples_number }}</p>
                                 <div>
+                                    <div class="alert alert-info">
+                                        <strong>benefit!</strong> Book now to get more privileges
+                                    </div>
+                                    <div class="alert alert-warning">
+                                        <strong>Quick time!</strong> We will contact you 24 hours in advance from the
+                                        time of booking
+                                    </div>
                                     <!-- Trigger the modal with a button -->
                                     <button type="submit" class="btn btn-primary btn-block" data-toggle="modal"
                                         data-target="#book-room">Book This Room!</button>
                                     <!-- Modal -->
-                                    <div class="modal fade" id="book-room" role="dialog">
+                                    <div class="modal fade" id="book-room" role="dialog"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <form action="{{ url("/bookings/rooms/$room->id") }}" method="post">
                                             @csrf
-                                            <div class="modal-dialog">
-
+                                            <div class="modal-dialog" role="document">
                                                 <!-- Modal content-->
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <button type="button" class="close"
-                                                            data-dismiss="modal">&times;</button>
                                                         <h4 class="modal-title">{{ $room['title'] }}</h4>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="row">
                                                             <div class="container">
                                                                 <!-- Datepicker as text field -->
-                                                                <label for="datepickerarrival">Arrival date</label>
-                                                                <div  class="input-group date col-sm-5"
-                                                                    data-date-format="dd.mm.yyyy">
+                                                                <div class="col-lg-12">
+                                                                    <label for="datepickerarrival">Arrival date</label>
+                                                                    <div class="input-group date col-lg-12"
+                                                                        data-date-format="dd.mm.yyyy">
 
-                                                                    <input id='datepickerarrival' type="text" class="form-control"
-                                                                        placeholder="dd.mm.yyyy" name="arrival_date" clickable required />
-                                                                    <div class="input-group-addon">
-                                                                        <span class="glyphicon glyphicon-th"></span>
+                                                                        <input id='datepickerarrival' type="text"
+                                                                            class="form-control"
+                                                                            placeholder="yyyy-mm-dd" name="arrival_date"
+                                                                            autocomplete="off" clickable required />
+                                                                        <div class="input-group-addon">
+                                                                            <span class="glyphicon glyphicon-th"></span>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- Datepicker as text field -->
+                                                                    <label for="departuredate">Departure Date</label>
+                                                                    <div class="input-group date  col-lg-12"
+                                                                        data-date-format="dd.mm.yyyy">
+
+                                                                        <input id='datepickerdeparture' type="text"
+                                                                            class="form-control"
+                                                                            placeholder="yyyy-mm-dd" autocomplete="off"
+                                                                            name="departure_date" clickable required />
+                                                                        <div class="input-group-addon">
+                                                                            <span class="glyphicon glyphicon-th"></span>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="input-group col-lg-12"
+                                                                        data-date-format="dd.mm.yyyy">
+                                                                        <div class="form-group">
+                                                                            <label for="people">Number People:</label>
+                                                                            <select class="form-control" id="people"
+                                                                                name="peoples">
+                                                                                @for ($i = 1; $i <= $room->
+                                                                                    maximum_peoples_number -
+                                                                                    $room->number_peoples; $i++)
+                                                                                    <option value="{{ $i }}">{{ $i }}
+                                                                                    </option>
+                                                                                    @endfor
+                                                                            </select>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
 
-                                                                <!-- Datepicker as text field -->
-                                                                <label for="departuredate">Departure Date</label>
-                                                                <div  class="input-group date  col-sm-5"
-                                                                    data-date-format="dd.mm.yyyy">
-
-                                                                    <input id='datepickerdeparture' type="text"
-                                                                        class="form-control"
-                                                                        placeholder="Departure Date"
-                                                                        name="departure_date" clickable  required />
-                                                                    <div class="input-group-addon">
-                                                                        <span class="glyphicon glyphicon-th"></span>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="input-group ol-sm-5"
-                                                                    data-date-format="dd.mm.yyyy">
-                                                                    <div class="form-group">
-                                                                        <label for="people">Number People:</label>
-                                                                        <select class="form-control" id="people"
-                                                                            name="peoples">
-                                                                            @for ($i = 1; $i <= $room->maximum_peoples_number - $room->number_peoples; $i++)
-                                                                            <option value="{{ $i }}">{{ $i }}</option>
-                                                                            @endfor
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-primary" name="book_now">Book Now</button>
-                                                        <button type="submit" class="btn btn-info">Add To Card</button>
+                                                        <button type="submit" class="btn btn-primary"
+                                                            name="book_now">Book Now</button>
+                                                        <a id="add-to-card" href="javascript:void(0)"
+                                                            class="btn btn-info" data-room-id="{{ $room->id }}">Add To
+                                                            Card </a>
                                                     </div>
                                                 </div>
 
@@ -116,62 +144,55 @@
                     </div>
                 </div>
                 <div class="content-detail">
-                    <div class="panel panel-default">
-                        <div class="panel-heading go-text-right">Description</div>
-                        <div class="panel-body">
+                    <div class="card">
+                        <div class="card-header">Description</div>
+                        <div class="card-body">
                             <p>{!! $room['description'] !!}</p>
                         </div>
                     </div>
-                    <div class="row  mb-10 slide-img">
-
+                </div>
+                <div class="card">
+                    <div class="card-header">Police and terms</div>
+                    <div class="card-body">
+                        <p>{!! $room['police_and_terms'] !!}</p>
                     </div>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading go-text-right">Police and terms</div>
-                    <div class="panel-body">
-                        <span class="RTL">
-                            <p>{!! $room['police_and_terms'] !!}</p>
-                        </span>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading go-text-right">Convenients of Room</div>
-                    <div class="panel-body">
-                        <div class="go-text-right">
+                <div class="card mt-4">
+                    <div class="card-header">Convenients of Room</div>
+                    <div class="card-body">
+                        <div class="row">
                             @foreach($room['convenients'] as $convenient)
-                            <div style="margin-top:6px;margin-left:0px" class="row col-md-4 col-sm-4 col-xs-6">
-                                <div class="row">
-                                    <img class="go-right"
-                                        style="max-height:30px;max-witdh:40px;vertical-align: text-bottom;"
-                                        src="{{ asset('images/ok.png') }}">
-                                    <span class="text-left go-text-right size14">
-                                        {{ $convenient['amount'].' '.$convenient['name'] }} </span>
-                                </div>
+                            <div class="col-md-4 col-sm-4 col-xs-6">
+                                <img class="covenients__icon-item" src="{{ asset('images/ok.png') }}">
+                                <span>{{ $convenient['name'] }}</span>
                             </div>
                             @endforeach
                         </div>
                     </div>
                 </div>
             </div>
+
             <!-- phan commnet -->
-            <div class="comment">
-                <div class="fb-like" data-href="http://localhost/detail-post.php" data-layout="button_count"
-                    data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
-                <div class="fb-save" data-uri="http://localhost" data-size="small"></div>
+
+            <div class="col-lg-12">
                 <!-- comment -->
-                <div class="fb-comments" data-href="https://www.facebook.com/ndh6989" data-width="100%"
-                    data-numposts="5">
-                </div>
+                <div id="fb-root"></div>
+                <div class="fb-comments" data-href="https://www.facebook.com/ndh6989" data-width="1000"
+                    data-numposts="5"></div>
             </div>
+
+
         </div>
     </div>
 </div>
+@endsection
 
-@endsection
-@section('head')
-<link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
-<script src="" charset="utf-8"></script>
-@endsection
 @section('footer')
-<script src="{{ asset('js/bootstrap-datepicker.min.js') }}" charset="utf-8"></script>
+<!-- facebook -->
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous"
+    src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v4.0&appId=1812993605672350&autoLogAppEvents=1">
+</script>
+
+<script src="{{ asset('./js/booking.js') }}"></script>
 @endsection

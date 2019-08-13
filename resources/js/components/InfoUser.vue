@@ -1,77 +1,73 @@
 <template>
   <div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">User Information</h3>
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">User Information</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         <div class="form-group row">
-          <label class="control-label col-sm-2" for="email">Name:</label>
+          <label class="control-label col-lg-3 text-right" for="email">Name:</label>
           <p v-if="!isEdit">{{ currentUser.name }}</p>
-          <div v-else class="col-sm-10">
+          <div v-else class="col-lg-9">
             <input
-              type="email"
+              v-validate="'required|min:6|max:18'"
+              type="text"
               class="form-control"
-              id="email"
               placeholder="Enter email"
               v-model="currentUser.name"
+              name="username"
             />
-            <div class="errors" v-if="errors.name">
-              <p>{{ errors.name[0] }}</p>
-            </div>
+            <span v-show="errors.has('username')" class="errors">{{ errors.first('username') }}</span>
           </div>
         </div>
         <div class="form-group row">
-          <label class="control-label col-sm-2" for="email">Email:</label>
+          <label class="control-label col-lg-3 text-right" for="email">Email:</label>
           <p v-if="!isEdit">{{ currentUser.email }}</p>
-          <div v-else class="col-sm-10">
+          <div v-else class="col-lg-9">
             <input
+              v-validate="'required|email'"
               type="email"
               class="form-control"
-              id="email"
+              name="email"
               placeholder="Enter email"
               v-model="currentUser.email"
             />
-            <div class="errors" v-if="errors.email">
-              <p>{{ errors.email[0] }}</p>
-            </div>
+            <span v-show="errors.has('email')" class="errors">{{ errors.first('email') }}</span>
           </div>
         </div>
         <div class="form-group row">
-          <label class="control-label col-sm-2" for="tel">Phone:</label>
+          <label class="control-label col-lg-3 text-right" for="tel">Phone:</label>
           <p v-if="!isEdit">{{ currentUser.phone }}</p>
-          <div v-else class="col-sm-10">
+          <div v-else class="col-lg-9">
             <input
+              v-validate="'digits:10'"
               type="tel"
               class="form-control"
-              id="tel"
+              name="phone"
               placeholder="Enter Phone"
               v-model="currentUser.phone"
+
             />
-            <div class="errors" v-if="errors.phone">
-              <p>{{ errors.phone[0] }}</p>
-            </div>
+            <span v-show="errors.has('phone')" class="errors">{{ errors.first('phone') }}</span>
           </div>
         </div>
         <div class="form-group row">
-          <label class="control-label col-sm-2" for="tel">Address:</label>
-          <div class="col-sm-10">
+          <label class="control-label col-lg-3 text-right" for="tel">Address:</label>
+          <div class="col-lg-9">
             <user-address-component
               @address-id="getAddressId"
               :user_id="currentUser.id"
               :address_id="currentUser.address_id"
               :is_edit="isEdit"
             ></user-address-component>
-            <div class="errors" v-if="errors.address">
-              <p>{{ errors.address[0] }}</p>
-            </div>
+
           </div>
         </div>
         <div class="form-group row">
-          <div v-if="!isEdit" class="col-sm-offset-3 col-md-12">
+          <div v-if="!isEdit" class="col-md-12">
             <button @click="isEdit = true" type="submit" class="btn btn-success">Edit</button>
           </div>
-          <div v-else class="col-lg-offset-2 col-lg-8">
+          <div v-else class="col-lg-8">
             <button @click="updateUser(currentUser)" type="submit" class="btn btn-primary">Save info</button>
             <button @click="isEdit = false" type="submit" class="btn btn-success">Canel</button>
           </div>
@@ -81,6 +77,7 @@
   </div>
 </template>
 <script>
+
 export default {
   data() {
     return {
@@ -90,128 +87,62 @@ export default {
         phone: "",
         address_id: null
       },
-      errors: {
-        name: null,
-        email: null,
-        phone: null,
-        address: null
-      },
       isEdit: false,
       counter: 0
     };
   },
   created() {
     this.getCurrentUser();
+        try {
+            Echo.channel('chat-room.1').listen('ChatMessageWasReceived', function(data) {
+                console.log(data.user, data.chatMessage);
+            });
+            Echo.private('chat-room.1')
+            .listen('ChatMessageWasReceived', (e) => {
+                console.log("fdsfksdlfk")
+            });
+        } catch (error) {
+            console.log(error);
+
+        }
+  },
+  mounted() {
+
+
   },
   methods: {
-    getCurrentUser() {
-      axios
-        .get("/getCurrentUser")
-        .then(response => {
-          this.currentUser = response.data;
-          this.checkEditUser;
-        })
-        .catch(error => {
-          console.log(error);
-        });
+     async getCurrentUser() {
+         try {
+            let response = await axios.get("/getCurrentUser");
+            this.currentUser = response.data;
+            this.checkEditUser;
+         } catch (error) {
+            console.log(error);
+         }
     },
-    updateUser(user) {
-      console.log(user);
-      axios
-        .put("/api/users/" + user.id, {
-          user: user
-        })
-        .then(response => {
-          console.log(response.data);
-          this.isEdit = false;
-        })
-        .catch(errors => {
-          console.log(errors.response);
-          if (errors.response.data.errors)
-            this.errors.name = errors.response.data.errors;
-        });
+    async updateUser(user) {
+        if (this.errors.any()) {
+            alertify.notify("You must fix all errors in the form ", "error", 7);
+            return;
+        }
+        try {
+            await axios.put("/api/users/" + user.id, {
+                name: user.name,
+                email: user.email,
+                phone:user.phone,
+                address_id:user.address_id
+            })
+            this.isEdit = false;
+            alertify.notify("update user success", "success", 7)
+        } catch (error) {
+            alertify.notify("An error occurred, Please contact support for notification", "error", 7)
+            console.log(error);
+        }
     },
     getAddressId(id) {
       this.currentUser.address_id = id;
     },
-    validateEmail(email) {
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
-    },
-    checkEditUser() {
-      this.errors = {
-        name: null,
-        email: null,
-        phone: null,
-        address: null
-      };
-      if (this.currentUser.name === "") {
-        this.errors.name = ["User-Mame is a required field."];
-      } else if (
-        this.currentUser.name != null &&
-        this.currentUser.name.length < 6
-      ) {
-        this.errors.name = ["User-Name must be greater than 6 characters"];
-      }
-      if (this.currentUser.email === "") {
-        this.errors.email = ["Email-Address is a required field."];
-      } else if (
-        this.currentUser.email != null &&
-        !this.validateEmail(this.currentUser.email)
-      ) {
-        this.errors.email = ["Email-Address is not valid."];
-      }
-      if (this.currentUser.phone === "") {
-        this.errors.phone = ["Phone-Number is a required field."];
-      } else if (
-        this.currentUser.phone != null &&
-        this.currentUser.phone.length != 10
-      ) {
-        this.errors.phone = ["Phone-Number must be 10 digits."];
-      }
-    }
   },
-  watch: {
-    currentUser: {
-      handler: function() {
-        console.log("change");
-        this.errors = {
-          name: null,
-          email: null,
-          phone: null,
-          address: null
-        };
-        if (this.currentUser.name === "") {
-          this.errors.name = ["User-Mame is a required field."];
-        } else if (
-          this.currentUser.name != null &&
-          this.currentUser.name.length < 6
-        ) {
-          this.errors.name = ["User-Name must be greater than 6 characters"];
-        }
-        if (this.currentUser.email === "") {
-          this.errors.email = ["Email-Address is a required field."];
-        } else if (
-          this.currentUser.email != null &&
-          !this.validateEmail(this.currentUser.email)
-        ) {
-          this.errors.email = ["Email-Address is not valid."];
-        }
-        if (this.currentUser.phone === "") {
-          this.errors.phone = ["Phone-Number is a required field."];
-        } else if (
-          this.currentUser.phone != null &&
-          this.currentUser.phone.length != 10
-        ) {
-          this.errors.phone = ["Phone-Number must be 10 digits."];
-        }
-        if (this.currentUser.address_id === null) {
-          this.errors.address = ["Please enter Address user"];
-        }
-      },
-      deep: true
-    }
-  }
 };
 </script>
 

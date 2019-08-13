@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Str;
+use App\Http\Requests\UserRequest;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Role;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -20,52 +21,44 @@ class UserController extends Controller
         $this->userRepository = $userRepository;
     }
 
-     /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $users = $this->userRepository->getUsersWithRoles();
-        return $users;
+        return $this->userRepository->getUsersWithRoles();
     }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        $this->validate(
-            $request,
-            [
-                'user.name' => 'required|min:8|max:16',
-                'user.email' => 'required|email',
-                'user.role' => 'required|exists:roles,name',
-                'user.phone' => 'required|string|min:10|max:10'
-            ],
-            [
-                'required' => 'Name is a required field',
-                'min' => 'The password must be at least :min characters',
-                'max' => 'The password must be at most :max characters.',
-                'email' => 'email Invalid ',
-                'exists' => ":attribute not exists"
-            ]
-        );
-        $dataUser = $request->input('user');
-        $dataUser['password'] = 123456;
-        if ($dataUser['role']== 'admin') {
+        $dataUser = $request->only(['name', 'email', 'phone']);
+        //check isset user by email
+        if ($this->userRepository->hasEmail($dataUser['email'])) {
+            return response()->json(['message' => 'email already exists'], 500);
+        }
+        //if is admin then create token
+        if ($request->role == 'admin') {
             $dataUser['api_token'] = hash('sha256', Str::random(60));
         }
-        $user = $this->userRepository->createUser($dataUser);
-        if (!$user) {
+        //store
+        $userId = $this->userRepository->createUser($dataUser);
+        if (!$userId) {
             return response()->json(['message' => 'error create user'], 500);
         }
-        $role = Role::where('name', $dataUser['role'])->first();
+        //role
+        $user = $this->userRepository->findById($userId);
+        $role = Role::where('name', $request->role)->first();
         $user->roles()->attach($role);
-        return response()->json(['message' => 'created user'], 200);
+
+        return response()->json(['message' => 'created user', "userId" => $userId], 201);
     }
 
     /**
@@ -75,48 +68,26 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        $this->validate(
-            $request,
-            [
-                'user.name' => 'required|min:8|max:16',
-                'user.email' => 'required|email',
-                'user.roles' => 'required',
-                'user.phone' => 'required|string|min:10|max:10'
-            ],
-            [
-                'required' => 'Name is a required field',
-                'min' => 'The Name must be at least :min characters',
-                'max' => 'The Name must be at most :max characters.',
-                'email' => 'email Invalid ',
-                'exists' => ":attribute not exists"
-            ]
-        );
-        $dataUser = $request->input('user');
-        $this->userRepository->updateById($id, $dataUser);
+        $dataUser = $request->only(['name', 'email', 'phone', 'address_id']);
+        //check isset user by email
+        if ($this->userRepository->findById($id)->email != $dataUser['email']) {
+            if ($this->userRepository->hasEmail($dataUser['email'])) {
+                return response()->json(['message' => 'email already exists'], 500);
+            }
+        }
+        //update
         $user = $this->userRepository->updateById($id, $dataUser);
         if (!$user) {
             return response()->json(['message' => 'error update user'], 500);
         }
-        $role = Role::where('name', $dataUser['roles'][0]['name'])->first();
-        $user->roles()->detach();
-        $user->roles()->attach($role);
-        return response(
-            [
-                'result' => 'success',
-                'role_id' => $user,
-            ],
-            200
-        );
-    }
-
-    public function bookings()
-    {
-        $user = $this->userRepository->bookings();
-        if ($user) {
-            return response()->json(['user_booking'=>$user], 200);
+        //role
+        if ($request->has($request->roleId)) {
+            $user->roles()->sync($request->roleId);
         }
+
+        return response(['message' => 'update user success'], 204);
     }
 
     /**
@@ -128,6 +99,11 @@ class UserController extends Controller
     public function destroy($id)
     {
         $this->userRepository->deleteById($id);
-        return response(['result' => 'success', 200]);
+        return response(['message' => 'success'], 204);
+    }
+
+    public function getListUserOtherMe()
+    {
+        return User::orderBy('name')->where('id', '!=', auth()->user()->id)->get();
     }
 }

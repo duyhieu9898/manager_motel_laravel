@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Convenient;
 use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model
@@ -36,6 +35,7 @@ class Room extends Model
     {
         return $this->belongsToMany('App\User')
                 ->withPivot('arrival_date', 'departure_date', 'peoples', 'status_id')
+                
                 ->withTimestamps();
     }
 }

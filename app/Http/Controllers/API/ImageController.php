@@ -37,7 +37,7 @@ class ImageController extends Controller
             ], 500);
         }
 
-        return response()->json(['image_id' => $imageId], 200);
+        return response()->json(['image_id' => $imageId], 201);
     }
 
     /**
@@ -112,7 +112,7 @@ class ImageController extends Controller
         }
 
         $this->imageRepository->setImageToRoom($imageId, $roomId);
-        return response()->json(['image_id' => $imageId], 200);
+        return response()->json(['image_id' => $imageId], 201);
     }
 
     /**

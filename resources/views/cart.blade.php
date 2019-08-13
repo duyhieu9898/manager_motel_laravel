@@ -1,22 +1,32 @@
 @extends('layouts.app')
 
-@section('content')
-<div id="app" class="container main-content">
-    <div class="row mt-5">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">cart</li>
-            </ol>
-        </nav>
-    </div>
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="panel panel-default">
-                <div class="panel-body">
+@section('head')
+<style>
+    header {
+        height: auto !important;
+    }
+</style>
+@endsection
+
+@section('main-container')
+<div class="row justify-content-center pb-5">
+    <div class="col-lg-10">
+        <div class="row">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">cart</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Cart</h3>
+                    </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3>Cart</h3>
                             @if ($rooms->isNotEmpty())
                             <table class="table table-hover table-bordered">
                                 <thead>
@@ -35,7 +45,8 @@
                                     <tr>
                                         <td>
                                             <div class="box-image">
-                                                <img class="reponsive" src="{{ $room['images'][0]['file_name'] }}" alt="">
+                                                <img class="responsive" src="{{ $room['images'][0]['file_name'] }}"
+                                                    alt="">
                                             </div>
                                         </td>
                                         <td>{{ $room->title }}</td>
@@ -49,40 +60,46 @@
                                 </tbody>
                             </table>
                             @else
-                                <p>There are no rooms in the cart</p>
+                            <p>There are no rooms in the cart</p>
                             @endif
                         </div>
+                        <div class="col-sm-12">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-4">
+                                    {{ $rooms->links() }}
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <div class="row justify-content-center pt-3">
+                    @if ($rooms->isNotEmpty())
 
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="row">
-                <div class="col-sm-12">
-                    <info-user-component></info-user-component>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-            @if ($rooms->isNotEmpty())
-                <div class="col-sm-offset-5 col-sm-12">
                     <form action="/check-out/" method="post">
                         @csrf
                         <button type="submit" class="btn btn-success">Check Out</button>
                         <a href="/" class="btn btn-primary" role="button">Back To Home</a>
                     </form>
-                </div>
-            @else
-                <div class="col-sm-offset-3 col-sm-12">
+
+                    @else
+
                     <a href="/" class="btn btn-primary" role="button">Back To Home</a>
+
+                    @endif
                 </div>
-            @endif
+            </div>
+            <div class="col-lg-4">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <info-user-component></info-user-component>
+                    </div>
+                </div>
+            </div>
         </div>
-</div>
+    </div>
 
 </div>
+
 @endsection
 @section('footer')
 <!-- app -->

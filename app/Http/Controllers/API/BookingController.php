@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
+    /**
+     * get list room_user
+     *
+     * @return Response
+     */
     public function index()
     {
         $bookings = DB::table('room_user')
@@ -27,7 +32,14 @@ class BookingController extends Controller
             ->get();
         return response()->json(['booking' => $bookings], 200);
     }
-    public function show($id)
+    
+    /**
+     * get room_user by id
+     *
+     * @param integer $id
+     * @return Response
+     */
+    public function show(int $id)
     {
         $booking = DB::table('room_user')
             ->select(
@@ -61,6 +73,14 @@ class BookingController extends Controller
             ->first();
         return response()->json(['booking' => $booking], 200);
     }
+
+    /**
+     * get room_user by user id
+     *
+     * @param Request $request
+     * @param integer $userId
+     * @return Response
+     */
     public function getBookingByUserId(Request $request, int $userId)
     {
         $booking = DB::table('room_user')
@@ -86,13 +106,26 @@ class BookingController extends Controller
             ->get();
         return response()->json(['booking' => $booking], 200);
     }
-    public function updateStatus(Request $request, $bookingId)
+
+    /**
+     * update status_booking of the room_user by by id_status
+     *
+     * @param Request $request
+     * @param integer $bookingId
+     * @return Response
+     */
+    public function updateStatus(Request $request, int $bookingId)
     {
         $status = DB::table('status_bookings')->select('id')->where('name', $request->status_name)->first();
         DB::table('room_user')->where('room_user.id', $bookingId)->update(['status_id' => $status->id]);
         return Response()->json(['message'=>'update status success'], 200);
     }
-
+    /**
+     * delete room_user by id
+     *
+     * @param [type] $id
+     * @return Response
+     */
     public function destroy($id)
     {
         DB::table('room_user')->where('room_user.id', $id)->delete();

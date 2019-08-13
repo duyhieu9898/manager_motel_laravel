@@ -2,8 +2,8 @@
 
 namespace App\Repositories;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Repositories\RepositoryInterface;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class BaseRepository
@@ -27,15 +27,28 @@ class BaseRepository implements RepositoryInterface
         $this->model = $model;
     }
 
-    /**
-     * @inheritdoc
-     */
+    public function create(array $data)
+    {
+        return $this->model::create($data);
+    }
+
     public function get()
     {
         return $this->model::get();
     }
+
     public function findById(int $id)
     {
         return $this->model::findOrFail($id);
+    }
+
+    public function updateById(int $id, array $data)
+    {
+        return $this->model::findOrFail($id)->update($data);
+    }
+
+    public function deleteById(int $id)
+    {
+        return $this->model::destroy($id);
     }
 }

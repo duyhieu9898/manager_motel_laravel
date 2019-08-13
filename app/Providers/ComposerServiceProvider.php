@@ -24,6 +24,20 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('*', 'App\Http\ViewComposers\HeaderComposer');
+        View::composer([
+            'auth/passwords/email',
+            'auth/login',
+            'auth/register',
+            'auth/verify',
+            'cart',
+            'category_rooms',
+            'detail_room',
+            'index',
+            'info_user',
+            'list_room',
+            'oder_room',
+            'home',
+            'socket'
+        ], 'App\Http\ViewComposers\HeaderComposer');
     }
 }

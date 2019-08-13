@@ -11,7 +11,7 @@ class Image extends Model
     protected $table = 'images'; //auto
     public $timestamps = false;
 
-    //relationshi
+    //relationship
     public function room()
     {
         return $this->belongsTo(Room::class);

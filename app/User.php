@@ -2,8 +2,6 @@
 
 namespace App;
 
-use App\Address;
-use App\Role;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -19,7 +17,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'address_id'
+        'name', 'email', 'password', 'phone', 'address_id', 'api_token'
     ];
 
     /**
@@ -67,11 +65,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany('App\Role');
     }
     public function address()
     {
-        return $this->belongsTo(Address::class);
+        return $this->belongsTo('App\Address');
     }
     public function rooms()
     {
@@ -82,5 +80,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isAdministrator()
     {
         return $this->roles()->where('name', 'admin')->exists();
+    }
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'receiver_id');
     }
 }

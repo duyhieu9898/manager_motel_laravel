@@ -3,16 +3,12 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-
-
 require('./bootstrap');
-
+//config
 const token = '8bbd88ccd51fd163bf59c84c820d98246f258fbefecf41073160b183d2fe86e6'
 axios.defaults.baseURL = window.location.origin
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
 window.Vue = require('vue');
-
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -20,112 +16,48 @@ window.Vue = require('vue');
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
-
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
-import VueRouter from 'vue-router';
-import CKEditor from '@ckeditor/ckeditor5-vue';
-import BootstrapVue from 'bootstrap-vue'
+import BootstrapVue from 'bootstrap-vue';
 import money from 'v-money'
-import ToggleButton from 'vue-js-toggle-button'
-// import VueSweetalert2 from 'vue-sweetalert2';
-
-
-
-
-
+import VeeValidate from 'vee-validate';
+import { Validator } from 'vee-validate';
+//Overwriting messages errors
+const dictionary = {
+    en: {
+        attributes: {
+            email_create: 'Email Address',
+            username_create: 'User name',
+            phone_create: 'Phone Number',
+            email: 'Email Address',
+            username: 'User name',
+            phone: 'Phone Number',
+        }
+    },
+};
+Validator.localize(dictionary);
 // register directive v-money and component <money>
 Vue.use(money, { precision: 3 })
-Vue.use(BootstrapVue)
-Vue.use(CKEditor);
-Vue.use(VueRouter);
-Vue.use(ToggleButton)
-    // Vue.use(VueSweetalert2);
-
-Vue.component('room-photo-component', require('./components/RoomPhoto.vue').default);
-Vue.component('room-address-component', require('./components/RoomAddress.vue').default);
+Vue.use(BootstrapVue);
+Vue.use(VeeValidate);
+//Register component in app
 Vue.component('user-address-component', require('./components/UserAddress.vue').default);
-Vue.component('app-admin-component', require('./components/AppAdmin.vue').default);
-Vue.component('room-convenients-component', require('./components/RoomConvenients.vue').default);
-Vue.component('todo-list-component', require('./components/TodoList.vue').default);
 Vue.component('info-user-component', require('./components/InfoUser.vue').default);
+Vue.component('chat-application', require('./components/ChatApplicationSocket.vue').default);
+Vue.component('chat-application-2', require('./components/ChatApplication.vue').default);
+//import component for VueRoute
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-import TheListRooms from './components/TheListRooms.vue';
-import TheRoomEdit from './components/TheRoomEdit.vue';
-import TheRoomCreate from './components/TheRoomCreate.vue';
-import TheListUser from './components/TheListUser.vue';
-import TheDashBoard from './components/TheDashBoard.vue';
-import TheListBooking from './components/TheListBooking.vue';
-import TheBookingDetail from './components/TheBookingDetail.vue';
-import TheListCategory from './components/TheListCategory.vue';
-
-
-const router = new VueRouter({
-    mode: 'history',
-    routes: [{
-            path: '/admin',
-            name: 'dash-board',
-            component: TheDashBoard
-        },
-        {
-            path: '/admin/rooms',
-            name: 'all-room',
-            component: TheListRooms
-        },
-        {
-            path: '/admin/rooms/:id/edit',
-            name: 'room-edit',
-            component: TheRoomEdit
-        },
-        {
-            path: '/admin/rooms/create',
-            name: 'room-create',
-            component: TheRoomCreate
-        },
-        {
-            path: '/admin/users',
-            name: 'user',
-            component: TheListUser
-        },
-        {
-            path: '/admin/bookings',
-            name: 'list-bookings',
-            component: TheListBooking
-        },
-        {
-            path: '/admin/bookings/:id',
-            name: 'booking',
-            component: TheBookingDetail
-        },
-        {
-            path: '/admin/categories',
-            name: 'categories',
-            component: TheListCategory
-        },
-
-    ],
-    scrollBehavior(to, from, savedPosition) {
-        if (savedPosition) {
-            return savedPosition
-        } else {
-            // return new Promise((resolve, reject) => {
-            //         setTimeout(() => {
-            //             resolve({ x: 0, y: 0 })
-            //         }, 500)
-            //     })
-            return { x: 0, y: 0 }
-        }
-    }
-});
-
-
-
-
 const app = new Vue({
     el: '#app',
-    router,
-});
+    data: {
+        userID: null
+    },
+    mounted() {
+        // Assign the ID from meta tag for future use in application
+        this.userID = document.head.querySelector('meta[name="userID"]').content
+    }
+})

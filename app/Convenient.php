@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Convenient extends Model
 {
-    //
-    protected $table = 'convenients'; //auto
+    protected $fillable = ['name'];
     public $timestamps = false;
 
     //relationship

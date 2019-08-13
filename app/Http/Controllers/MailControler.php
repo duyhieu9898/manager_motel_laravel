@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Mail;
 use Illuminate\Http\Request;
 
-class MailControler extends Controller
+class MailController extends Controller
 {
     public function sendEmail()
     {

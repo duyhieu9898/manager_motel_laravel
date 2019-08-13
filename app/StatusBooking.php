@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Room;
 use Illuminate\Database\Eloquent\Model;
 
 class StatusBooking extends Model
@@ -13,6 +12,6 @@ class StatusBooking extends Model
 
     public function rooms()
     {
-        return $this->hasMany(Room::class);
+        return $this->hasMany('App\Room');
     }
 }

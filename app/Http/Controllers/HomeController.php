@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
+use App\Repositories\Room\RoomRepositoryInterface;
 
 class HomeController extends Controller
 {
+    private $roomRepository;
+    private $itemRoom = 9;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(RoomRepositoryInterface $roomRepository)
     {
-        $this->middleware('auth');
+        $this->roomRepository = $roomRepository;
     }
 
     /**
@@ -24,6 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $roomsNewsCreate = $this->roomRepository->getNewCreate($this->itemRoom);
+        return view('index', compact(['roomsNewsCreate']));
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
+    
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -23,26 +24,42 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
+     * Where to redirect users after verification.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/';
+
+    /**
      * Create a new controller instance.
      *
      * @return void
      */
-
-    public function logout(Request $request)
+    public function logout()
     {
         Auth::logout();
         return redirect('/login');
     }
     /**
-     * Where to redirect users after login.
+     * Send the response after the user was authenticated.
      *
-     * @var string
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
      */
-    protected function redirectTo()
+    protected function sendLoginResponse(Request $request)
     {
-        if (Auth::user()->isAdministrator()) {
-            return '/admin';
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'user' => $this->guard()->user(),
+            ]);
         }
-        return '/';
+        $username = explode("@", $request->email)[0];
+        $request->session()->flash('login-success', "Hello {$username}, Wish you a lucky day");
+        return $this->authenticated($request, $this->guard()->user())
+            ?: redirect()->intended($this->redirectPath());
     }
 }

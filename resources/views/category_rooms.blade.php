@@ -1,44 +1,52 @@
 @extends('layouts.app')
+
 @section('head')
-    <link rel="stylesheet" href="{{ asset('css/category-rooms.css') }}">
+<style>
+    header {
+        height: auto !important;
+    }
+</style>
 @endsection
-@section('content')
-<div class="container main-content" id="app">
+@section('main-container')
 
-    <div class="row mt-5">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Category</li>
-            </ol>
-        </nav>
-    </div>
+<nav aria-label="breadcrumb" class="mt-5">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item">Categories</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ $listRooms[0]->category->name }}</li>
+    </ol>
+</nav>
 
-    <div class="row">
-        @foreach ($listRooms as $room)
-            <div class="box-room col-lg-3 col-md-4 col-sm-6 col-xs-10 col-xs-offset-1 col-sm-offset-0 ">
-                <div class="box-room__image">
-                    <div class="actions">
-                        <a href="{{ url("/detail-room/$room->id") }}"><button type="button" class="btn btn-primary"> More info</button></a>
-                    </div>
-                    <img  class="reponsive" src="{{ $room->images[0]->file_name}}" alt="">
-                </div>
-                <div class="box-room__info">
-                    <div class="info__title"><p class="info__title--content fix-length">{{ $room->title }}</p> </div>
-                    <div class="info__address"><p class="info__address--content fix-length">{{ $room->category->name }}</p> </div>
-                    <div class="info_description"><p class="info__description--content">{!! $room->description !!}</p></div>
-                </div>
-                <div class="box-room__price">
-                    <p class="box-room__price--content text-warning" > price: <span>12,345,478 </span>vnd/month</p>
-                </div>
+<div class="row">
+    @foreach ($listRooms as $room)
+    <div class="box-room col-lg-3 col-md-4 col-sm-6 col-xs-10">
+        <div class="box-room__image">
+            <div class="box-room__actions">
+                <a href="{{ url("/detail-room/$room->id") }}">
+                    <button type="button" class="btn btn-primary"> More info</button>
+                </a>
             </div>
-        @endforeach
-    </div>
-    <div class="row" id="pagination">
-        <div class="col-md-6 col-md-push-3">
-            {{ $listRooms->links() }}
+            <img class="responsive" src="{{ $room->images[0]->file_name}}" alt="">
         </div>
-
+        <div class="box-room__info">
+            <div class="box-room__title">
+                <p class="fix-length">{{ $room->title }}</p>
+            </div>
+            <div class="box-room__category">
+                <p class="fix-length">{{ $room->category->name }}</p>
+            </div>
+            <div class="box-room__description">
+                {!! $room->description !!}
+            </div>
+        </div>
+        <div class="box-room__price">
+            <p class="text-warning"> price: {{ formatMoney($room['price'],'vnd/month') }}</p>
+        </div>
     </div>
+    @endforeach
+</div>
+<div class="row justify-content-center" id="pagination">
+    {{ $listRooms->links() }}
+</div>
 
 @endsection

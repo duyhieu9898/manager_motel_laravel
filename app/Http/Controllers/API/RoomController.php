@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RoomEditRequest;
 use App\Http\Requests\RoomCreateRequest;
-use App\Repositories\Room\RoomRepositoryInterface;
+use App\Http\Requests\RoomEditRequest;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Convenient\ConvenientRepositoryInterface;
 use App\Repositories\Image\ImageRepositoryInterface;
+use App\Repositories\Room\RoomRepositoryInterface;
+use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
@@ -41,16 +41,23 @@ class RoomController extends Controller
         $pagination = $this->roomRepository->jsonPagination(10);
 
         $rooms = $pagination->load('category', 'address.province');
-        return response()->json(['rooms' => $rooms, 'pagination' => $pagination]);
+        return response()->json(['rooms' => $rooms, 'pagination' => $pagination], 206);
     }
+
+    /**
+     * get form info to create new user
+     *
+     * @return void
+     */
     public function create()
     {
-        $listCategory   = $this->categoryRepository->get();
+        $listCategory = $this->categoryRepository->get();
         $listConvenient = $this->convenientRepository->get();
-        return response()->json(['convenients' => $listConvenient, 'categories' => $listCategory]);
+        return response()->json(['convenients' => $listConvenient, 'categories' => $listCategory], 200);
     }
+
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created user in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -60,59 +67,58 @@ class RoomController extends Controller
         $dataRoom = $request->all();
         $roomId = $this->roomRepository->create($dataRoom);
         if (!$roomId) {
-            return response()->json([
-                'message' => 'Server error while creating room'
-            ], 500);
+            return response()->json(['message' => 'Server error while creating room',], 500);
         }
         $this->imageRepository->setImagesToRoom($dataRoom['list_images_id'], $roomId);
         return response()->json([
-            'message' => 'store room success'
-        ], 200);
+            'message' => 'store room success',
+        ], 201);
     }
 
     /**
-     * Display the specified resource.
+     * update number people in a room
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
-    public function show($id)
-    {
-        //
-    }
     public function updatePeopleInRoom(Request $request)
     {
-        $room =  $this->roomRepository->findById($request->room_id);
+        $room = $this->roomRepository->findById($request->room_id);
         $room->number_peoples = $request->number_people;
         $result = $room->save();
         if ($result) {
             return response()->json([
                 'message' => 'update peoples in room success',
-                'people' => $request->number_people
+                'people' => $request->number_people,
             ], 200);
         }
-        return response()->json([
-            'message' => 'Server error while updating peoples in room'
-        ], 500);
+        return response()->json(['message' => 'Server error while updating peoples in room'], 500);
     }
 
-    public function edit($id)
+    /**
+     * get form info to edit user
+     *
+     * @param integer $id
+     * @return Response
+     */
+    public function edit(int $id)
     {
-        $categories       = $this->categoryRepository->get();
-        $convenients      = $this->convenientRepository->get();
-        $room             = $this->roomRepository->findById($id)->load('convenients');
+        $categories = $this->categoryRepository->get();
+        $convenients = $this->convenientRepository->get();
+        $room = $this->roomRepository->findById($id)->load('convenients');
         $AllConvenientsId = $room->convenients->map(function ($item) {
             return $item['id'];
         });
         $arrListConvenientsId = $AllConvenientsId->all();
         $arrData = [
-            'room'                 => $room,
-            'categories'           => $categories,
-            'convenients'          => $convenients,
+            'room' => $room,
+            'categories' => $categories,
+            'convenients' => $convenients,
             'arrListConvenientsId' => $arrListConvenientsId,
         ];
         return response()->json($arrData);
     }
+
     /**
      * Update the specified resource in storage.
      *
@@ -122,37 +128,33 @@ class RoomController extends Controller
      */
     public function update(RoomEditRequest $request, $id)
     {
-        $dataRoom = $request->all();
-        $room     = $this->roomRepository->findById($id);
-        $result   = $this->roomRepository->update($room, $dataRoom);
+        $result = $this->roomRepository->updateById($id, $request->all());
         if ($result) {
-            return response()->json([
-                'message' => 'update room success'
-            ], 200);
+            return response()->json(['message' => 'update room success'], 200);
         }
 
         return response()->json([
-            'message' => 'Server error while updating room'
+            'message' => 'Server error while updating room',
         ], 500);
     }
 
+    /**
+     * update status display in the room
+     *
+     * @param Request $request
+     * @param integer $roomId
+     * @return Response
+     */
     public function active(Request $request, int $roomId)
     {
         $valActive = $request->active;
         $result = $this->roomRepository->active($valActive, $roomId);
         if ($result) {
-            return response()->json([
-                'message' => 'update room active success'
-            ], 200);
+            return response()->json(['message' => 'update room active success'], 200);
         }
         return response()->json([
-            'message' => 'Server error while updating room active'
+            'message' => 'Server error while updating room active',
         ], 500);
-    }
-
-    public function people(Request $request)
-    {
-        //$this->roomRepository->people($roomId, $numPleoples = 1);
     }
 
     /**

@@ -54,8 +54,9 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
         }
         return false;
     }
-    public function update($room, $dataRoom)
+    public function updateById($id, $dataRoom)
     {
+        $room = $this->findById($id);
         $room->category_id = $dataRoom['category_id'];
         $room->title = $dataRoom['title'];
         $room->description = $dataRoom['description'];
@@ -112,5 +113,14 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
     public function bookingProcessing($userId, $dataBooking)
     {
         return $this->model->users()->attach($userId, $dataBooking);
+    }
+    public function getNewCreate($numItem)
+    {
+        $rooms=$this->model::where(['active' =>1 ])
+            ->orderBy('created_at', 'desc')
+            ->limit($numItem)->get()
+            ->load(['address.ward','address.district', 'address.province', 'images' ]);
+
+        return $rooms;
     }
 }

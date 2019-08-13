@@ -16,11 +16,11 @@ class Category extends Model
         return $this->hasMany(Room::class);
     }
 
-/**
- *Get instance category by name
- * @param string $name
- *  return instance query builder
- */
+    /**
+     *Get instance category by name
+     * @param string $name
+     *  return instance query builder
+     */
     public function scopeOfName($query, $name)
     {
         return $query->where('name', $name);

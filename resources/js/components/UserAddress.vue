@@ -35,8 +35,8 @@
                   v-model="address.street"
                   placeholder="enter Street"
                 />
-                <div class="errors" v-if="errors.address.street != null">
-                  <p>{{ errors.address.street }}</p>
+                <div class="errorsCustom" v-if="errorsCustom.address.street != null">
+                  <span>{{ errorsCustom.address.street }}</span>
                 </div>
               </div>
               <div class="col-lg-offset-2 col-lg-8 form-group">
@@ -48,8 +48,8 @@
                     :key="province.id"
                   >{{ province.name }}</option>
                 </select>
-                <div class="errors" v-if="errors.address.province != null">
-                  <p>{{ errors.address.province }}</p>
+                <div class="errorsCustom" v-if="errorsCustom.address.province != null">
+                  <span>{{ errorsCustom.address.province }}</span>
                 </div>
               </div>
               <div class="col-lg-offset-2 col-lg-8 form-group">
@@ -61,8 +61,8 @@
                     :key="district.id"
                   >{{ district.name }}</option>
                 </select>
-                <div class="errors" v-if="errors.address.district != null">
-                  <p>{{ errors.address.district }}</p>
+                <div class="errorsCustom" v-if="errorsCustom.address.district != null">
+                  <span>{{ errorsCustom.address.district }}</span>
                 </div>
               </div>
               <div class="col-lg-offset-2 col-lg-8 form-group">
@@ -74,8 +74,8 @@
                     :key="ward.id"
                   >{{ ward.name }}</option>
                 </select>
-                <div class="errors" v-if="errors.address.ward != null">
-                  <p>{{ errors.address.ward }}</p>
+                <div class="errorsCustom" v-if="errorsCustom.address.ward != null">
+                  <span>{{ errorsCustom.address.ward }}</span>
                 </div>
               </div>
             </div>
@@ -118,7 +118,7 @@ export default {
       list_districts: [],
       list_wards: [],
       host_name: null,
-      errors: {
+      errorsCustom: {
         address: {
           street: null,
           ward: null,
@@ -132,7 +132,7 @@ export default {
     this.getListProvinces();
   },
   methods: {
-    getAddressOfUser() {
+    getAddressById() {
       axios
         .get("/api/address/" + this.address_id)
         .then(res => {
@@ -146,8 +146,11 @@ export default {
     saveAddress() {
       if (this.checkAddress()) {
         if (this.current_address != "") {
+            console.log('updata');
+
           this.updateAddress();
         } else {
+            console.log('create');
           this.createAddress();
         }
         var current_address = `${this.address.street} - ${this.address.ward.name}, ${this.address.district.name}, ${this.address.province.name}`;
@@ -174,7 +177,7 @@ export default {
     },
     updateAddress() {
       axios
-        .put("/api/address/" + this.user_id, {
+        .put("/api/address/" + this.address_id, {
           street: this.address.street,
           ward: this.address.ward.id,
           district: this.address.district.id,
@@ -219,27 +222,27 @@ export default {
     },
     checkAddress() {
       //reset error
-      this.errors.address.street = null;
-      this.errors.address.ward = null;
-      this.errors.address.district = null;
-      this.errors.address.province = null;
+      this.errorsCustom.address.street = null;
+      this.errorsCustom.address.ward = null;
+      this.errorsCustom.address.district = null;
+      this.errorsCustom.address.province = null;
       if (this.address.street === "") {
-        this.errors.address.street = "Please enter Street.";
+        this.errorsCustom.address.street = "Please enter Street.";
       }
       if (this.address.ward === "Chose Ward") {
-        this.errors.address.ward = "Please choose Ward";
+        this.errorsCustom.address.ward = "Please choose Ward";
       }
       if (this.address.district === "Chose District") {
-        this.errors.address.district = "Please choose District.";
+        this.errorsCustom.address.district = "Please choose District.";
       }
       if (this.address.province === "Chose Province") {
-        this.errors.address.province = "Please choose Province.";
+        this.errorsCustom.address.province = "Please choose Province.";
       }
       if (
-        this.errors.address.street === null &&
-        this.errors.address.province === null &&
-        this.errors.address.district === null &&
-        this.errors.address.ward === null
+        this.errorsCustom.address.street === null &&
+        this.errorsCustom.address.province === null &&
+        this.errorsCustom.address.district === null &&
+        this.errorsCustom.address.ward === null
       ) {
         return true;
       }
@@ -263,7 +266,7 @@ export default {
   watch: {
     getProvince() {
       if (this.address.province !== "Chose Province") {
-        this.errors.address.province = null;
+        this.errorsCustom.address.province = null;
         this.getListDistrictsByProvince(this.address.province.id);
         //reset value select default
         this.address.district = "Chose District";
@@ -271,7 +274,7 @@ export default {
     },
     getDistrict() {
       if (this.address.district !== "Chose Province") {
-        this.errors.address.district = null;
+        this.errorsCustom.address.district = null;
         this.getListWardsByDistrict(this.address.district.id);
         //reset value select default
         this.address.ward = "Chose Ward";
@@ -279,22 +282,25 @@ export default {
     },
     getWard() {
       if (this.address.ward !== "Chose Ward") {
-        this.errors.address.ward = null;
+        this.errorsCustom.address.ward = null;
       }
     },
     getStreet() {
       if (this.address.street !== "Chose Province") {
-        this.errors.address.street = null;
+        this.errorsCustom.address.street = null;
       }
     },
     address_id: {
       handler: function() {
-        this.getAddressOfUser();
-        console.log("reload bind data getAddressOfUser");
+        this.getAddressById();
+        console.log("reload bind data getAddressById");
       }
     }
   }
 };
 </script>
 <style>
+.errorsCustom span {
+    color: red;
+}
 </style>

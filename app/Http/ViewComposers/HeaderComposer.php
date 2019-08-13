@@ -24,7 +24,7 @@ class HeaderComposer
     /**
      * Create a new profile composer.
      *
-     * @param  CategoryRepository  $users
+     * @param  UserRepository  $users
      * @return void
      */
     public function __construct(CategoryRepositoryInterface $category, UserRepositoryInterface $user)
@@ -43,6 +43,7 @@ class HeaderComposer
     public function compose(View $view)
     {
         $view->with('categories', $this->categoryRepository->get());
+
         if (Auth::check()) {
             $view->with('numRoomInCart', $this->userRepository->countRoomsInCartByUserId(Auth::id()));
         }

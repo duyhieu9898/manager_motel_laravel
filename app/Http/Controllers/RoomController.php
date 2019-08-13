@@ -3,31 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\Room\RoomRepositoryInterface;
-use App\Repositories\Category\CategoryRepositoryInterface;
-use App\Repositories\Province\ProvinceRepositoryInterface;
-use Illuminate\Support\Facades\DB;
 
 class RoomController extends Controller
 {
     private $roomRepository;
-    private $categoryRepository;
-    private $provinceRepository;
 
-    public function __construct(
-        RoomRepositoryInterface $roomRepository,
-        CategoryRepositoryInterface $categoryRepository,
-        ProvinceRepositoryInterface $provinceRepository
-    ) {
-        $this->roomRepository = $roomRepository;
-        $this->categoryRepository = $categoryRepository;
-        $this->provinceRepository = $provinceRepository;
-    }
-
-    public function latest()
+    public function __construct(RoomRepositoryInterface $roomRepository)
     {
-        $numItem=3;
-        $newRoomsOfCategory = $this->categoryRepository->getNewRoomsOfAllCategories($numItem);
-        return view('index', compact(['newRoomsOfCategory']));
+        $this->roomRepository = $roomRepository;
     }
 
     public function show($id)

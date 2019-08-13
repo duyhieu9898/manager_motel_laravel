@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use App\Repositories\Category\CategoryRepositoryInterface;
 
 class CategoryController extends Controller
@@ -35,25 +35,13 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $this->validate(
-            $request,
-            [
-                'category.name' => 'required|min:5|max:20',
-            ],
-            [
-                'required' => 'Name is a required field',
-                'min' => 'The password must be at least :min characters',
-                'max' => 'The password must be at most :max characters.',
-            ]
-        );
-        $dataCategory = $request->input('category');
-        $category = $this->categoryRepository->create($dataCategory);
-        if (!$category) {
-            return response()->json(['message' => 'error create category'], 500);
+        $result = $this->categoryRepository->create($request->only('name'));
+        if ($result) {
+            return response()->json(['message' => 'created category'], 201);
         }
-        return response()->json(['message' => 'created category'], 200);
+        return response()->json(['message' => 'error create category'], 500);
     }
 
     /**
@@ -63,32 +51,13 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
-        $this->validate(
-            $request,
-            [
-                'category.name' => 'required|min:5|max:20',
-            ],
-            [
-                'required' => 'Name is a required field',
-                'min' => 'The Name must be at least :min characters',
-                'max' => 'The Name must be at most :max characters.',
-            ]
-        );
-        $dataCategory = $request->input('category');
-        $this->categoryRepository->updateById($id, $dataCategory);
-        $category = $this->categoryRepository->updateById($id, $dataCategory);
-        if (!$category) {
-            return response()->json(['message' => 'error update category'], 500);
+        $result = $this->categoryRepository->updateById($id, $request->only('name'));
+        if ($result) {
+            return response(['result' => 'success'], 200);
         }
-        return response(
-            [
-                'result' => 'success',
-                'role_id' => $category,
-            ],
-            200
-        );
+        return response()->json(['message' => 'error update category'], 500);
     }
 
     /**
@@ -99,7 +68,10 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $this->categoryRepository->deleteById($id);
-        return response(['result' => 'success', 200]);
+        $result = $this->categoryRepository->deleteById($id);
+        if ($result) {
+            return response(['result' => 'delete category success'], 200);
+        }
+        return response()->json(['message' => 'error update category'], 500);
     }
 }
