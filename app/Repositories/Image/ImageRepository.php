@@ -56,12 +56,13 @@ class ImageRepository extends BaseRepository implements ImageRepositoryInterface
             $image->room_id=$roomId;
             $image->save();
         }
+        return true;
     }
 
     public function setImageToRoom(int $imageId, int $roomId)
     {
         $image = $this->model::findOrFail($imageId);
         $image->room_id = $roomId;
-        $image->save();
+        return $image->save();
     }
 }

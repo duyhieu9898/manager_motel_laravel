@@ -14,4 +14,7 @@ interface RepositoryInterface
     public function findById(int $id);
     public function deleteById(int $id);
     public function updateById(int $id, array $data);
+    public function make(array $with);
+    public function getFirstBy($key, $value, array $with);
+    public function getManyBy($key, $value, array $with);
 }

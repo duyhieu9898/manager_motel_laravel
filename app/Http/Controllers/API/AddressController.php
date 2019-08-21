@@ -4,10 +4,15 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
+use App\Services\AddressService;
 
 class AddressController extends Controller
 {
+    private $addressService;
+    public function __construct(AddressService $addressService)
+    {
+        $this->addressService=$addressService;
+    }
     /**
      * get address by id
      *
@@ -16,13 +21,7 @@ class AddressController extends Controller
      */
     public function getById(int $id)
     {
-        $address= DB::table('addresses')
-            ->select('street', 'wards.name as ward', 'districts.name as district', 'provinces.name as province')
-            ->join('wards', 'addresses.ward_id', 'wards.id')
-            ->join('districts', 'addresses.district_id', 'districts.id')
-            ->join('provinces', 'addresses.province_id', 'provinces.id')
-            ->where('addresses.id', $id)
-            ->first();
+        $address= $this->addressService->getById($id);
         if ($address) {
             return response()->json(['address' => $address], 200);
         }
@@ -41,20 +40,19 @@ class AddressController extends Controller
      */
     public function updateById(Request $request, int $id)
     {
-        if ($request->has(['street', 'province', 'district', 'ward' ])) {
-            $address=DB::table('addresses')
-                ->where('id', $id)
-                ->update(
-                    [
-                    'addresses.street' => $request->street,
-                    'addresses.ward_id' => $request->ward,
-                    'addresses.district_id' => $request->district,
-                    'addresses.province_id' => $request->province,
-                    ]
-                );
-            if ($address) {
-                return response()->json(['message'=> 'update address success', 200]);
-            }
+        if (!$request->has(['street', 'province', 'district', 'ward' ])) {
+            return response()->json(['message' => 'validate error',], 500);
+        }
+        $dataAddress = [
+                "street" => $request->street,
+                "ward" => $request->ward,
+                "district" => $request->district,
+                "province" => $request->province
+            ];
+
+
+        if ($this->addressService->updateById($id, $dataAddress)) {
+            return response()->json(['message'=> 'update address success', 200]);
         }
         return response()->json(['message' => 'Server error while updating address',], 500);
     }
@@ -67,26 +65,21 @@ class AddressController extends Controller
      */
     public function create(Request $request)
     {
-        if ($request->has(['street', 'province', 'district', 'ward' ])) {
-            $addressId=DB::table('addresses')
-                ->insertGetId(
-                    [
-                    'street' => $request->street,
-                    'ward_id' => $request->ward,
-                    'district_id' => $request->district,
-                    'province_id' => $request->province,
-                    ]
-                );
-            if ($addressId) {
-                return response()->json([
-                    'message' => 'create address success',
-                    "address_id" => $addressId
-                ], 201);
-            }
+        if (!$request->has(['street', 'province', 'district', 'ward' ])) {
+            return response()->json(['message' => 'validate error',], 500);
         }
-        return response()->json([
-            'message'=> 'Server error while creating address ', 500
-            ]);
+        $dataAddress = [
+                "street" => $request->street,
+                "ward" => $request->ward,
+                "district" => $request->district,
+                "province" => $request->province
+            ];
+        $addressId = $this->addressService->create($dataAddress);
+
+        if (!$addressId) {
+            return response()->json(['message'=> 'Server error while creating address ', 500]);
+        }
+        return response()->json(["address_id" => $addressId], 201);
     }
 
     /**
@@ -97,13 +90,13 @@ class AddressController extends Controller
      */
     public function getWardsByDistrictId($districtId)
     {
-        $listWards = DB::table('wards')->where('district_id', $districtId)->get();
-        if ($listWards) {
-            return response()->json($listWards, 200);
+        $listWards = $this->addressService->getWardsByDistrictId($districtId);
+        if (!$listWards) {
+            return response()->json([
+                'message'=> 'Server error while get list Ward ', 500
+            ]);
         }
-        return response()->json([
-            'message'=> 'Server error while get list Ward ', 500
-        ]);
+        return response()->json($listWards, 200);
     }
 
     /**
@@ -114,13 +107,13 @@ class AddressController extends Controller
      */
     public function getDistrictsByProvinceId($provinceId)
     {
-        $listDistricts = DB::table('districts')->where('province_id', $provinceId)->get();
-        if ($listDistricts) {
-            return response()->json($listDistricts, 200);
+        $listDistricts = $this->addressService->getDistrictsByProvinceId($provinceId);
+        if (!$listDistricts) {
+            return response()->json([
+                'message'=> 'Server error while get list Districts ', 500
+            ]);
         }
-        return response()->json([
-            'message'=> 'Server error while get list Districts ', 500
-        ]);
+        return response()->json($listDistricts, 200);
     }
 
     /**
@@ -129,7 +122,13 @@ class AddressController extends Controller
      */
     public function getProvinces()
     {
-        $listProvinces = DB::table('provinces')->get();
+        $listProvinces =  $this->addressService->getProvinces();
+        if (!$listProvinces) {
+            return response()->json([
+                'message'=> 'Server error while get list Districts ', 500
+            ]);
+        }
+
         return response()->json($listProvinces, 200);
     }
 }
