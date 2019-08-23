@@ -84,12 +84,12 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         $rooms = $this->findById($userId)->load('rooms')->rooms;
         foreach ($rooms as $room) {
-            $room->users()->updateExistingPivot($userId, ['status_id' => 2]);
+            $room->users()->where("room_user.status_id", 1)->update(['room_user.status_id' => 2]);
         }
     }
     /**
      * count number Room in cart
-     *
+     *wh
      * @param integer $userId
      * @return integer
      */

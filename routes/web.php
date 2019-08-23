@@ -74,3 +74,13 @@ Route::get('/chat', function () {
 Route::get('publish', function () {
     LRedis::publish('message', "hello my friend");
 });
+
+use App\User;
+
+Route::get('test1', function () {
+    $user= new User;
+    $rooms = $user->find(3)->load('rooms')->rooms;
+    foreach ($rooms as $room) {
+        $room->users()->where("room_user.status_id", 1)->update(['room_user.status_id' => 2])->dd();
+    }
+});

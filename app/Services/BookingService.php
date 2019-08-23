@@ -26,6 +26,7 @@ class BookingService
             ->join('rooms', 'room_user.room_id', 'rooms.id')
             ->join('status_bookings', 'room_user.status_id', 'status_bookings.id')
             ->whereIn('room_user.status_id', [2, 3, 4])
+            ->orderByRaw('room_user.updated_at DESC')
             ->get();
         return $bookings;
     }

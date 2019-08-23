@@ -61,4 +61,6 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/getListUserOtherMe', 'API\UsersController@getListUserOtherMe');
     Route::post('/messages', 'API\MessagesController@index');
     Route::post('/messages/send', 'API\MessagesController@store');
+    //
+    Route::post('/sent-notification', 'API\NotificationController@sent');
 });

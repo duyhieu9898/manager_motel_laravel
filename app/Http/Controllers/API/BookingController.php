@@ -74,15 +74,14 @@ class BookingController extends Controller
      */
     public function updateStatus(Request $request, int $bookingId)
     {
-        $nameStatus = $request->name;
-        
+        $nameStatus = $request->status_name;
+
         if ($this->bookingService->updateStatusById($bookingId, $nameStatus)) {
-            return response()->json([
+            return Response()->json(['message'=>'update status success'], 200);
+        }
+        return response()->json([
                 'message'=> 'Server error while update status booking',
             ], 500);
-        }
-
-        return Response()->json(['message'=>'update status success'], 200);
     }
     /**
      * delete room_user by id

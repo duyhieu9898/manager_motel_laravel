@@ -37,7 +37,8 @@ class ComposerServiceProvider extends ServiceProvider
             'list_room',
             'oder_room',
             'home',
-            'socket'
+            'socket',
+            'order_room'
         ], 'App\Http\ViewComposers\HeaderComposer');
     }
 }

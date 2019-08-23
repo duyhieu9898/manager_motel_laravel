@@ -18,6 +18,32 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
+                    <li class="nav-item dropdown notifications">
+                        <a class="nav-link dropdown-toggle" href="#notifications-panel" id="triggerId"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-bell" aria-hidden="true" data-count="0" style="color:#fff"></i>
+                        </a>
+
+                        <div class="dropdown-menu notifications-menu" aria-labelledby="triggerId">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between">
+                                    <div class="dropdown-toolbar-actions">
+                                        <a href="#">Mark all as read</a>
+                                    </div>
+                                    <p class="dropdown-toolbar-title">Notifications (<span class="notif-count">0</span>)
+                                    </p>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="list-notifications">
+                                    </ul>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <a href="#">View All</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
                     @if(Auth::guest())
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">

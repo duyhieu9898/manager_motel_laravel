@@ -20,14 +20,21 @@ class StatisticalController extends Controller
 
         $totalRoom =  DB::table('rooms')->count();
         $totalUser =  DB::table('users')->count();
-        $totalEarningMonth = DB::table('rooms')
+        $listRoomsWithPeoples = DB::table('rooms')
+            ->select('rooms.price', 'room_user.peoples', 'room_user.status_id')
             ->join('room_user', 'rooms.id', 'room_user.id')
-            ->where('status_id', '!=', 1)
+            ->where('status_id', '>=', 3)
             ->whereYear('room_user.created_at', $yearCurrent)
             ->whereMonth('room_user.created_at', $mothCurrent)
-            ->sum('price');
+            ->get();
+        $totalEarningMonth = 0;
+        foreach ($listRoomsWithPeoples as $value) {
+            $totalEarningMonth += $value->price * $value->peoples;
+        }
         $totalBooking = DB::table('room_user')
-            ->where('status_id', '==', 2)
+            ->where('status_id', '>=', 2)
+            ->whereYear('room_user.created_at', $yearCurrent)
+            ->whereMonth('room_user.created_at', $mothCurrent)
             ->count();
 
 
@@ -42,10 +49,11 @@ class StatisticalController extends Controller
         $arrTotals = [
             'total_room' => $totalRoom,
             'total_user' => $totalUser,
-            'totalBooking' => $totalBooking,
+            'total_booking' => $totalBooking,
             'list_book_day' => $listBookDay,
             'total_earning_month' => $totalEarningMonth
         ];
+       
         return response()->json($arrTotals, 200);
     }
 }

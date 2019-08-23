@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\Room\RoomRepositoryInterface;
 use App\Events\RedisEvent;
+use Pusher\Pusher;
 
 class BookingController extends Controller
 {
@@ -80,7 +81,11 @@ class BookingController extends Controller
     public function checkOut()
     {
         $this->userRepository->bookingPending(Auth::id());
-        event(new RedisEvent(Auth::id(), "message_example"));
+        //!Broadcast be current configured for redis with socket
+        //*pusher
+        $this->sendPusherMessage("new-booking", Auth::id());
+        //*socket redis
+        //event(new RedisEvent(Auth::id(), "message_example"));
         return redirect('/cart')->with('booking-success', 'your booking success');
     }
 
@@ -96,5 +101,19 @@ class BookingController extends Controller
         $roomsCompleted = $this->userRepository->getBookingCompleted(Auth::id());
         $roomsCanceled = $this->userRepository->getBookingCanceled(Auth::id());
         return view('order_room', compact(['roomsPending', 'roomsCompleted', 'roomsCanceled']));
+    }
+
+    public function sendPusherMessage($event, $message)
+    {
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            [
+                'cluster' => env('PUSHER_APP_CLUSTER'),
+                'encrypted' => true
+            ]
+        );
+        $pusher->trigger('booking', $event, $message);
     }
 }
