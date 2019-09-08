@@ -16,6 +16,8 @@ use App\Repositories\Province\ProvinceRepository;
 use App\Repositories\Province\ProvinceRepositoryInterface;
 use App\Repositories\Address\AddressRepository;
 use App\Repositories\Address\AddressRepositoryInterface;
+use App\Repositories\Notification\NotificationRepository;
+use App\Repositories\Notification\NotificationRepositoryInterface;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Routing\UrlGenerator;
@@ -40,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(ConvenientRepositoryInterface::class, ConvenientRepository::class);
         $this->app->singleton(ProvinceRepositoryInterface::class, ProvinceRepository::class);
         $this->app->singleton(AddressRepositoryInterface::class, AddressRepository::class);
+        $this->app->singleton(NotificationRepositoryInterface::class, NotificationRepository::class);
     }
 
     /**

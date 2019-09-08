@@ -103,7 +103,6 @@
     background-color: #1a1a1a;
 }
 
-
 /*===========PAGE INDEX==============*/
 
 
@@ -475,6 +474,69 @@ hr {
     font-weight: 400;
 }
 
+.notifications-menu {
+    width: 350px;
+}
+
+.notifications-menu.dropdown-menu {
+    padding: 0;
+}
+
+.notifications_view-all {
+    margin-bottom: -8px;
+}
+
+.notifications-menu p {
+    margin: 0;
+}
+
+.notifications-menu .card-header,
+.notifications-menu .card-footer {
+    padding: 7px 15px;
+}
+
+.notifications-menu .card-body {
+    padding: 0;
+}
+
+.list-notifications li {
+    padding: 7px 15px;
+    list-style: none;
+    background: #f9f9f9;
+    border: 1px solid #EEEEEE;
+}
+
+.list-notifications li:hover {
+    background: #EEEEEE;
+}
+
+.list-notifications {
+    padding: 0;
+}
+
+.media-object {
+    padding-right: 15px;
+}
+
+.media-object>img {
+    border-radius: 50%
+}
+
+.notification-meta>.timestamp {
+    font-size: 12px;
+    color: #535c68;
+}
+
+.notification-desc {
+    word-break: break-word;
+}
+
+.notification-title {
+    text-overflow: ellipsis;
+    /* Required for text-overflow to do anything */
+    white-space: nowrap;
+    overflow: hidden;
+}
 
 /*login*/
 
@@ -535,7 +597,6 @@ hr {
 .profile-user .errors {
     color: #FD7E14 !important;
 }
-
 
 /*list-room*/
 
@@ -670,68 +731,4 @@ img {
 
 #pagination {
     margin-top: 50px;
-}
-
-.notifications-menu {
-    width: 350px;
-}
-
-.notifications-menu.dropdown-menu {
-    padding: 0;
-}
-
-.notifications_view-all {
-    margin-bottom: -8px;
-}
-
-.notifications-menu p {
-    margin: 0;
-}
-
-.notifications-menu .card-header,
-.notifications-menu .card-footer {
-    padding: 7px 15px;
-}
-
-.notifications-menu .card-body {
-    padding: 0;
-}
-
-.list-notifications li {
-    padding: 7px 15px;
-    list-style: none;
-    background: #f9f9f9;
-    border: 1px solid #EEEEEE;
-}
-
-.list-notifications li:hover {
-    background: #EEEEEE;
-}
-
-.list-notifications {
-    padding: 0;
-}
-
-.media-object {
-    padding-right: 15px;
-}
-
-.media-object>img {
-    border-radius: 50%
-}
-
-.notification-meta>.timestamp {
-    font-size: 12px;
-    color: #535c68;
-}
-
-.notification-desc {
-    word-break: break-word;
-}
-
-.notification-title {
-    text-overflow: ellipsis;
-    /* Required for text-overflow to do anything */
-    white-space: nowrap;
-    overflow: hidden;
 }

@@ -6,10 +6,11 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Traits\FullTextSearch;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens,Notifiable;
+    use HasApiTokens,Notifiable, FullTextSearch;
 
     /**
      * The attributes that are mass assignable.
@@ -20,6 +21,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'name', 'email', 'password', 'phone', 'address_id', 'api_token'
     ];
 
+    protected $searchable = [
+        'email',
+        'name'
+    ];
     /**
      * The attributes that should be hidden for arrays.
      *

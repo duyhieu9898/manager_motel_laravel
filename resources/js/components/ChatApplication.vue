@@ -165,7 +165,7 @@ export default {
         let app = this
         app.loadingMessages = true
         app.messages = []
-        axios.post('api/messages', {
+        axios.post('messages', {
           sender_id: app.chatUserID
         }).then((resp) => {
           app.messages = resp.data
@@ -175,7 +175,7 @@ export default {
       sendMessage () {
         let app = this
         if (app.newMessage !== '') {
-          axios.post('api/messages/send', {
+          axios.post('messages/send', {
             sender_id: app.$root.userID,
             receiver_id: app.chatUserID,
             message: app.newMessage

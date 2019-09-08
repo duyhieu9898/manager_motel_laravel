@@ -14,73 +14,61 @@ class ConvenientsTableSeeder extends Seeder
     {
         //
         $convenient = new Convenient;
-        $convenient->amount = 1;
         $convenient->id = 1;
         $convenient->name = "phòng khách";
         $convenient->save();
 
         $convenient = new Convenient;
-        $convenient->amount = 1;
         $convenient->id = 2;
         $convenient->name = "phòng ngủ";
         $convenient->save();
 
         $convenient = new Convenient;
-        $convenient->amount = 1;
         $convenient->id = 3;
         $convenient->name = "phòng bếp";
-        $convenient->save();
 
+        $convenient->save();
         $convenient = new Convenient;
-        $convenient->amount = 1;
         $convenient->id = 4;
         $convenient->name = "phòng tắm";
         $convenient->save();
 
         $convenient = new Convenient;
-        $convenient->amount = 1;
         $convenient->id = 5;
         $convenient->name = "phòng vệ sinh";
         $convenient->save();
 
         $convenient = new Convenient;
-        $convenient->amount = 1;
         $convenient->id = 6;
         $convenient->name = "phòng ăn";
         $convenient->save();
 
         $convenient = new Convenient;
-        $convenient->amount = 1;
         $convenient->id = 7;
         $convenient->name = "tivi";
         $convenient->save();
 
         $convenient = new Convenient;
-        $convenient->amount = 1;
         $convenient->id = 8;
         $convenient->name = "tủ lạnh";
         $convenient->save();
 
         $convenient = new Convenient;
-        $convenient->amount = 1;
         $convenient->id = 9;
         $convenient->name = "điều hòa";
         $convenient->save();
 
         $convenient = new Convenient;
-        $convenient->amount = 1;
         $convenient->id = 10;
         $convenient->name = "máy giặt";
         $convenient->save();
 
         $convenient = new Convenient;
-        $convenient->amount = 1;
         $convenient->id = 11;
         $convenient->name = "quạt cây";
         $convenient->save();
 
         $convenient = new Convenient;
-        $convenient->amount = 1;
         $convenient->id = 12;
         $convenient->name = "wifi";
         $convenient->save();

@@ -4,6 +4,7 @@ namespace App\Repositories\User;
 
 use App\Repositories\BaseRepository;
 use App\User;
+use Searchy;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -164,5 +165,16 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         $user = $this->findById($userId);
         return $user->rooms()->with('images')->wherePivot('status_id', 4)->paginate(5);
+    }
+
+    public function fuzzySearch($value)
+    {
+        return Searchy::search($this->model)->fields('name', 'email', 'id')
+            ->query($value)->getQuery()->limit(10)->get();
+    }
+
+    public function fullTextSearch($value)
+    {
+        return $user = $this->model::search($value)->get();
     }
 }

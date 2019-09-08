@@ -8,7 +8,9 @@ class Room extends Model
 {
     public $timestamps = true;
     protected $guarded = [];//all attributes mass assignable
-
+    protected $searchable = [
+        'title',
+    ];
     //relationship
     public function category()
     {
@@ -35,7 +37,6 @@ class Room extends Model
     {
         return $this->belongsToMany('App\User')
                 ->withPivot('arrival_date', 'departure_date', 'peoples', 'status_id')
-                
                 ->withTimestamps();
     }
 }

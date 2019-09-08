@@ -57,10 +57,10 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::resource('/users', 'API\UserController');
 
     //statistical
-    Route::get('statistical', 'API\StatisticalController@index');
+    Route::get('/statistical', 'API\StatisticalController@index');
     Route::get('/getListUserOtherMe', 'API\UsersController@getListUserOtherMe');
-    Route::post('/messages', 'API\MessagesController@index');
-    Route::post('/messages/send', 'API\MessagesController@store');
+
     //
     Route::post('/sent-notification', 'API\NotificationController@sent');
+    Route::get('/search-users/{value}', 'API\UserController@fuzzySearch');
 });

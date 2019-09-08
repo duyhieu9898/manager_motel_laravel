@@ -106,4 +106,22 @@ class UserController extends Controller
     {
         return User::orderBy('name')->where('id', '!=', auth()->user()->id)->get();
     }
+
+    public function fullTextSearch($value)
+    {
+        $user = $this->userRepository->fullTextSearch($value);
+
+        if (count($user) != 0) {
+            return response()->json($user, 200);
+        }
+    }
+
+    public function fuzzySearch($value)
+    {
+        $user = $this->userRepository->fuzzySearch($value);
+        
+        if (count($user) != 0) {
+            return response()->json($user, 200);
+        }
+    }
 }

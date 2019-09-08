@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\Room\RoomRepositoryInterface;
+use App\Traits\FullTextSearch;
 
 class RoomController extends Controller
 {
+    use FullTextSearch;
+    
     private $roomRepository;
 
     public function __construct(RoomRepositoryInterface $roomRepository)

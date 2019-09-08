@@ -53,6 +53,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/getCurrentUser', function () {
         return Auth::user()->load('roles');
     });
+    //chat
+    Route::get('/chat', function () {
+        return view('home');
+    });
+    Route::post('/messages', 'API\MessagesController@index');
+    Route::post('/messages/send', 'API\MessagesController@store');
+    Route::get('/notifications/me', 'NotificationController@index');
 });
 //route auth
 Auth::routes(['verify' => true]);
@@ -66,21 +73,8 @@ Route::get('/notify', function () {
 Route::get('/send', 'SendMessageController@index');
 Route::post('/postMessage', 'SendMessageController@sendMessage')->name('postMessage');
 
-//chat
-Route::get('/chat', function () {
-    return view('home');
-});
+
 //test
 Route::get('publish', function () {
     LRedis::publish('message', "hello my friend");
-});
-
-use App\User;
-
-Route::get('test1', function () {
-    $user= new User;
-    $rooms = $user->find(3)->load('rooms')->rooms;
-    foreach ($rooms as $room) {
-        $room->users()->where("room_user.status_id", 1)->update(['room_user.status_id' => 2])->dd();
-    }
 });
