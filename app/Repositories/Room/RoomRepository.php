@@ -21,6 +21,7 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
     {
         parent::__construct($model);
     }
+
     public function getByCategoryId($idCategory, $perPage)
     {
 
@@ -35,7 +36,8 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
                 ->with(['images', 'category'])
                 ->paginate($perPage);
     }
-    public function create($dataRoom)
+
+    public function create(array $dataRoom)
     {
         $room = new $this->model;
         $room->category_id = $dataRoom['category_id'];
@@ -54,7 +56,8 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
         }
         return false;
     }
-    public function updateById($id, $dataRoom)
+
+    public function updateById(int $id, array $dataRoom)
     {
         $room = $this->findById($id);
         $room->category_id = $dataRoom['category_id'];
@@ -114,7 +117,7 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
     {
         return $this->model->users()->attach($userId, $dataBooking);
     }
-    public function getNewCreate($numItem)
+    public function getNewCreate(int $numItem)
     {
         $rooms=$this->model::where(['active' =>1 ])
             ->orderBy('created_at', 'desc')

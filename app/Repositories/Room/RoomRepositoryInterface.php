@@ -7,8 +7,6 @@ use App\Repositories\RepositoryInterface;
 interface RoomRepositoryInterface extends RepositoryInterface
 {
     public function getByCategoryId($idCategory, $perPage);
-    public function create($dataRoom);
-    public function updateById(int $id, $dataRoom);
     public function jsonPagination($perPage);
     public function active(bool $val, int $roomId);
     public function people($roomId, $numPeoples);

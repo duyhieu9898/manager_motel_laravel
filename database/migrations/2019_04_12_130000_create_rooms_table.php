@@ -43,8 +43,6 @@ class CreateRoomsTable extends Migration
                         ->onUpdate('cascade'); //n-1
         });
         
-        DB::statement('ALTER TABLE users ADD FULLTEXT `search` (`email`, `name`)');
-
         Schema::create('images', function (Blueprint $table) {
             $table->bigIncrements('id')->increment();
             $table->string('original_name');
