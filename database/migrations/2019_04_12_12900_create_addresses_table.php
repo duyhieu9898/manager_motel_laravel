@@ -22,9 +22,9 @@ class CreateAddressesTable extends Migration
             $table->string('province_id');
             //
             $table->index(['province_id','district_id','ward_id']);
-            // $table->foreign('ward_id')->references('id')->on('wards')->onDelete('cascade')->onUpdate('cascade');
-            // $table->foreign('district_id')->references('id')->on('districts')->onDelete('cascade')->onUpdate('cascade');
-            // $table->foreign('province_id')->references('id')->on('provinces')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('ward_id')->references('id')->on('wards')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('district_id')->references('id')->on('districts')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('province_id')->references('id')->on('provinces')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

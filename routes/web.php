@@ -78,3 +78,5 @@ Route::post('/postMessage', 'SendMessageController@sendMessage')->name('postMess
 Route::get('publish', function () {
     LRedis::publish('message', "hello my friend");
 });
+//chat
+Route::resource('/users', 'API\UserController');

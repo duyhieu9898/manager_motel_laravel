@@ -15,7 +15,7 @@ $(document).ready(function() {
             type: "post",
             url: "http://localhost:8000/bookings/rooms/" + roomId,
             data: {
-                "_token": "{{ csrf_token() }}",
+                _token: $('meta[name="csrf-token"]').attr('content'),
                 arrival_date: dateArrival,
                 departure_date: dateDeparture,
                 peoples: people

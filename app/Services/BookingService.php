@@ -20,7 +20,7 @@ class BookingService
                 'users.phone as user_phone',
                 'users.email as user_email',
                 'status_bookings.name as status_booking',
-                DB::raw("DATE_FORMAT(room_user.created_at, '%H:%i:%s %d-%m-%Y') as date_booking"),
+                DB::raw("DATE_FORMAT(room_user.created_at, '%H:%i:%s %d-%m-%Y') as date_booking")
             )
             ->join('users', 'room_user.user_id', 'users.id')
             ->join('rooms', 'room_user.room_id', 'rooms.id')
