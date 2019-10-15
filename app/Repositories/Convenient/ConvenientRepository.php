@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Repositories\Convenient;
+namespace App\Repositories\Convenience;
 
-use App\Convenient;
+use App\Convenience;
 use App\Repositories\BaseRepository;
 
-class ConvenientRepository extends BaseRepository implements ConvenientRepositoryInterface
+class ConvenienceRepository extends BaseRepository implements ConvenienceRepositoryInterface
 {
     /**
-     * @var Convenient
+     * @var Convenience
      */
     protected $model;
 
     /**
-     * ConvenientRepository constructor.
+     * ConvenienceRepository constructor.
      *
-     * @param Convenient $model
+     * @param Convenience $model
      */
-    public function __construct(Convenient $model)
+    public function __construct(Convenience $model)
     {
         parent::__construct($model);
     }

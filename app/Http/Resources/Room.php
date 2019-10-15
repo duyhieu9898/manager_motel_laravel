@@ -41,7 +41,7 @@ class Room extends JsonResource
             'police_and_terms' => $this->police_and_terms,
             'price' => $this->price,
             'image' => $this->images,
-            'convenients' => $this->convenients
+            'conveniences' => $this->conveniences
         ];
     }
 }

@@ -31,7 +31,7 @@ class RoomEditRequest extends FormRequest
             'price' => 'required|numeric|min:1|max:99999999',
             'description' => 'required|string|between:10,999',
             'police_and_terms' => 'required|string|between:10,999',
-            'list_convenients_id' => 'required|array',
+            'list_conveniences_id' => 'required|array',
             ];
     }
     public function messages()
@@ -42,7 +42,7 @@ class RoomEditRequest extends FormRequest
             'title.max' => "The room title may not be greater than 999 characters.",
             'category_id.numeric' => 'The room category field is required.',
             'address_id.required' => 'The room address field is required.',
-            'list_convenients_id' => 'The room convenients field is required.',
+            'list_conveniences_id' => 'The room conveniences field is required.',
             'room_area.min' => 'The room area field is required.',
             'price.min' => 'The room price field is required.'
         ];

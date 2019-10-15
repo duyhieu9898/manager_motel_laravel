@@ -16,7 +16,7 @@ class MessagesController extends Controller
      */
     public function index()
     {
-        return auth()
+       $messages = auth()
             ->user()
             ->messages()
             ->where(function ($query) {
@@ -27,7 +27,10 @@ class MessagesController extends Controller
                 $query->bySender(auth()->user()->id)
                     ->byReceiver(request()->input('sender_id'));
             })
+            ->latest()
+            ->take(10)
             ->get();
+        return array_reverse($messages->toArray());
     }
 
     /**

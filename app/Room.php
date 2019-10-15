@@ -20,9 +20,9 @@ class Room extends Model
     {
         return $this->hasMany('App\Image');
     }
-    public function convenients()
+    public function conveniences()
     {
-        return $this->belongsToMany('App\Convenient');
+        return $this->belongsToMany('App\Convenience');
     }
     public function address()
     {

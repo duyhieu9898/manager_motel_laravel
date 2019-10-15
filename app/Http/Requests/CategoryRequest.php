@@ -24,16 +24,16 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:4|max:36|unique:convenients,name',
+            'name' => 'required|min:4|max:36|unique:conveniences,name',
         ];
     }
     public function messages()
     {
         return [
-            'required' => 'Convenient name is a required field',
-            'min' => 'The convenient name must be at least :min characters',
-            'max' => 'The convenient name must be at most :max characters.',
-            'unique' => 'The selected convenient already exist',
+            'required' => 'Convenience name is a required field',
+            'min' => 'The convenience name must be at least :min characters',
+            'max' => 'The convenience name must be at most :max characters.',
+            'unique' => 'The selected convenience already exist',
         ];
     }
 }

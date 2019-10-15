@@ -158,13 +158,13 @@
                     </div>
                 </div>
                 <div class="card mt-4">
-                    <div class="card-header">Convenients of Room</div>
+                    <div class="card-header">Conveniences of Room</div>
                     <div class="card-body">
                         <div class="row">
-                            @foreach($room['convenients'] as $convenient)
+                            @foreach($room['conveniences'] as $convenience)
                             <div class="col-md-4 col-sm-4 col-xs-6">
                                 <img class="covenients__icon-item" src="{{ asset('images/ok.png') }}">
-                                <span>{{ $convenient['name'] }}</span>
+                                <span>{{ $convenience['name'] }}</span>
                             </div>
                             @endforeach
                         </div>

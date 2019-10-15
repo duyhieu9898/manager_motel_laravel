@@ -93,18 +93,6 @@ export default {
   },
   created() {
     this.getCurrentUser();
-        try {
-            Echo.channel('chat-room.1').listen('ChatMessageWasReceived', function(data) {
-                console.log(data.user, data.chatMessage);
-            });
-            Echo.private('chat-room.1')
-            .listen('ChatMessageWasReceived', (e) => {
-                console.log("fdsfksdlfk")
-            });
-        } catch (error) {
-            console.log(error);
-
-        }
   },
   mounted() {
 

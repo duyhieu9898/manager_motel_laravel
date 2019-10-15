@@ -32,8 +32,9 @@ if (token) {
  * for events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.
  */
-import Echo from 'laravel-echo'
-//! Pusher
+// !import Echo from 'laravel-echo' //broadcasting laravel
+
+// ! chanel Pusher
 // window.Pusher = require('pusher-js');
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',
@@ -42,9 +43,9 @@ import Echo from 'laravel-echo'
 //     cluster: 'ap1',
 //     encrypted: true
 // });
-//! Socket.io
-window.io = require('socket.io-client')
-window.Echo = new Echo({
-    broadcaster: 'socket.io',
-    host: window.location.hostname + ':6001'
-})
+//! chanel Socket.io + redis
+// window.io = require('socket.io-client')
+// window.Echo = new Echo({
+//     broadcaster: 'socket.io',
+//     host: window.location.hostname + ':6001'
+// })

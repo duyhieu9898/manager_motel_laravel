@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RoomCreateRequest;
 use App\Http\Requests\RoomEditRequest;
 use App\Repositories\Category\CategoryRepositoryInterface;
-use App\Repositories\Convenient\ConvenientRepositoryInterface;
+use App\Repositories\Convenience\ConvenienceRepositoryInterface;
 use App\Repositories\Image\ImageRepositoryInterface;
 use App\Repositories\Room\RoomRepositoryInterface;
 use Illuminate\Http\Request;
@@ -15,18 +15,18 @@ class RoomController extends Controller
 {
     private $roomRepository;
     private $categoryRepository;
-    private $convenientRepository;
+    private $convenienceRepository;
     private $imageRepository;
 
     public function __construct(
         RoomRepositoryInterface $roomRepository,
         CategoryRepositoryInterface $categoryRepository,
-        ConvenientRepositoryInterface $convenientRepository,
+        ConvenienceRepositoryInterface $convenienceRepository,
         ImageRepositoryInterface $imageRepository
     ) {
         $this->roomRepository = $roomRepository;
         $this->categoryRepository = $categoryRepository;
-        $this->convenientRepository = $convenientRepository;
+        $this->convenienceRepository = $convenienceRepository;
         $this->imageRepository = $imageRepository;
     }
 
@@ -52,8 +52,8 @@ class RoomController extends Controller
     public function create()
     {
         $listCategory = $this->categoryRepository->get();
-        $listConvenient = $this->convenientRepository->get();
-        return response()->json(['convenients' => $listConvenient, 'categories' => $listCategory], 200);
+        $listConvenience = $this->convenienceRepository->get();
+        return response()->json(['conveniences' => $listConvenience, 'categories' => $listCategory], 200);
     }
 
     /**
@@ -104,17 +104,17 @@ class RoomController extends Controller
     public function edit(int $id)
     {
         $categories = $this->categoryRepository->get();
-        $convenients = $this->convenientRepository->get();
-        $room = $this->roomRepository->findById($id)->load('convenients');
-        $AllConvenientsId = $room->convenients->map(function ($item) {
+        $conveniences = $this->convenienceRepository->get();
+        $room = $this->roomRepository->findById($id)->load('conveniences');
+        $AllConveniencesId = $room->conveniences->map(function ($item) {
             return $item['id'];
         });
-        $arrListConvenientsId = $AllConvenientsId->all();
+        $arrListConveniencesId = $AllConveniencesId->all();
         $arrData = [
             'room' => $room,
             'categories' => $categories,
-            'convenients' => $convenients,
-            'arrListConvenientsId' => $arrListConvenientsId,
+            'conveniences' => $conveniences,
+            'arrListConveniencesId' => $arrListConveniencesId,
         ];
         return response()->json($arrData);
     }

@@ -5,7 +5,7 @@ namespace App;
 use App\Room;
 use Illuminate\Database\Eloquent\Model;
 
-class Convenient extends Model
+class Convenience extends Model
 {
     protected $fillable = ['name'];
     public $timestamps = false;
@@ -13,6 +13,6 @@ class Convenient extends Model
     //relationship
     public function room()
     {
-        return $this->belongsToMany(Room::class, 'room_convenient');
+        return $this->belongsToMany(Room::class, 'room_convenience');
     }
 }

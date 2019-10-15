@@ -31,7 +31,7 @@ class RoomsTableSeeder extends Seeder
         Aliquam nec rutrum diam, sed elementum arcu. Mauris pulvinar ligula id vulputate condimentum.
         Quisque ut dui a turpis congue molestie. Cras bibendum vestibulum sodales.
         In hac habitasse platea dictumst.</p>";
-        $listIdConvenient = DB::table('convenients')->pluck('id');
+        $listIdConvenience = DB::table('conveniences')->pluck('id');
         for ($i = 1; $i <= 300; $i++) {
             $categoryId = rand(1, 3);
             if ($categoryId == 1) {
@@ -52,7 +52,7 @@ class RoomsTableSeeder extends Seeder
             'address_id' => $i
             ])->id;
             $room=Room::find($id);
-            $room->convenients()->attach($listIdConvenient);
+            $room->conveniences()->attach($listIdConvenience);
         }
     }
 }

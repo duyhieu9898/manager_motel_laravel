@@ -4,14 +4,14 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConvenientsTable extends Migration {
+class CreateConveniencesTable extends Migration {
 	/**
 	 * Run the migrations.
 	 *
 	 * @return void
 	 */
 	public function up() {
-		Schema::create('convenients', function (Blueprint $table) {
+		Schema::create('conveniences', function (Blueprint $table) {
 			$table->bigIncrements('id');
 			$table->string('name');
 		});
@@ -23,6 +23,6 @@ class CreateConvenientsTable extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		Schema::dropIfExists('convenients');
+		Schema::dropIfExists('conveniences');
 	}
 }

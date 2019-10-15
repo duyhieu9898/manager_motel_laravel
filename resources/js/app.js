@@ -3,12 +3,12 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-require('./bootstrap');
+require('./bootstrap')
 //config
 const token = 'cdcc4de55400db8bd806035d431b1dad389c49b416f92dd358d1a139e78303a5'
 axios.defaults.baseURL = window.location.origin
-axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-window.Vue = require('vue');
+axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+window.Vue = require('vue')
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -16,12 +16,14 @@ window.Vue = require('vue');
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
-// const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
-import BootstrapVue from 'bootstrap-vue';
+// const files = require.context('./', true, /\.vue$/i)
+// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+import BootstrapVue from 'bootstrap-vue'
 import money from 'v-money'
-import VeeValidate from 'vee-validate';
-import { Validator } from 'vee-validate';
+import VeeValidate from 'vee-validate'
+import { Validator } from 'vee-validate'
+import Chat from 'vue-beautiful-chat'
+import store from './store'
 //Overwriting messages errors
 const dictionary = {
     en: {
@@ -34,16 +36,18 @@ const dictionary = {
             phone: 'Phone Number',
         }
     },
-};
-Validator.localize(dictionary);
+}
+
+Validator.localize(dictionary)
 // register directive v-money and component <money>
 Vue.use(money, { precision: 3 })
-Vue.use(BootstrapVue);
-Vue.use(VeeValidate);
+Vue.use(BootstrapVue)
+Vue.use(VeeValidate)
+Vue.use(Chat)
 //Register component in app
-Vue.component('user-address-component', require('./components/UserAddress.vue').default);
-Vue.component('info-user-component', require('./components/InfoUser.vue').default);
-Vue.component('chat-application-2', require('./components/ChatApplicationPusher.vue').default);
+Vue.component('user-address-component', require('./components/UserAddress.vue').default)
+Vue.component('info-user-component', require('./components/InfoUser.vue').default)
+Vue.component('chat-application', require('./components/ChatApplicationPusher.vue').default)
 
 //import component for VueRoute
 /**
@@ -51,13 +55,10 @@ Vue.component('chat-application-2', require('./components/ChatApplicationPusher.
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-const app = new Vue({
+const vm = new Vue({
     el: '#app',
-    data: {
-        userID: null
-    },
+    store,
     mounted() {
-        // Assign the ID from meta tag for future use in application
-        this.userID = document.head.querySelector('meta[name="userID"]').content
+        store.dispatch('getCurrentUser')
     }
 })

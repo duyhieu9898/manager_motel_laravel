@@ -49,7 +49,7 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
         $room->police_and_terms = $dataRoom['police_and_terms'];
         $room->maximum_peoples_number = $dataRoom['maximum_peoples_number'];
         $result = $room->save();
-        $room->convenients()->attach($dataRoom['list_convenients_id']);
+        $room->conveniences()->attach($dataRoom['list_conveniences_id']);
 
         if ($result) {
             return $room->id;
@@ -69,7 +69,7 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
         $room->maximum_peoples_number = $dataRoom['maximum_peoples_number'];
         $result = $room->save();
         //
-        $room->convenients()->sync($dataRoom['list_convenients_id']);
+        $room->conveniences()->sync($dataRoom['list_conveniences_id']);
 
         if ($result) {
             return true;
@@ -85,7 +85,7 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
     public function deleteById(int $id)
     {
         $room = $this->findById($id);
-        $room->convenients()->detach();
+        $room->conveniences()->detach();
         $result =$room->delete();
         if ($result) {
             return true;

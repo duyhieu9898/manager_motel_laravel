@@ -42,6 +42,8 @@
         "laravel-echo": "^1.5.4",
         "pusher-js": "^5.0.1",
         "socker.io": "0.0.0-alpha-beta",
-        "socket.io-client": "^2.2.0"
+        "socket.io-client": "^2.2.0",
+        "vue-beautiful-chat": "^2.3.1",
+        "vuex": "^3.1.1"
     }
 }

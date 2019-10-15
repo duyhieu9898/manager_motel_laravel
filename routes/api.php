@@ -14,18 +14,18 @@ use Illuminate\Support\Facades\Auth;
 
 Route::group(['middleware' => ['auth:api']], function () {
     //image
-    Route::get('/list-images/{room_id}', 'API\ImageController@getListImagesByRoomId');
-    Route::post('/store-image', 'API\ImageController@store');
+    Route::get('/images/room/{room_id}', 'API\ImageController@getListImagesByRoomId');
+    Route::post('/images', 'API\ImageController@store');
     Route::post('/upload-image/{room_id}', 'API\ImageController@saveImage')->name('upload_image');
-    Route::delete('/delete-image/{image_id?}', 'API\ImageController@destroy')->name('delete_image');
+    Route::delete('/images/{image_id?}', 'API\ImageController@destroy')->name('delete_image');
 
     //address
     Route::get('/wards/{idDistrict}', 'API\AddressController@getWardsByDistrictId');
     Route::get('/districts/{idProvince}', 'API\AddressController@getDistrictsByProvinceId');
     Route::get('/provinces', 'API\AddressController@getProvinces');
-    Route::get('/address/{id}', 'API\AddressController@getById');
+    Route::get('/addresses/{id}', 'API\AddressController@getById');
     Route::post('/addresses/create', 'API\AddressController@create');
-    Route::put('/address/{id}', 'API\AddressController@updateById');
+    Route::put('/addresses/{id}', 'API\AddressController@updateById');
 
     //room
     Route::get('/rooms', 'API\RoomController@index');
@@ -47,11 +47,12 @@ Route::group(['middleware' => ['auth:api']], function () {
     //category
     Route::resource('/categories', 'API\CategoryController');
 
-    //convenient
-    Route::resource('/convenients', 'API\ConvenientController');
+    //convenience
+    Route::resource('/conveniences', 'API\ConvenienceController');
 
     //user
     Route::get('/getCurrentUser', function () {
+        return Auth::user();
         return Auth::user()->load('roles');
     });
     Route::resource('/users', 'API\UserController');
@@ -63,4 +64,11 @@ Route::group(['middleware' => ['auth:api']], function () {
     //
     Route::post('/sent-notification', 'API\NotificationController@sent');
     Route::get('/search-users/{value}', 'API\UserController@fuzzySearch');
+    //message
+    Route::post('/messages', 'API\MessagesController@index');
+    Route::post('/messages/send', 'API\MessagesController@store');
+});
+
+Route::post('/login', function ($id) {
+    return 'user are login';
 });

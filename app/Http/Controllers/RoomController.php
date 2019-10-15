@@ -8,7 +8,7 @@ use App\Traits\FullTextSearch;
 class RoomController extends Controller
 {
     use FullTextSearch;
-    
+
     private $roomRepository;
 
     public function __construct(RoomRepositoryInterface $roomRepository)
@@ -18,7 +18,7 @@ class RoomController extends Controller
 
     public function show($id)
     {
-        $room = $this->roomRepository->findById($id)->load('images', 'convenients');
+        $room = $this->roomRepository->findById($id)->load('images', 'conveniences');
         return view('detail_room', compact('room'));
     }
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repositories\Convenient;
+namespace App\Repositories\Convenience;
 
 use App\Repositories\RepositoryInterface;
 
-interface ConvenientRepositoryInterface extends RepositoryInterface
+interface ConvenienceRepositoryInterface extends RepositoryInterface
 {
 
 }
