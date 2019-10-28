@@ -20,12 +20,22 @@ class UsersTableSeeder extends Seeder
         $role_admin = Role::where('name', 'admin')->first();
 
         $customer = new User();
-        $customer->name = 'customer Name';
-        $customer->email = 'customer@example.com';
+        $customer->name = 'customer no 1';
+        $customer->email = 'customer1@example.com';
         $customer->password = bcrypt('123456');
         $customer->phone = '0366025756';
         $customer->save();
         $customer->roles()->attach($role_customer);
+
+        $customer = new User();
+        $customer->name = 'customer no 2';
+        $customer->email = 'customer2@example.com';
+        $customer->password = bcrypt('123456');
+        $customer->phone = '0366025756';
+        $customer->save();
+        $customer->roles()->attach($role_customer);
+
+
 
         $owner = new User();
         $owner->name = 'owner Name';

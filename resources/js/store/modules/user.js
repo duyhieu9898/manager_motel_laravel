@@ -25,7 +25,7 @@ const getters = {
 };
 
 const actions = {
-  async getCurrentUser({ commit }) {
+  async currentUser({ commit }) {
     try {
       let response = await axios.get('/getCurrentUser');
       let currentUser = response.data;

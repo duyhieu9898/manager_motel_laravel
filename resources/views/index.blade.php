@@ -65,7 +65,7 @@
     <div class="room-center__title text-white pt-5">
         <h3>NEWS ROOM CENTER</h3>
     </div>
-    <div class="row">
+    <div class="">
         <div class="col-lg-12 p-5">
             <div class="owl-carousel owl-theme new-room-carousel">
                 @foreach($roomsNewsCreate as $room)
@@ -97,7 +97,6 @@
                 @endforeach
             </div>
         </div>
-
     </div>
 </div>
 @endsection

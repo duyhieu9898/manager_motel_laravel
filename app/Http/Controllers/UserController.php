@@ -7,4 +7,7 @@ use App\User;
 
 class UserController extends Controller
 {
+    public function loginAdmin() {
+        return 'ok';
+    }
 }

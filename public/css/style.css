@@ -249,8 +249,6 @@ search-room h3 {
 #room-center {
     background-image: url("/images/motel-service-bg.jpg");
     height: auto;
-    margin-right: -15px;
-    margin-left: -15px;
     /* Center and scale the image nicely */
     background-position: center;
     background-repeat: no-repeat;

@@ -1,6 +1,5 @@
 <?php
 use Illuminate\Support\Facades\Auth;
-use App\Events\RedisEvent;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,9 +53,6 @@ Route::group(['middleware' => ['auth']], function () {
         return Auth::user()->load('roles');
     });
     //chat
-    Route::get('/chat', function () {
-        return view('home');
-    });
     Route::post('/messages', 'API\MessagesController@index');
     Route::post('/messages/send', 'API\MessagesController@store');
     Route::get('/notifications/me', 'NotificationController@index');

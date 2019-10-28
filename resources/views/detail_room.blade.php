@@ -32,9 +32,10 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12 col-md-6">
-                                <div class="box-image">
-                                    <img class="responsive" src="{{ $room['images'][0]['file_name'] }}"
-                                        alt="representative image">
+                                <div class="box-image-carousel owl-carousel owl-theme">
+                                    @foreach ($room['images'] as $images)
+                                    <img class="responsive item" src="{{ $images['file_name'] }}">
+                                    @endforeach
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6">
@@ -193,6 +194,6 @@
 <script async defer crossorigin="anonymous"
     src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v4.0&appId=1812993605672350&autoLogAppEvents=1">
 </script>
-
+<script src="{{ asset('./js/owl-carousel-option.js') }}"></script>
 <script src="{{ asset('./js/booking.js') }}"></script>
 @endsection

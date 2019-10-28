@@ -20,7 +20,8 @@ class NotificationController extends Controller
     {
         //$this->notification->create($request->all());
         //$data['user_id'] = $request->input('user_id');
-        $data['title'] = $request->input('title');
+        $message =  $request->input('message');
+        return response($request->all());
         $data['content'] = $request->input('content');
 
 
@@ -36,6 +37,7 @@ class NotificationController extends Controller
 
         $pusher->trigger('Notify', 'send-message', $data);
 
-        return redirect('/send');
+        return response([ 'message' => 'send notification all user']);
     }
+
 }

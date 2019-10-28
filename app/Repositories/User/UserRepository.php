@@ -30,7 +30,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
      */
     public function getUsersWithRoles()
     {
-        return User::get()->load('roles');
+        return User::with('roles')->get();
     }
     /**
      * Store a newly created user in storage.

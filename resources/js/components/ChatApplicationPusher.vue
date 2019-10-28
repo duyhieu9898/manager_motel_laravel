@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="chat-application">
     <beautiful-chat
       :participants="participants"
       :titleImageUrl="titleImageUrl"
@@ -101,7 +101,7 @@ export default {
       alwaysScrollToBottom: false, // when set to true always scrolls the chat to the bottom when new events are in (new message, user starts typing...)
 
       messageStyling: true, // enables *bold* /emph/ _underline_ and such (more info at github.com/mattezza/msgdown)
-      adminId: 3
+      adminId: 4
     };
   },
   async mounted() {
@@ -234,3 +234,9 @@ export default {
   }
 };
 </script>
+<style lang="css">
+    .chat-application {
+        position: absolute;
+        z-index: 10;
+    }
+</style>

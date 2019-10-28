@@ -22,4 +22,11 @@ $(document).ready(function() {
             }
         }
     })
+
+    $('.box-image-carousel').owlCarousel({
+        loop: true,
+        responsiveClass: true,
+        dotsEach: true,
+        items: 1
+    })
 });

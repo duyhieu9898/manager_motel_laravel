@@ -52,7 +52,6 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     //user
     Route::get('/getCurrentUser', function () {
-        return Auth::user();
         return Auth::user()->load('roles');
     });
     Route::resource('/users', 'API\UserController');
@@ -62,13 +61,9 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/getListUserOtherMe', 'API\UsersController@getListUserOtherMe');
 
     //
-    Route::post('/sent-notification', 'API\NotificationController@sent');
+    Route::post('/send-notification', 'API\NotificationController@sent');
     Route::get('/search-users/{value}', 'API\UserController@fuzzySearch');
     //message
     Route::post('/messages', 'API\MessagesController@index');
     Route::post('/messages/send', 'API\MessagesController@store');
-});
-
-Route::post('/login', function ($id) {
-    return 'user are login';
 });

@@ -52,7 +52,8 @@
     @include('../sections/header')
     @include('../sections/main')
     @include('../sections/footer')
-
+    <!-- App -->
+    <script src="{!! asset('/js/app.js') !!}"></script>
     <!-- Bootstrap -->
     <script src="{{ asset('./plugins/popper/popper.min.js') }}"></script>
     <script src="{{ asset('./plugins/bootstrap/bootstrap.min.js') }}"></script>

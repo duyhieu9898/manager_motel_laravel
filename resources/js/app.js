@@ -5,7 +5,7 @@
  */
 require('./bootstrap')
 //config
-const token = 'cdcc4de55400db8bd806035d431b1dad389c49b416f92dd358d1a139e78303a5'
+const token = 'aac7be0fadb22ce91215aac89b01003a1d873899edc6c10b0212aba24b40b885'
 axios.defaults.baseURL = window.location.origin
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 window.Vue = require('vue')
@@ -59,6 +59,6 @@ const vm = new Vue({
     el: '#app',
     store,
     mounted() {
-        store.dispatch('getCurrentUser')
+        store.dispatch('currentUser')
     }
 })
