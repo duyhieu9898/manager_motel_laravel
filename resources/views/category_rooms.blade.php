@@ -5,11 +5,14 @@
     header {
         height: auto !important;
     }
+    #app {
+        min-height: calc(100% - 50px - 320px);
+    }
 </style>
 @endsection
 @section('main-container')
 
-<nav aria-label="breadcrumb" class="mt-5">
+<nav aria-label="breadcrumb" class="pt-5">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
         <li class="breadcrumb-item">Categories</li>

@@ -1,7 +1,7 @@
 <header class="header-bg">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark-overlay navbar-static-top">
         <div class="container">
-            <a class="navbar-brand" href="/">MOTELBOOKING</a>
+            <a class="navbar-brand" href="/">{{ $dataHeader['home_name'] }}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -9,7 +9,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav mr-auto">
                     @foreach ($categories as $category)
-                    <li class="nav-item text-capitalize" id="category-{{$category['id']}}">
+                    <li class="nav-item text-capitalize" id="category-{{ $category['id'] }}">
                         <a
                             class="nav-link"
                             href="{{ route('category_rooms',$category['id']) }}
@@ -17,7 +17,7 @@
                     </li>
                     @endforeach
                     <li class="nav-item text-capitalize">
-                        <a class="nav-link" href="https://www.topcv.vn/xem-cv/43fb6293a5795a0e01008739259bf2db" target="_blank">About Me</a>
+                    <a class="nav-link" href="{{ $dataHeader['link_about_me'] }}" target="_blank">About Me</a>
                     </li>
                 </ul>
 

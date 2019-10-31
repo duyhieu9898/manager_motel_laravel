@@ -31,4 +31,27 @@ $(document).ready(function() {
             }
         });
     });
+    $('.button-cancel-booking').click(function(e) {
+        const self = this
+        const roomId = $(this).data("roomId");
+
+        $.ajax({
+            type: "get",
+            url: "http://localhost:8000/cancel-booking/" + roomId,
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+            },
+            success: function(response) {
+                alertify.notify("cancel booking completed", "success", 7);
+                self.parentElement.parentElement.remove()
+                if ($('#pills-pending tr>td').length === 0) {
+                    $('#pills-pending').html('<p>There are no rooms was pending</p>')
+                }
+            },
+            error: function(err) {
+                console.log(err);
+                alertify.notify("An error occurred, Please contact support for notification", "error", 7);
+            }
+        });
+    })
 });

@@ -3,27 +3,27 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4">
-                    <h4>Trụ sở chính:</h4>
+                <h4>{{ $dataFooter['footer_left_title'] }}</h4>
                     <ul>
-                        <li><i class="fa fa-map-marker"></i>&nbsp;169 Đường 32,Liên Mạc, Bắc Từ Liêm, TP Hà Nội
+                        <li><i class="fa fa-map-marker"></i>&nbsp;{{ $dataFooter['footer_left_address'] }}
                         </li>
-                        <li><i class="fa fa-phone"></i>&nbsp;Điện thoại: 0366 025 756</li>
-                        <li><i class="fa fa-envelope-o"></i>&nbsp;Gmail: duyhieu9898@gmail.com</li>
+                        <li><i class="fa fa-phone"></i>&nbsp;{{ $dataFooter['footer_left_phone'] }}</li>
+                        <li><i class="fa fa-envelope-o"></i>&nbsp;{{ $dataFooter['footer_left_mail'] }}</li>
                     </ul>
                 </div>
                 <div class="col-lg-4">
-                    <h4>Chi nhánh Hà Nội</h4>
+                    <h4>{{ $dataFooter['footer_mid_title'] }}</h4>
                     <ul>
-                        <li><i class="fa fa-map-marker"></i>&nbsp;169 Đường 32,Liên Mạc, Bắc Từ Liêm, TP Hà Nội
+                        <li><i class="fa fa-map-marker"></i>&nbsp;{{ $dataFooter['footer_mid_address'] }}
                         </li>
-                        <li><i class="fa fa-phone"></i>&nbsp;Điện thoại: 0366 025 756</li>
-                        <li><i class="fa fa-envelope-o"></i>&nbsp;Gmail: duyhieu9898@gmail.com</li>
+                        <li><i class="fa fa-phone"></i>&nbsp;{{ $dataFooter['footer_mid_phone'] }}</li>
+                        <li><i class="fa fa-envelope-o"></i>&nbsp;{{ $dataFooter['footer_left_mail'] }}</li>
                     </ul>
                 </div>
                 <div class="col-lg-4">
-                    <h4>Fanpages của chúng tôi</h4>
+                    <h4>{{ $dataFooter['footer_right_title'] }}</h4>
                     <div class="fb-page"
-                        data-href="https://www.facebook.com/Bot-chat-fb-220963458793205/?modal=admin_todo_tour"
+                        data-href="{{ $dataFooter['footer_right_facebook'] }}"
                         data-small-header="false" data-adapt-container-width="true" data-hide-cover="false"
                         data-show-facepile="true">
                         <blockquote cite="https://www.facebook.com/duyhieu9889/" class="fb-xfbml-parse-ignore">

@@ -14,7 +14,7 @@ class Address extends Model
     //
     public $timestamps = false;
     protected $table = 'addresses';
-    protected $fillable = ['street, ward_id, district_id, province_id'];
+    protected $fillable = ['street', 'ward_id', 'district_id', 'province_id'];
 
     //relationship
     public function rooms()

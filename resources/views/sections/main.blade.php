@@ -4,6 +4,5 @@
         @if (Auth::check())
             <chat-application></chat-application>
         @endif
-
     </div>
 </div>

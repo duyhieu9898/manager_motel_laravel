@@ -10,7 +10,6 @@
         </div>
         <p class="header-content__description">website booking room good price and fast time</p>
     </div>
-
 </div>
 @endsection
 

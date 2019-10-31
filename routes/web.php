@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,21 +42,19 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/cart', 'BookingController@cart');
     Route::view('/profile', 'info_user');
     Route::get('/order', 'BookingController@bookingOfUser');
-
+    Route::get('/cancel-booking/{id}', 'BookingController@cancelBooking');
     Route::group(['middleware' => ['admin']], function () {
         Route::get('/admin', function () {
             $token = Auth::user()->api_token;
             return redirect("http://localhost:8080/?api_token=$token");
         });
     });
-
-    Route::get('/getCurrentUser', function () {
-        return Auth::user()->load('roles');
-    });
     //chat
     Route::post('/messages', 'API\MessagesController@index');
     Route::post('/messages/send', 'API\MessagesController@store');
     Route::get('/notifications/me', 'NotificationController@index');
+    //payment
+    Route::get('return-vnpay', 'PaymentController@return');
 });
 //route auth
 Auth::routes(['verify' => true]);

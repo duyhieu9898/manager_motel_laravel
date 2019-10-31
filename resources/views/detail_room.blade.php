@@ -5,6 +5,9 @@
     header {
         height: auto !important;
     }
+    #app {
+        min-height: calc(100% - 50px - 320px);
+    }
 </style>
 
 <link rel="stylesheet" href="{{ asset('./plugins/DataPicker/bootstrap-datepicker.min.css') }}">

@@ -12,7 +12,7 @@
     background-color: rgb(0, 0, 0, 0.5);
     padding: 50px;
     border-radius: 8px;
-    z-index: 1041;
+    z-index: 1;
 }
 
 #login:hover,

@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\Room\RoomRepositoryInterface;
-use App\Events\RedisEvent;
 use Pusher\Pusher;
+use Illuminate\Support\Facades\Log;
 
 class BookingController extends Controller
 {
@@ -86,7 +86,7 @@ class BookingController extends Controller
         $this->sendPusherMessage("new-booking", Auth::id());
         //*socket redis
         //event(new RedisEvent(Auth::id(), "message_example"));
-        return redirect('/cart')->with('booking-success', 'your booking success');
+        return redirect('/cart')->with('booking-success', 'Your booking success. Good luck');
     }
 
     /**
@@ -115,5 +115,15 @@ class BookingController extends Controller
             ]
         );
         $pusher->trigger('booking', $event, $message);
+    }
+
+    public function cancelBooking($roomId)
+    {
+        $userId = Auth::user()->id;
+        $result = $this->userRepository->cancelBookingPending($userId, $roomId);
+        if ($result) {
+            return response()->json('success', 200);
+        }
+        return response()->json(['message' => 'booking undefine'], 400);
     }
 }

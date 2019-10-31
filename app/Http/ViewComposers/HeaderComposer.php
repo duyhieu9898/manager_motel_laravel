@@ -6,6 +6,7 @@ use Illuminate\View\View;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HeaderComposer
 {
@@ -42,6 +43,18 @@ class HeaderComposer
      */
     public function compose(View $view)
     {
+        $arrData = DB::table('basic_information')->whereIn('name', [
+            'home_name',
+            'home_header',
+            'link_logo_header',
+            'slogan_header',
+            'link_about_me'
+        ])->get()->toArray();
+        for ($i=0; $i < count($arrData) ; $i++) {
+            $arrData[$arrData[$i]->name] = $arrData[$i]->content;
+            unset($arrData[$i]);
+        }
+        $view->with('dataHeader', $arrData);
         $view->with('categories', $this->categoryRepository->get());
 
         if (Auth::check()) {

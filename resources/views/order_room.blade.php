@@ -5,16 +5,19 @@
     header {
         height: auto !important;
     }
+    #app {
+        min-height: calc(100% - 50px - 320px);
+    }
 </style>
 @endsection
 
 @section('main-container')
-<div class="container">
-    <div class="row">
+<div class="row d-flex justify-content-center pt-5">
+    <div class="col-10">
         <div class="col lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Cart</h3>
+                    <h3 class="card-title">Your Cart</h3>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -48,8 +51,9 @@
                                                 <th style="width:30%;">Room title</th>
                                                 <th style="width:10%;">Tenants</th>
                                                 <th style="width:10%;">Price</th>
-                                                <th style="width:17.5%;">Arrival date</th>
-                                                <th style="width:17.5%;">Departure date</th>
+                                                <th style="width:15%;">Arrival date</th>
+                                                <th style="width:15%;">Departure date</th>
+                                                <th style="width:10%;">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -67,6 +71,13 @@
                                                 <td>{{ $room->price }}/vnd</td>
                                                 <td>{{ $room->pivot->arrival_date }}</td>
                                                 <td>{{ $room->pivot->departure_date }}</td>
+                                                <td>
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-warning button-cancel-booking"
+                                                        data-room-id="{{ $room->id }}"
+                                                    >Cancel</button>
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -177,4 +188,7 @@
     </div>
 </div>
 
+@endsection
+@section('footer')
+<script src="{{ asset('./js/booking.js') }}"></script>
 @endsection

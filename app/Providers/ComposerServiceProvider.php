@@ -24,7 +24,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer([
+        $arrViews = [
             'auth/passwords/email',
             'auth/login',
             'auth/register',
@@ -39,6 +39,8 @@ class ComposerServiceProvider extends ServiceProvider
             'home',
             'socket',
             'order_room'
-        ], 'App\Http\ViewComposers\HeaderComposer');
+        ];
+        View::composer($arrViews, 'App\Http\ViewComposers\HeaderComposer');
+        View::composer($arrViews, 'App\Http\ViewComposers\FooterComposer');
     }
 }

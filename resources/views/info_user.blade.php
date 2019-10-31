@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('header')
+@section('main-container')
 <div class="container">
-    <div class="row" style="margin-top:90px;">
-        <div class="col-lg-8 profile-user" id="app">
+    <div class="row" >
+        <div id="app" class="col-lg-8 profile-user" >
             <info-user-component></info-user-component>
         </div>
     </div>
@@ -13,5 +13,4 @@
 @section('footer')
 <!-- app -->
 <script src="{!! asset('/js/app.js') !!}"></script>
-
 @endsection

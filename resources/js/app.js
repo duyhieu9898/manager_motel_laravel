@@ -5,7 +5,7 @@
  */
 require('./bootstrap')
 //config
-const token = 'aac7be0fadb22ce91215aac89b01003a1d873899edc6c10b0212aba24b40b885'
+const token = '80f592836bd4fbe0708ab40bbc81319851d5ea9aa85b9ca0c7b99d3e171b84ed'
 axios.defaults.baseURL = window.location.origin
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 window.Vue = require('vue')

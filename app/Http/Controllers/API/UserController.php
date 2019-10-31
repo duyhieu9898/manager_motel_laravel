@@ -8,6 +8,7 @@ use App\Repositories\User\UserRepositoryInterface;
 use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -119,9 +120,21 @@ class UserController extends Controller
     public function fuzzySearch($value)
     {
         $user = $this->userRepository->fuzzySearch($value);
-        
+
         if (count($user) != 0) {
             return response()->json($user, 200);
         }
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+        $user = $this->userRepository->hasEmail($credentials['email']);
+        if ($user) {
+            if (Hash::check($credentials['password'], $user->getAuthPassword()) ){
+                return $user->api_token;
+            }
+        }
+        return response()->json(['message' => 'error login'], 400);
     }
 }

@@ -12,6 +12,9 @@
  */
 use Illuminate\Support\Facades\Auth;
 
+Route::post('/admin/login', 'API\UserController@login');
+
+
 Route::group(['middleware' => ['auth:api']], function () {
     //image
     Route::get('/images/room/{room_id}', 'API\ImageController@getListImagesByRoomId');
@@ -58,7 +61,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     //statistical
     Route::get('/statistical', 'API\StatisticalController@index');
-    Route::get('/getListUserOtherMe', 'API\UsersController@getListUserOtherMe');
+    Route::get('/getListUserOtherMe', 'API\UserController@getListUserOtherMe');
 
     //
     Route::post('/send-notification', 'API\NotificationController@sent');
@@ -66,4 +69,9 @@ Route::group(['middleware' => ['auth:api']], function () {
     //message
     Route::post('/messages', 'API\MessagesController@index');
     Route::post('/messages/send', 'API\MessagesController@store');
+
+    // basic information
+    Route::get('/basic-information', 'API\BasicInformationController@index');
+    Route::put('/basic-information/{id}', 'API\BasicInformationController@update');
 });
+

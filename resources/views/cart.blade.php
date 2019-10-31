@@ -5,6 +5,9 @@
     header {
         height: auto !important;
     }
+    #app {
+        min-height: calc(100% - 50px - 320px);
+    }
 </style>
 @endsection
 

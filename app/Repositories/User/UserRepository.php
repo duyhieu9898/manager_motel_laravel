@@ -177,4 +177,13 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         return $user = $this->model::search($value)->get();
     }
+
+    public function cancelBookingPending(int $userId, int $roomId)
+    {
+        $user = $this->findById($userId);
+        return $user->rooms()->where([
+            ["room_user.status_id", 2],
+            ["room_user.room_id", $roomId]
+        ])->delete();
+    }
 }
