@@ -5,10 +5,10 @@
     <div class="header-content">
         <div class="align-items-center d-flex">
             <img src="images/logo.png">
-            <span class="header-content__title">BOOKING<span style="color:#f1ab42"> ONLINE</span></span>
+            <span class="header-content__title">HOMO<span style="color:#f1ab42">SAPIENS</span></span>
 
         </div>
-        <p class="header-content__description">website booking room good price and fast time</p>
+        <p class="header-content__description">Khách sạn tốt nhất vịnh bắc bộ</p>
     </div>
 </div>
 @endsection
@@ -16,40 +16,40 @@
 @section('main-container')
 
 <div class="search-room">
-    <h3 class="text-center">CHECK AVAILABILITY</h3>
+    <h3 class="text-center">TÌM PHÒNG</h3>
     <div class="row justify-content-center">
         <div class="col-lg-10">
             <form action="/search-room" method="get">
                 <div class="row">
                     <div class="col-lg-2">
-                        <label class="srearch-room__lable-input">Category</label>
+                        <label class="srearch-room__lable-input">Thể Loại</label>
                         <select name="category_id" class="form-control srearch-room--input-category" required>
-                            <option hidden>Chose Category</option>
+                            <option hidden>Chọn thể loại</option>
                             @foreach($categories as $category)
                             <option value="{{ $category['id'] }}">{{$category['name']}}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-lg-2 ">
-                        <label class="srearch-room__lable-input">Province</label>
+                        <label class="srearch-room__lable-input">Tỉnh/Thành phố</label>
                         <input type="text" name="name_province" class="form-control" placeholder="Enter name province">
                     </div>
                     <div class="col-lg-2 ">
-                        <label class="srearch-room__lable-input">People</label>
+                        <label class="srearch-room__lable-input">Số Người</label>
                         <input type="text" name="people" class="form-control " placeholder="Enter number people">
                     </div>
                     <div class="col-lg-2">
-                        <label class="srearch-room__lable-input">Price min</label>
+                        <label class="srearch-room__lable-input">Giá tối thiểu</label>
                         <input type="text" name="min_price" class="form-control" data-type="currency"
                             placeholder="Enter price min">
                     </div>
                     <div class="col-lg-2">
-                        <label class="srearch-room__lable-input">price max</label>
+                        <label class="srearch-room__lable-input">Giá tối đa</label>
                         <input type="text" name="max_price" class="form-control" data-type="currency"
                             placeholder="Enter price max">
                     </div>
                     <div class="col-lg-2 d-flex flex-column-reverse">
-                        <button type="submit" class="btn btn-outline-dark">Search room</button>
+                        <button type="submit" class="btn btn-outline-dark">Tìm ngay</button>
                     </div>
                 </div>
             </form>
@@ -62,7 +62,7 @@
 
 <div id="room-center">
     <div class="room-center__title text-white pt-5">
-        <h3>NEWS ROOM CENTER</h3>
+        <h3>PHÒNG MỚI NHẤT</h3>
     </div>
     <div class="">
         <div class="col-lg-12 p-5">

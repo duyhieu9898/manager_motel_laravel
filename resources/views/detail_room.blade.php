@@ -43,27 +43,26 @@
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <p>
-                                    <strong>Address:</strong>
+                                    <strong>Địa chỉ:</strong>
                                     {{ $room->address->street }}
                                     {{ $room->address->ward->name }}
                                     {{ $room->address->district->name }}
                                     {{ $room->address->province->name }}
                                 </p>
-                                <p><strong>Room area: </strong>{{ $room->room_area }}m</p>
-                                <p><strong>Price: </strong>{{ formatMoney($room['price'],'vnd/month') }}</p>
-                                <p><strong>People per Room:
+                                <p><strong>Diện tích phòng: </strong>{{ $room->room_area }}m</p>
+                                <p><strong>Giá thành: </strong>{{ formatMoney($room['price'],'vnd/month') }}</p>
+                                <p><strong>Số người / phòng:
                                     </strong>{{ $room->number_peoples }}/{{ $room->maximum_peoples_number }}</p>
                                 <div>
                                     <div class="alert alert-info">
-                                        <strong>benefit!</strong> Book now to get more privileges
+                                        <strong>Ưu đãi!</strong> Đặt phòng ngay để có khuyến mãi
                                     </div>
                                     <div class="alert alert-warning">
-                                        <strong>Quick time!</strong> We will contact you 24 hours in advance from the
-                                        time of booking
+                                        <strong>Thời gian nhanh chóng!</strong> Chúng tôi sẽ liện hệ với bạn trong vòng 24 kể từ khi đặt phòng
                                     </div>
                                     <!-- Trigger the modal with a button -->
                                     <button type="submit" class="btn btn-primary btn-block" data-toggle="modal"
-                                        data-target="#book-room">Book This Room!</button>
+                                        data-target="#book-room">Đặt phòng ngay!</button>
                                     <!-- Modal -->
                                     <div class="modal fade" id="book-room" role="dialog"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -83,7 +82,7 @@
                                                             <div class="container">
                                                                 <!-- Datepicker as text field -->
                                                                 <div class="col-lg-12">
-                                                                    <label for="datepickerarrival">Arrival date</label>
+                                                                    <label for="datepickerarrival">Ngày đến</label>
                                                                     <div class="input-group date col-lg-12"
                                                                         data-date-format="dd.mm.yyyy">
 
@@ -97,7 +96,7 @@
                                                                     </div>
 
                                                                     <!-- Datepicker as text field -->
-                                                                    <label for="departuredate">Departure Date</label>
+                                                                    <label for="departuredate">Ngày đi</label>
                                                                     <div class="input-group date  col-lg-12"
                                                                         data-date-format="dd.mm.yyyy">
 
@@ -113,7 +112,7 @@
                                                                     <div class="input-group col-lg-12"
                                                                         data-date-format="dd.mm.yyyy">
                                                                         <div class="form-group">
-                                                                            <label for="people">Number People:</label>
+                                                                            <label for="people">số người:</label>
                                                                             <select class="form-control" id="people"
                                                                                 name="peoples">
                                                                                 @for ($i = 1; $i <= $room->
@@ -132,10 +131,9 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="submit" class="btn btn-primary"
-                                                            name="book_now">Book Now</button>
+                                                            name="book_now">Đặt ngay</button>
                                                         <a id="add-to-card" href="javascript:void(0)"
-                                                            class="btn btn-info" data-room-id="{{ $room->id }}">Add To
-                                                            Card </a>
+                                                            class="btn btn-info" data-room-id="{{ $room->id }}">Thêm vào giỏ hàng</a>
                                                     </div>
                                                 </div>
 
@@ -149,20 +147,20 @@
                 </div>
                 <div class="content-detail">
                     <div class="card">
-                        <div class="card-header">Description</div>
+                        <div class="card-header">Thông tin</div>
                         <div class="card-body">
                             <p>{!! $room['description'] !!}</p>
                         </div>
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-header">Police and terms</div>
+                    <div class="card-header">Chính sách và điều khoản</div>
                     <div class="card-body">
                         <p>{!! $room['police_and_terms'] !!}</p>
                     </div>
                 </div>
                 <div class="card mt-4">
-                    <div class="card-header">Conveniences of Room</div>
+                    <div class="card-header">Tiện ích</div>
                     <div class="card-body">
                         <div class="row">
                             @foreach($room['conveniences'] as $convenience)

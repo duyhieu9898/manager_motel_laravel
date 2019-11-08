@@ -26,23 +26,23 @@
                                 <li class="nav-item">
                                     <a class="nav-link active" id="pills-pending-tab" data-toggle="pill"
                                         href="#pills-pending" role="tab" aria-controls="pills-pending"
-                                        aria-selected="true">Pending</a>
+                                        aria-selected="true">Đang chờ thanh toán</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="pills-compled-tab" data-toggle="pill" href="#pills-compled"
-                                        role="tab" aria-controls="pills-compled" aria-selected="false">Compled</a>
+                                        role="tab" aria-controls="pills-compled" aria-selected="false">Hoàn thành</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="pills-canceled-tab" data-toggle="pill"
                                         href="#pills-canceled" role="tab" aria-controls="pills-canceled"
-                                        aria-selected="false">Canceled</a>
+                                        aria-selected="false">Đã hủy</a>
                                 </li>
                             </ul>
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-pending" role="tabpanel"
                                     aria-labelledby="pills-pending-tab">
                                     @if ($roomsPending->isEmpty())
-                                    <p>There are no rooms was pending</p>
+                                    <p>Không có phòng nào</p>
                                     @else
                                     <table class="table table-hover table-bordered">
                                         <thead>
@@ -94,7 +94,7 @@
                                 <div class="tab-pane fade" id="pills-compled" role="tabpanel"
                                     aria-labelledby="pills-compled-tab">
                                     @if ($roomsCompleted->isEmpty())
-                                    <p>There are no rooms was completed</p>
+                                    <p>Không có phòng nào</p>
                                     @else
                                     <table class="table table-hover table-bordered">
                                         <thead>
@@ -138,7 +138,7 @@
                                 <div class="tab-pane fade" id="pills-canceled" role="tabpanel"
                                     aria-labelledby="pills-canceled-tab">
                                     @if ($roomsCanceled->isEmpty())
-                                    <p>There are no rooms was cancel</p>
+                                    <p>Không có phòng nào</p>
                                     @else
                                     <table class="table table-hover table-bordered">
                                         <thead>

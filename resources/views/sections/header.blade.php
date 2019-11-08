@@ -16,9 +16,9 @@
                         ">{{ $category['name'] }}</a>
                     </li>
                     @endforeach
-                    <li class="nav-item text-capitalize">
+                    {{-- <li class="nav-item text-capitalize">
                     <a class="nav-link" href="{{ $dataHeader['link_about_me'] }}" target="_blank">About Me</a>
-                    </li>
+                    </li> --}}
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -27,12 +27,12 @@
                     @if(Auth::guest())
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">
-                                <i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Login
+                                <i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Đăng nhập
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('register') }}">
-                                <i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Register
+                                <i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Đăng ký
                             </a>
                         </li>
                     @elseif(Auth::user()->isAdministrator())
@@ -46,9 +46,9 @@
                                 <div class="card">
                                     <div class="card-header d-flex justify-content-between">
                                         <div class="dropdown-toolbar-actions">
-                                            <a href="#">Mark all as read</a>
+                                            <a href="#">Đánh dấu tất cả là đã đọc</a>
                                         </div>
-                                        <p class="dropdown-toolbar-title">Notifications (<span class="notif-count">0</span>)
+                                        <p class="dropdown-toolbar-title">Thông báo (<span class="notif-count">0</span>)
                                         </p>
                                     </div>
                                     <div class="card-body">
@@ -56,14 +56,14 @@
                                         </ul>
                                     </div>
                                     <div class="card-footer text-center">
-                                        <a href="#">View All</a>
+                                        <a href="#">Xem tất cả</a>
                                     </div>
                                 </div>
                             </div>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/cart') }}">
-                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Cart&nbsp;
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Giỏ hàng&nbsp;
                                 <span id="number-booking" class="badge badge-warning">{{ $numRoomInCart }}</span>
                             </a>
                         </li>
@@ -76,18 +76,18 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a href="{{ url('/admin') }}" class="dropdown-item">
                                     <i class="fa fa-th-large" style="color:#204d74;"></i>
-                                    &nbsp;Admin Manager
+                                    &nbsp;Quản lý
                                 </a>
                                 <a href="{{ url('/order') }}" class="dropdown-item"><i class="fa fa-home"
-                                        aria-hidden="true"></i>&nbsp;Order Rooms</a>
+                                        aria-hidden="true"></i>&nbsp;Đơn đặt phòng</a>
 
                                 <a href="{{ url('/profile') }}" class="dropdown-item">
                                     <i class="fa fa-address-book" aria-hidden="true"></i>
-                                    &nbsp;Profile</a>
+                                    &nbsp;Thông tin cá nhân</a>
                                 <a href="{{ route('register') }}" class="dropdown-item">
-                                    <i class="fa fa-address-card" aria-hidden="true"></i>&nbsp;Register</a>
+                                    <i class="fa fa-address-card" aria-hidden="true"></i>&nbsp;Đăng ký</a>
                                 <a href="{{ url('/logout') }}" class="dropdown-item">
-                                    <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Logout
+                                    <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Đăng nhập
                                 </a>
                             </div>
                         </li>
@@ -102,9 +102,9 @@
                                 <div class="card">
                                     <div class="card-header d-flex justify-content-between">
                                         <div class="dropdown-toolbar-actions">
-                                            <a href="#">Mark all as read</a>
+                                            <a href="#">Đánh dấu tất cả là đã đọc</a>
                                         </div>
-                                        <p class="dropdown-toolbar-title">Notifications (<span class="notif-count">0</span>)
+                                        <p class="dropdown-toolbar-title">Thông báo (<span class="notif-count">0</span>)
                                         </p>
                                     </div>
                                     <div class="card-body">
@@ -112,7 +112,8 @@
                                         </ul>
                                     </div>
                                     <div class="card-footer text-center">
-                                        <a href="#">View All</a>
+                                        <a href="#">xem tất cả
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +121,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/cart') }}">
                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                &nbsp;Cart&nbsp;
+                                &nbsp;Giỏ hàng&nbsp;
                                 <span class="badge badge-warning">{{ $numRoomInCart }}</span>
                             </a>
                         </li>
@@ -134,18 +135,18 @@
                             <div class="dropdown-menu" role="menu">
                                 <a href="{{ url('/order') }}" class="dropdown-item">
                                     <i class="fa fa-home" aria-hidden="true"></i>
-                                    &nbsp;Order Rooms
+                                    &nbsp;Đơn đặt phòng
                                 </a>
 
                                 <a href="{{ url('/profile') }}" class="dropdown-item"><i class="fa fa-address-book"
-                                        aria-hidden="true"></i>&nbsp;Profile</a>
+                                        aria-hidden="true"></i>&nbsp;Thông tin cá nhân</a>
                                 <a href="{{ route('register') }}" class="dropdown-item">
                                     <i class="fa fa-address-card" aria-hidden="true"></i>
-                                    &nbsp;Register
+                                    &nbsp;Đăng ký
                                 </a>
                                 <a href="{{ url('/logout') }}" class="dropdown-item">
                                     <i class="fa fa-sign-out" aria-hidden="true"></i>
-                                    &nbsp;Logout</a>
+                                    &nbsp;Đăng nhập</a>
                             </div>
                         </li>
                     @endif

@@ -27,14 +27,14 @@ class RoomsTableSeeder extends Seeder
         for ($i = 1; $i <= 300; $i++) {
             $categoryId = rand(1, 3);
             if ($categoryId == 1) {
-                $categoryName = "Motel";
+                $categoryName = "Phòng đơn";
             } elseif ($categoryId == 2) {
-                $categoryName = "House";
+                $categoryName = "Phòng đôi";
             } else {
-                $categoryName = "Apartment";
+                $categoryName = "Phòng gia đình";
             }
             $id=Room::create([
-                'title' => "Room {$categoryName} No  {$i}",
+                'title' => "{$categoryName} số  {$i}",
                 'description' => $paragraphs,
                 'category_id' => $categoryId,
                 'police_and_terms' => $textListDemo,

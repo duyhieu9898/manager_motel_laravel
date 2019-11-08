@@ -14,7 +14,7 @@ class BasicInformationsTableSeeder extends Seeder
     {
 
         BasicInformation::insert([
-            ['name' => 'home_name','content' => 'MOTEL BOOKING'],
+            ['name' => 'home_name','content' => 'HOMO SAPIENS'],
             ['name' => 'home_header','content' => 'BOOKING ONLINE'],
             ['name' => 'link_logo_header','content' => 'logo.png'],
             ['name' => 'slogan_header','content' => 'Website booking room good price and fast time'],
