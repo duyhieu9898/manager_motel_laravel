@@ -22,7 +22,7 @@
         "axios": "^0.18.1",
         "bootstrap-vue": "^2.0.0-rc.28",
         "cross-env": "^5.2.1",
-        "jquery": "^3.2",
+        "jquery": "^3.5",
         "laravel-mix": "^4.1.4",
         "lodash": "^4.17.15",
         "moment-timezone": "^0.5.26",
