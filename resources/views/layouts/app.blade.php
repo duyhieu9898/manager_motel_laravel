@@ -52,6 +52,7 @@
     @include('../sections/header')
     @include('../sections/main')
     @include('../sections/footer')
+    @include('../sections/modal_address')
     <!-- App -->
     <script src="{!! asset('/js/app.js') !!}"></script>
     <!-- Bootstrap -->
@@ -78,7 +79,7 @@
         // Enable pusher logging - don't include this in production
          Pusher.logToConsole = true;
 
-        var pusher = new Pusher('{{env('PUSHER_APP_KEY')}}', {
+        var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
             cluster: 'ap1',
             encrypted: true
         });

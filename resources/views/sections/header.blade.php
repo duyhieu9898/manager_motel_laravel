@@ -87,7 +87,7 @@
                                 <a href="{{ route('register') }}" class="dropdown-item">
                                     <i class="fa fa-address-card" aria-hidden="true"></i>&nbsp;Đăng ký</a>
                                 <a href="{{ url('/logout') }}" class="dropdown-item">
-                                    <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Đăng nhập
+                                    <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Đăng xuất
                                 </a>
                             </div>
                         </li>
@@ -146,7 +146,7 @@
                                 </a>
                                 <a href="{{ url('/logout') }}" class="dropdown-item">
                                     <i class="fa fa-sign-out" aria-hidden="true"></i>
-                                    &nbsp;Đăng nhập</a>
+                                    &nbsp;Đăng xuất</a>
                             </div>
                         </li>
                     @endif

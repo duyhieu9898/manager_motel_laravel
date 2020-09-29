@@ -38,9 +38,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
      * @param array $dataUser
      * @return integer
      */
-    public function createUser(array $dataUser):int
+    public function createUser(array $dataUser): int
     {
-        $dataUser['password'] =  bcrypt(123456);
+        $dataUser['password'] = bcrypt(123456);
         $user = $this->model::create($dataUser);
         if ($user) {
             return $user->id;
@@ -183,7 +183,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $user = $this->findById($userId);
         return $user->rooms()->where([
             ["room_user.status_id", 2],
-            ["room_user.room_id", $roomId]
+            ["room_user.room_id", $roomId],
         ])->delete();
     }
 }

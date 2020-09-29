@@ -5,7 +5,7 @@
  */
 require('./bootstrap')
 //config
-const token = '80f592836bd4fbe0708ab40bbc81319851d5ea9aa85b9ca0c7b99d3e171b84ed'
+const token = '4f7a13041aa49c2da7ffafa677e96d333a82aca382f0f5ea44127dfe2e09033a'
 axios.defaults.baseURL = window.location.origin
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 window.Vue = require('vue')
@@ -45,8 +45,7 @@ Vue.use(BootstrapVue)
 Vue.use(VeeValidate)
 Vue.use(Chat)
 //Register component in app
-Vue.component('user-address-component', require('./components/UserAddress.vue').default)
-Vue.component('info-user-component', require('./components/InfoUser.vue').default)
+
 Vue.component('chat-application', require('./components/ChatApplicationPusher.vue').default)
 
 //import component for VueRoute

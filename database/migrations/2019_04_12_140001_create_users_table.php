@@ -28,9 +28,9 @@ class CreateUsersTable extends Migration
 
             //relationship
             $table->foreign('address_id')->references('id')
-                        ->on('addresses')
-                        ->onDelete('cascade')
-                        ->onUpdate('cascade'); //n-1
+                ->on('addresses')
+                ->onDelete('cascade')
+                ->onUpdate('cascade'); //n-1
         });
         //full text search
         DB::statement('ALTER TABLE users ADD FULLTEXT `search` (`email`, `name`)');

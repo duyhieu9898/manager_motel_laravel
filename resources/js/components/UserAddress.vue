@@ -1,110 +1,12 @@
 <template>
   <div>
-    <input
-      v-if="is_edit"
-      class="info__address form-control"
-      v-model="current_address"
-      placeholder="Enter address of the room"
-      readonly
-      data-toggle="modal"
-      data-target="#adddress--model__edit"
-    />
-    <p v-else>{{ current_address }}</p>
-    <div
-      class="modal fade"
-      id="adddress--model__edit"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="modalLongTitle"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalTitle">Adress Form</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="row justify-content-center">
-              <div class="col-lg-offset-2 col-lg-8 form-group">
-                <input
-                  class="form-control"
-                  type="text"
-                  v-model="address.street"
-                  placeholder="enter Street"
-                />
-                <div class="errorsCustom" v-if="errorsCustom.address.street != null">
-                  <span>{{ errorsCustom.address.street }}</span>
-                </div>
-              </div>
-              <div class="col-lg-offset-2 col-lg-8 form-group">
-                <select class="form-control" v-model="address.province">
-                  <option hidden>Chose Province</option>
-                  <option
-                    v-bind:value="{ id: province.id, name: province.name }"
-                    v-for="province in list_provinces"
-                    :key="province.id"
-                  >{{ province.name }}</option>
-                </select>
-                <div class="errorsCustom" v-if="errorsCustom.address.province != null">
-                  <span>{{ errorsCustom.address.province }}</span>
-                </div>
-              </div>
-              <div class="col-lg-offset-2 col-lg-8 form-group">
-                <select class="form-control" v-model="address.district">
-                  <option hidden>Chose District</option>
-                  <option
-                    v-bind:value="{ id: district.id, name: district.name }"
-                    v-for="district in list_districts"
-                    :key="district.id"
-                  >{{ district.name }}</option>
-                </select>
-                <div class="errorsCustom" v-if="errorsCustom.address.district != null">
-                  <span>{{ errorsCustom.address.district }}</span>
-                </div>
-              </div>
-              <div class="col-lg-offset-2 col-lg-8 form-group">
-                <select class="form-control" v-model="address.ward">
-                  <option hidden>Chose Ward</option>
-                  <option
-                    v-bind:value="{ id: ward.id, name: ward.name}"
-                    v-for="ward in list_wards"
-                    :key="ward.id"
-                  >{{ ward.name }}</option>
-                </select>
-                <div class="errorsCustom" v-if="errorsCustom.address.ward != null">
-                  <span>{{ errorsCustom.address.ward }}</span>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <div>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
-                <button type="button" class="btn btn-primary" @click="saveAddress()">SAVE</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
   </div>
 </template>
 
 <script>
 export default {
-  props: {
-    user_id: {
-      type: Number
-    },
-    address_id: {
-      type: Number
-    },
-    is_edit: {
-      type: Boolean
-    }
-  },
+
   data() {
     return {
       address: {
@@ -128,9 +30,7 @@ export default {
       }
     };
   },
-  created() {
-    this.getListProvinces();
-  },
+
   methods: {
     getAddressById() {
       axios

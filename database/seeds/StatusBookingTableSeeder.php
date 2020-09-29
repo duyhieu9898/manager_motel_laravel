@@ -22,18 +22,17 @@ class StatusBookingTableSeeder extends Seeder
 
         $completed = new StatusBooking();
         $completed->id = 2;
-        $completed->name = "Đang thanh toán";
+        $completed->name = "pending";
         $completed->save();
 
         $cancelled = new StatusBooking();
         $cancelled->id = 3;
-        $cancelled->name = "Hoàn thành";
+        $cancelled->name = "completed";
         $cancelled->save();
 
         $cancelled = new StatusBooking();
         $cancelled->id = 4;
-        $cancelled->name = "Hủy Bỏ";
+        $cancelled->name = "cancelled";
         $cancelled->save();
-
     }
 }

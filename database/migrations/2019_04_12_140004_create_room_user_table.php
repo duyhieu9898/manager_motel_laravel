@@ -25,17 +25,17 @@ class CreateRoomUserTable extends Migration
             $table->timestamps();
             //relationship
             $table->foreign('user_id')->references('id')
-                        ->on('users')
-                        ->onDelete('cascade')
-                        ->onUpdate('cascade');
+                ->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->foreign('room_id')->references('id')
-                        ->on('rooms')
-                        ->onDelete('cascade')
-                        ->onUpdate('cascade');
+                ->on('rooms')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->foreign('status_id')->references('id')
-                        ->on('status_bookings')
-                        ->onDelete('cascade')
-                        ->onUpdate('cascade');
+                ->on('status_bookings')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

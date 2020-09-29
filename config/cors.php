@@ -11,9 +11,9 @@ return [
     | to accept any value.
     |
     */
-   
+
     'supportsCredentials' => false,
-    'allowedOrigins' => ['http://localhost:8080', 'http://localhost:8080/'],
+    'allowedOrigins' => ['http://localhost:8080', 'http://localhost:8081'],
     'allowedOriginsPatterns' => [],
     'allowedHeaders' => ['*'],
     'allowedMethods' => ['*'],

@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 $router->group(['namespace' => '\Rap2hpoutre\LaravelLogViewer'], function () use ($router) {
     $router->get('logs', 'LogViewerController@index');
 });
-//*===============ROUTE CONTROLL WEB==================*//
+//*===============ROUTE CONTROLLER WEB==================*//
 Route::get('/test-email', 'RoomController@sendEmail');
 Route::view('/index2', 'index2');
 Route::get('/email', function () {
@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/bookings/rooms/{id}', 'BookingController@booking'); //store
     Route::post('check-out/', 'BookingController@checkOut');
     Route::get('/cart', 'BookingController@cart');
-    Route::view('/profile', 'info_user');
+    Route::get('/profile', 'UserController@index');
     Route::get('/order', 'BookingController@bookingOfUser');
     Route::get('/cancel-booking/{id}', 'BookingController@cancelBooking');
     Route::group(['middleware' => ['admin']], function () {
@@ -70,8 +70,8 @@ Route::post('/postMessage', 'SendMessageController@sendMessage')->name('postMess
 
 
 //test
-Route::get('publish', function () {
-    LRedis::publish('message', "hello my friend");
-});
+// Route::get('publish', function () {
+//     LRedis::publish('message', "hello my friend");
+// });
 //chat
 Route::resource('/users', 'API\UserController');

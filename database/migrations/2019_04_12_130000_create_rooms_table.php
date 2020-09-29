@@ -30,19 +30,19 @@ class CreateRoomsTable extends Migration
             $table->timestamps();
             //relationship
             $table->foreign('status_booking_id')->references('id')
-                        ->on('status_bookings')
-                        ->onDelete('cascade')
-                        ->onUpdate('cascade'); //1-n
+                ->on('status_bookings')
+                ->onDelete('cascade')
+                ->onUpdate('cascade'); //1-n
             $table->foreign('category_id')->references('id')
-                        ->on('categories')
-                        ->onDelete('cascade')
-                        ->onUpdate('cascade'); //n-1
+                ->on('categories')
+                ->onDelete('cascade')
+                ->onUpdate('cascade'); //n-1
             $table->foreign('address_id')->references('id')
-                        ->on('addresses')
-                        ->onDelete('cascade')
-                        ->onUpdate('cascade'); //n-1
+                ->on('addresses')
+                ->onDelete('cascade')
+                ->onUpdate('cascade'); //n-1
         });
-        
+
         Schema::create('images', function (Blueprint $table) {
             $table->bigIncrements('id')->increment();
             $table->string('original_name');
@@ -51,9 +51,9 @@ class CreateRoomsTable extends Migration
             $table->unsignedBigInteger('room_id')->nullable();
             //relationship
             $table->foreign('room_id')->references('id')
-                        ->on('rooms')
-                        ->onDelete('cascade')
-                        ->onUpdate('cascade'); //n-1
+                ->on('rooms')
+                ->onDelete('cascade')
+                ->onUpdate('cascade'); //n-1
         });
     }
 
